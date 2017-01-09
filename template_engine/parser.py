@@ -1,15 +1,10 @@
 import re
+import os
 from nodes import GroupNode, ExpressionNode, HTMLNode
 
-TOKEN_REGEX = re.compile(r"({[{%].*?[}%]})")
+TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), '..', 'templates')
 
-text = """
-<section id='profile'>
-<h1>{{ a }}</h1>
-<ul id='friends-list'>
-</ul>
-</section>
-"""
+TOKEN_REGEX = re.compile(r"({[{%].*?[}%]})")
 
 """
 {% for f in person.friends %}
@@ -56,9 +51,11 @@ def identify_token(token):
     else:
         return create_token(token, "html")
 
-def render(contents, context):
-    eval_tree = parse(lexer(contents))
+def render(fname, context):
+    template_path = os.path.join(TEMPLATE_DIR, fname)
+    with open(template_path) as template:
+        eval_tree = parse(lexer(template.read()))
     return eval_tree.render(context)
 
 
-print(render(text, {'a': 10}))
+print(render('test_template.html', {'a': 10}))
