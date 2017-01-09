@@ -23,6 +23,29 @@ class ExpressionNode(Node):
     def render(self, context):
         return html.escape(str(eval(self._expression, {}, context)))
 
+class ForNode(Node):
+    def __init__(self, iterator, iterable):
+        self._iterator = iterator
+        self._iterable = iterable
+        self._child = None
+
+    def __str__(self):
+        return self.__repr__()
+
+    def set_child(self, child):
+        self._child = child
+
+    def __repr__(self):
+        return "<ForNode: '" + self._iterator + '; ' + self._child + "'>"
+
+    def render(self, context):
+        ivar = eval(self._iterator, {}, context)
+        rendered_children = []
+        for i in self._iterable:
+            new_context = dict(context)
+            new_context[ivar] = i
+            rendered_children.append(self._child.render(new_context))
+        return ''.join(rendered_children)
 
 class HTMLNode(Node):
     def __init__(self, content):

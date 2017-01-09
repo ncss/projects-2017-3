@@ -65,6 +65,10 @@ def identify_token(token):
             return create_token(' '.join(term_list[1:]), 'if')
         elif ' '.join(term_list) == 'end if':
             return create_token(None, 'end_if')
+        elif keyword == 'for':
+            return create_token({'iterator': term_list[1], 'iterable': ' '.join(term_list[3:])}, 'for')
+        elif ' '.join(term_list) == 'end for':
+            return create_token(None, 'end_for')
         # TODO The rest of the keywords
     elif token.startswith('{{') and token.endswith('}}'):
         # expression
