@@ -17,7 +17,14 @@ def get_template(filename):
 def index_handler(request):
     request.write("hello there")
 
+def view_question_handler(response, question_id):
+    title = response.get_field('title')
+    description = response.get_field('description')
+    question = {'title': title, 'description': description}
+    render_file(response, 'view_question.html', question)
+
 
 server = Server()
 server.register(r'/', index_handler)
+server.register(r'/view/(\d+)/?', view_question_handler)
 server.run()
