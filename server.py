@@ -14,8 +14,8 @@ def get_template(filename):
     with open(os.path.join(TEMPLATE_DIR, filename)) as f:
         return f.read()
 
-def index_handler(request):
-    request.write("hello there")
+def index_handler(response):
+    render_file(response, 'index.html', {})
 
 
 server = Server()
