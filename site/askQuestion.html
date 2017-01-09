@@ -1,8 +1,9 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" type='text/css' href='css/style.css'>
     <link rel="stylesheet" type='text/css' href='css/reset.css'>
+    <link rel="stylesheet" type='text/css' href='css/style.css'>
+    <link rel="stylesheet" type='text/css' href='css/askQuestion.css'>
     <title>Ask a Question!</title>
   </head>
   <body>
@@ -17,10 +18,23 @@
         </nav>
       </div>
     </section>
-
-    <h2>Ask a Question<h2>
-    <label>Question</label>
-    <input type="text" name="questionTitle">
-    <input type="file" name="upload">
+    <div class="wholething">
+      <h2>Ask a Question</h2>
+      <div class="question">
+        <label>Question</label>
+        <input type="text" name="questionTitle">
+      </div>
+      <div class="question">
+        <label>Upload an image of the product you want to find!</label>
+        <input type="file" name="upload">
+      </div>
+      <div class="question">
+        <label>Description</label>
+        <input type="text" name="description">
+      </div>
+      <div class="question">
+        <input type="submit" value="Submit">
+      </div>
+    </div>
   </body>
 </html>
