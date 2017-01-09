@@ -4,14 +4,24 @@ body {
 
 fieldset {
   width: 300px;
-  height: 310px;
-  border: 2px solid black;
+  max-height: 270px;
   margin-bottom: 10px;
   display: inline-block;
   margin-right: 10px;
   vertical-align: top;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
-.post_text {
-  margin-left: 20px;
+.post_text figcaption {
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.post_image {
+  height: 200px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 1px solid black;
 }
