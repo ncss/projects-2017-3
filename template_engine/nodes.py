@@ -37,10 +37,40 @@ class HTMLNode(Node):
     def __repr__(self):
         return "<HTMLNode: '" + head(self._content, 20) + "'>"
 
+class IfNode(Node):
+    def __init__(self, predicate):
+        self._predicate = predicate
+        self._children = {'True': GroupNode(), 'False': GroupNode()}
+
+    def render(self, context):
+
+        predicate_result = eval(self._predicate, {}, context)
+
+        if predicate_result:
+            true_node = self._children['True']
+            return true_node.render(context)
+        else:
+            false_node = self._children['False']
+            return false_node.render(context)
+
+    def add_true_child(self, child):
+        true_node = self._children['True']
+        true_node.add_child(child)
+
+    def add_false_child(self, child):
+        false_node = self._children['False']
+        false_node.add_child(child)
+
+    def __str__(self):
+        return self.__repr__()
+
+    def __repr__(self):
+        return "<IfNode: '" + str(self._children["True"]) + "' EndIf>"
+        #return "<IfNode: '" + head(self._predicate, 20) + "'>"
 
 class GroupNode(Node):
-    def __init__(self, children=[]):
-        self._children = children
+    def __init__(self):
+        self._children = []
 
     def add_child(self, child):
         self._children.append(child)
@@ -55,4 +85,4 @@ class GroupNode(Node):
         return self.__repr__()
 
     def __repr__(self):
-        return "<GroupNode: '" + self._children + "'>"
+        return "<GroupNode: '" + str(self._children) + "'>"
