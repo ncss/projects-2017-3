@@ -1,13 +1,14 @@
 import re
+from nodes import GroupNode, ExpressionNode, HTMLNode
+
+TOKEN_REGEX = re.compile(r"({[{%].*?[}%]})")
 
 text = """
-{% include header.html %}
 <section id='profile'>
-<h1>{{ person.name }}</h1>
+<h1>{{ a }}</h1>
 <ul id='friends-list'>
 </ul>
 </section>
-{% include footer.html %}
 """
 
 """
@@ -18,15 +19,25 @@ text = """
 {% end for %}
 """
 
-def parse(tokens, up_to):
+def parse(tokens, up_to=0, parent=GroupNode()):
     while up_to < len(tokens):
         token = tokens[up_to]
         if token['label'] == 'expression':
-
+            node = ExpressionNode(token['contents'])
+            parent.add_child(node)
+        elif token['label'] == 'html':
+            node = HTMLNode(token['contents'])
+            parent.add_child(node)
+        elif token['label'] == 'include':
+            with open(token['contents']) as f:
+                node = parse(lexer(f.read()), 0, parent)
         up_to += 1
+    return parent
 
-def get_tokens(text):
-    return re.split(r"({[{%].*?[}%]})", text)
+def lexer(text):
+    tags = TOKEN_REGEX.split(text)
+    tokens = [identify_token(token) for token in tags]
+    return tokens
 
 def create_token(contents, label):
     return {"contents": contents, "label": label}
@@ -45,5 +56,9 @@ def identify_token(token):
     else:
         return create_token(token, "html")
 
-for token in get_tokens(text):
-    print(identify_token(token))
+def render(contents, context):
+    eval_tree = parse(lexer(contents))
+    return eval_tree.render(context)
+
+
+print(render(text, {'a': 10}))

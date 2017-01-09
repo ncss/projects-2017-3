@@ -48,7 +48,7 @@ class GroupNode(Node):
     def render(self, context):
         out = ''
         for child in self._children:
-            out += child.render()
+            out += child.render(context)
         return out
 
     def __str__(self):
