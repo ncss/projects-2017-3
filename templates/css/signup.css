@@ -1,0 +1,11 @@
+body {
+  max-width: 1700px;
+  margin: 0px auto;
+}
+
+.input_field {
+  border: 1px solid black;
+  width: 400px;
+  height: 400px;
+  margin: 0px auto;
+}
