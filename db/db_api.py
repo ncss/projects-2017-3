@@ -252,7 +252,7 @@ with sqlite3.connect('db.db') as conn:
             SELECT *
             FROM comments
             WHERE parent_id = ?
-            ORDER BY date''', (parent_id,)
+            ORDER BY date''', (parent_id,))
 
             rows = [Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) for row in cur.fetchall()]
             return rows
@@ -267,3 +267,14 @@ with sqlite3.connect('db.db') as conn:
             WHERE id = ?''', (new_text, comment_id)
             )
             return find(comment_id)
+
+    if __name__ == "__main__":
+        #sign_up(username, password, nickname, email, datetime)
+        User.sign_up('kay', '12345abc', 'kyap', 'yapkaymen@gmail.com', '1/10/2017')
+        details = User.find('kay')
+        assert details.username == 'kay'
+        try:
+            details1 = User.find('abc')
+            assert False
+        except UserNotFound:
+            pass
