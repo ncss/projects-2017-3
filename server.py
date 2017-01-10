@@ -1,8 +1,8 @@
 import os
 from tornado.ncss import Server, ncssbook_log
 from template_engine.parser import render
-from auth import User, requires_login
-users = []
+from auth import User, requires_login, add_user
+
 
 TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
@@ -43,8 +43,7 @@ def signup_handler_post(request):
     if username != None:
         request.set_secure_cookie("current_user", username)
     user = User(ident, username, password, nickname, email, gender, dob, None, None)
-    users.append(user)
-    print(users[0].username)
+    add_user(user)
 
 @requires_login
 def ask_handler(request):

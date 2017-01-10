@@ -20,7 +20,11 @@ class User:
     def __str__(self):
         return "id=%s, user=%s, pass=%s, nick=%s, email=%s, gend=%s, dob=%s, bio=%s, date=%s" % (self.id, self.username, self.pasw, self.nick, self.email, self.gend,
                                                                                                  self.dob, self.bio, self.date
+                                                                                             self.dob, self.bio, self.date
                                                                                                  )
+
+def add_user(user):
+    ALL_USER[user.username] = user
 
 def check_cookie(response):
 
@@ -67,4 +71,3 @@ def foo(response, *args, **kwargs):
 #x = User('1', 'jack', 'hash', 'jack', 'email', 'm', '241-25', 'joegjlqejfgjawdlfkjd', '2012391934')
 #print(x.id)
 ALL_USER['jack'] = User('1', 'jack', '21i3u41234', 'jackywathy','jackywathy24@gmail.com', 'm', '24029999', 'jack is a person', '24/02/1111')
-
