@@ -1,8 +1,9 @@
 import os
 from tornado.ncss import Server, ncssbook_log
+from auth import User
 
 TEMPLATE_DIR = 'templates'
-UPLOAD_DIR = 'upload'
+UPLOADS_DIR = os.path.join('static', 'uploads')
 
 def render_file(response, filename:str, variables) -> None:
     """Renders the filename replaceing {name} with keys in variables"""
@@ -17,7 +18,7 @@ def get_template(filename):
         return f.read()
 
 def get_upload_path(filename):
-    return os.path.join(UPLOAD_DIR, filename)
+    return os.path.join(UPLOADS_DIR, filename)
 
 def index_handler(response):
     render_file(response, 'index.html', {})
