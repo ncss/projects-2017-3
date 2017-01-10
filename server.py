@@ -20,8 +20,8 @@ def get_upload_path(filename):
     return os.path.join(UPLOAD_DIR, filename)
 
 def index_handler(response):
+    response.set_secure_cookie("subwayCookie", "VISITED?")
     render_file(response, 'index.html', {})
-
 
 def ask_handler(request):
     name = request.get_field("name")
