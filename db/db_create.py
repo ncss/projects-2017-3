@@ -65,6 +65,15 @@ with sqlite3.connect('db.db') as conn:
 
 with sqlite3.connect('db.db') as conn:
     cur = conn.cursor()
+    class CommentNotFoundException(Exception):
+        pass
+
+    class UserNotFound(Exception):
+        pass
+
+    class PostNotFound(Exception):
+        pass
+
 
     class User:
 
@@ -92,7 +101,7 @@ with sqlite3.connect('db.db') as conn:
             row = cur.fetchone()
 
             if row is None:
-                raise UsernNotFOund('{} does not exist'.format(username))
+                raise UserNotFound('{} does not exist'.format(username))
             return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
 
         @staticmethod
@@ -104,20 +113,20 @@ with sqlite3.connect('db.db') as conn:
             ORDER BY datetime
                 ''')
             all_users = cur.fetchall()
-            #if row is None:
-                #raise UsernNotFOund('{} does not exist'.format(username))
+            if row is None:
+                raise UserNotFound('{} does not exist'.format(username))
             return all_users
 
         @staticmethod
-        def sign_up(username, password, nickname, email):
+        def sign_up(username, password, nickname, email, datetime):
             cur.execute(
             '''
-            INSERT INTO users (username, password, nickname, email) VALUES (?, ?, ?, ?)
-            ''', (username, password, nickname, email)
+            INSERT INTO users (username, password, nickname, email, datetime) VALUES (?, ?, ?, ?, ?)
+            ''', (username, password, nickname, email, datetime)
             )
             id = cur.lastrowid
             conn.commit()
-            return User(id, username, password, nickname, email)
+            return User(id, username, password, nickname, email, datetime)
 
 
         @staticmethod
@@ -156,6 +165,123 @@ with sqlite3.connect('db.db') as conn:
             row = cur.fetchone()
             user_id = False if row is None else True
             return user_id
+
+    class Post:
+
+        def __init__(self, id, user_id, description, title, date):
+            self.id = id
+            self.user_id = user_id
+            self.description = description
+            self.title = title
+            self.date = date
+
+        def find(id):
+            cur = conn.cursor(
+            '''
+            SELECT *
+            FROM posts
+            WHERE id = ? ''', (id,)
+            )
+            row = cur.fetchone()
+
+            if row is None:
+                raise PostNotFound('{} does not correspond to a post that exists.'.format(id))
+            return Post(row[0], row[1], row[2], row[3], row[4])
+
+        def create(user_id, description, title, date):
+            cur = conn.cursor(
+            '''
+            INSERT INTO posts (user_id, description, title, post_date)
+            VALUES (?, ?, ?, ?); ''', (user_id, description, title, date))
+
+            return Post (cur.lastrowid, user_id, description, title, date)
+
+        def delete(id, user_id):
+            #   to do
+            pass
+
+
+
+    class Comment:
+
+        def __init__(self, id, user_id, post_id, text, date, parent_id, score):
+            self.id = id
+            self.user_id = user_id
+            self.post_id = post_id
+            self.text = text
+            self.date = date
+            self.parent_id = parent_id
+            self.score = score
+
+        @staticmethod
+        def create(user_id, post_id, text, date, parent_id):
+            cur = conn.cursor(
+            '''
+            INSERT INTO comments (user_id, post_id, text, date, parent_id)
+            VALUES (?, ?, ?, ?, ?); ''', (user_id, post_id, text, date, parent_id))
+
+            return Comment(cur.lastrowid, user_id, post_id, text, date, parent_id, 0)
+
+        @staticmethod
+        def find(id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE id = ? ''', (id,)
+            )
+            row = cur.fetchone()
+
+            if row is None:
+                raise CommentNotFoundException('{} does not exist'.format(id))
+            return Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+
+        @staticmethod
+        def find_comments_for_post_id(post_id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE post_id = ?
+            ORDER BY date''', (post_id,)
+            )
+            rows = [Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) for row in cur.fetchall()]
+            return rows
+
+        @staticmethod
+        def find_comments_for_user(user_id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE user_id = ?
+            ORDER BY date''', (post_id,)
+            )
+            rows = [Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) for row in cur.fetchall()]
+            return rows
+
+        @staticmethod
+        def find_children_for_comment(parent_id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE parent_id = ?
+            ORDER BY date''', (parent_id,)
+
+            rows = [Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) for row in cur.fetchall()]
+            return rows
+
+        # Extra field to identify that it's edited? (int, represented as * on page | edited_date represented as string ¯\_(ツ)_/¯)
+        @staticmethod
+        def edit_comment_with_id(comment_id, new_text):
+            cur = conn.execute(
+            '''
+            UPDATE comments
+            SET text = ?
+            WHERE id = ?''', (new_text, comment_id)
+            )
+            return find(comment_id)
 
     User.sign_up('ske', 'h3FR9R', 'steph', 'fdghasbka')
     User.sign_up('hi', 'hfks', 'shdkd', 'jskfs')
