@@ -160,3 +160,87 @@ with sqlite3.connect('db.db') as conn:
         def delete(id, user_id):
             #   to do
             pass
+
+    class CommentNotFoundException(Exception):
+        pass
+
+    class Comment:
+
+        def __init__(self, id, user_id, post_id, text, date, parent_id, score):
+            self.id = id
+            self.user_id = user_id
+            self.post_id = post_id
+            self.text = text
+            self.date = date
+            self.parent_id = parent_id
+            self.score = score
+
+        @staticmethod
+        def create(user_id, post_id, text, date, parent_id):
+            cur = conn.cursor(
+            '''
+            INSERT INTO comments (user_id, post_id, text, date, parent_id)
+            VALUES (?, ?, ?, ?, ?); ''', (user_id, post_id, text, date, parent_id))
+
+            return Comment(cur.lastrowid, user_id, post_id, text, date, parent_id, 0)
+
+        @staticmethod
+        def find(id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE id = ? ''', (id,)
+            )
+            row = cur.fetchone()
+
+            if row is None:
+                raise CommentNotFoundException('{} does not exist'.format(id))
+            return Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+
+        @staticmethod
+        def find_comments_for_post_id(post_id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE post_id = ?
+            ORDER BY date''', (post_id,)
+            )
+            rows = [Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) for row in cur.fetchall()]
+            return rows
+
+        @staticmethod
+        def find_comments_for_user(user_id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE user_id = ?
+            ORDER BY date''', (post_id,)
+            )
+            rows = [Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) for row in cur.fetchall()]
+            return rows
+
+        @staticmethod
+        def find_children_for_comment(parent_id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE parent_id = ?
+            ORDER BY date''', (parent_id,)
+            
+            rows = [Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) for row in cur.fetchall()]
+            return rows
+
+        # Extra field to identify that it's edited? (int, represented as * on page | edited_date represented as string ¯\_(ツ)_/¯)
+        @staticmethod
+        def edit_comment_with_id(comment_id, new_text):
+            cur = conn.execute(
+            '''
+            UPDATE comments
+            SET text = ?
+            WHERE id = ?''', (new_text, comment_id)
+            )
+            return find(comment_id)
