@@ -201,7 +201,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def create(user_id, post_id, text, date, parent_id):
-            cur = conn.cursor(
+            cur = conn.execute(
             '''
             INSERT INTO comments (user_id, post_id, text, date, parent_id)
             VALUES (?, ?, ?, ?, ?); ''', (user_id, post_id, text, date, parent_id))
@@ -210,7 +210,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find(id):
-            cur = conn.excecute(
+            cur = conn.execute(
             '''
             SELECT *
             FROM comments
@@ -224,7 +224,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find_comments_for_post_id(post_id):
-            cur = conn.excecute(
+            cur = conn.execute(
             '''
             SELECT *
             FROM comments
@@ -236,7 +236,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find_comments_for_user(user_id):
-            cur = conn.excecute(
+            cur = conn.execute(
             '''
             SELECT *
             FROM comments
@@ -248,7 +248,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find_children_for_comment(parent_id):
-            cur = conn.excecute(
+            cur = conn.execute(
             '''
             SELECT *
             FROM comments
@@ -273,11 +273,19 @@ with sqlite3.connect('db.db') as conn:
         #sign_up(username, password, nickname, email, datetime)
         User.sign_up('kay', '12345abc', 'kyap', 'yapkaymen@gmail.com', '1/10/2017')
         User.sign_up('abc', 'ghsdak', 'paks', 'team@gmail.com', '1/10/2017')
-        details = User.find('kay')
-        assert details.username == 'kay'
         try:
-            details1 = User.find('abc')
-
+            User.delete('kay')
+            details = User.find('kay')
         except UserNotFound:
             pass
-        multidetails = User.find_multiple()
+        try:
+            assert details.username == 'kay'
+        except NameError:
+            pass
+        try:
+            details1 = User.find('abc')
+            User.update('kay', 'abc', 'bear', 'bear@gmail.com', 'M', '30/01/1999', 'Bear is bear', 'picture')
+            details = User.find('kay')
+        except UserNotFound:
+            pass
+        #Comment.create(0, 0, 'Hi', '1/10/2017', 0)
