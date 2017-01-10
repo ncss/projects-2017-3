@@ -1,6 +1,6 @@
 import re
 import os
-from nodes import GroupNode, ExpressionNode, HTMLNode, IfNode, ForNode, CommentNode
+from .nodes import GroupNode, ExpressionNode, HTMLNode, IfNode, ForNode, CommentNode
 
 class TemplateSyntaxException(Exception):
     pass
@@ -9,7 +9,7 @@ TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), '..', 'templates')
 
 TOKEN_REGEX = re.compile(r'({[{%].*?[}%]})')
 
-def parse(tokens, up_to=0, parent=GroupNode(), parent_type=None):
+def parse(tokens, up_to, parent, parent_type=None):
     while up_to < len(tokens):
         token = tokens[up_to]
         if token['label'] == 'expression':
@@ -100,8 +100,8 @@ def identify_token(token):
 def render(fname, context):
     template_path = os.path.join(TEMPLATE_DIR, fname)
     with open(template_path) as template:
-        eval_tree = parse(lexer(template.read()))[0]
+        eval_tree = parse(lexer(template.read()), 0, GroupNode())[0]
     return eval_tree.render(context)
 
-
-print(render('test_template.html', {'a': ['hello', 'world']}))
+if __name__ == '__main__':
+    print(render('test_template.html', {'a': ['hello', 'world']}))
