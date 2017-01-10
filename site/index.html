@@ -1,66 +1,54 @@
 <!doctype html>
-<!--url: file:///C:/Users/cbux8313/Desktop/projects-2017-3/site/index.html -->
+<!--url: file:///C:/Users/sh8151/Desktop/projects-2017-3/site/index.html -->
 <html>
   <head>
-    <link rel="stylesheet" type='text/css' href='css/style.css'>
+    <link rel="stylesheet" type='text/css' href='css/reset.css'>
+    <link rel="stylesheet" type='text/css' href='css/index.css'>
     <title>
     </title>
   </head>
   <body>
+    <div>
     <section>
       <div>
         <nav>
           <ul>
             <li><a href="#">Logo here</a></li>
-            <li><a href="#"> Title here</a></li>
-            <li><a href="#"> Username etc</a></li>
+            <li><a href="#">Title Here</a></li>
+            <li><a href="#">Username = {username}</a></li>
           </ul>
         </nav>
       </div>
     </section>
     <section>
-      <h1>Title</h1>
+      <h1>Feed</h1>
     </section>
     <fieldset>
-        <img src= "images/books.jpg" alt= "Books"></img>
+        <img class='post_image' src= "images/books.jpg" alt= "Books">
+        <div class = 'post_text'>
+            <figcaption>
+              Where do I find these books?
+            </figcaption>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <img class='post_image' src= "images/cats.jpg" alt= "Cats">
+        <div class = 'post_text'>
           <figcaption>
-            Where do I find these books?
+              Where do I find these cats?
           </figcaption>
-          <p>
-            Write an answer:
-           </p>
-          <textarea></textarea>
-          <p>
-            <input type = "submit" value = "Submit">
-          </p>
+      </div>
     </fieldset>
 
     <fieldset>
-        <img src= "images/cats.jpg" alt= "Cats"></img>
-        <figcaption>
-            Where do I find these cats?
-        </figcaption>
-        <p>
-          Write an answer:
-        </p>
-        <textarea></textarea>
-        <p>
-          <input type = "submit" value = "Submit">
-        </p>
-    </fieldset>
-
-    <fieldset>
-        <img src= "images/mountains.jpg" alt= "Mountains"></img>
-        <figcaption>
-            Where do I find this mountain?
-        </figcaption>
-        <p>
-          Write an answer:
-        </p>
-        <textarea></textarea>
-        <p>
-          <input type = "submit" value = "Submit">
-        </p>
+        <img class='post_image' src= "images/mountains.jpg" alt= "Mountains">
+        <div class = 'post_text'>
+          <figcaption>
+              Where do I find this mountain?
+          </figcaption>
+      </div>
     </fieldset>
 </body>
+</div>
 </html>
