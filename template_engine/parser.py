@@ -1,6 +1,6 @@
 import re
 import os
-from nodes import GroupNode, ExpressionNode, HTMLNode, IfNode, ForNode
+from nodes import GroupNode, ExpressionNode, HTMLNode, IfNode, ForNode, CommentNode
 
 class TemplateSyntaxException(Exception):
     pass
@@ -49,7 +49,18 @@ def parse(tokens, up_to=0, parent=GroupNode(), parent_type=None):
                 return parent, up_to
             else:
                 raise TemplateSyntaxException('Unexpected end of for')
-
+        elif token['label'] == 'comment':
+            node = CommentNode()
+            parent.add_child(node)
+            up_to += 1
+            parse_results = parse(tokens, up_to, GroupNode(), 'comment')
+            up_to = parse_results[1]
+        elif token['label'] == 'end_comment':
+            if parent_type == 'comment':
+                up_to += 1
+                return parent, up_to
+            else:
+                raise TemplateSyntaxException('Unexpected end of comment')
     return parent, up_to
 
 def lexer(text):
@@ -75,6 +86,10 @@ def identify_token(token):
             return create_token({'iterator': term_list[1], 'iterable': ' '.join(term_list[3:])}, 'for')
         elif ' '.join(term_list) == 'end for':
             return create_token(None, 'end_for')
+        elif keyword == 'comment':
+            return create_token(None, 'comment')
+        elif ' '.join(term_list) == 'end comment':
+            return create_token(None, 'end_comment')
         # TODO The rest of the keywords
     elif token.startswith('{{') and token.endswith('}}'):
         # expression

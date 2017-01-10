@@ -111,3 +111,20 @@ class GroupNode(Node):
 
     def __repr__(self):
         return "<GroupNode: '" + str(self._children) + "'>"
+
+class CommentNode(Node):
+    def __init__(self):
+        self._children = []
+
+    def add_child(self, child):
+        self._children.append(child)
+
+    def render(self, context):
+        out = ''
+        return out
+
+    def __str__(self):
+        return self.__repr__()
+
+    def __repr__(self):
+        return "<CommentNode: '" + str(self._children) + "'>"
