@@ -1,0 +1,11 @@
+label {
+  display: block;
+}
+
+.login_button {
+  margin-top: 10px;
+}
+
+fieldset {
+  border: none;
+}
