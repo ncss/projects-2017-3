@@ -20,15 +20,17 @@
       <h1>Feed</h1>
     </section>
     <div class = 'post_list'>
+      {% for image in images %}
       <fieldset>
-          <img class='post_image' src= "static/images/books.jpg" alt= "Books">
+          <img class='post_image' src= "static/images/{{ image }}" alt= "Books">
           <div class = 'post_text'>
               <figcaption>
-                Where do I find these books?
+                Where do I find this?
               </figcaption>
           </div>
       </fieldset>
-
+      {% end for %}
+      {% comment %}
       <fieldset>
           <img class='post_image' src= "static/images/cats.jpg" alt= "Cats">
           <div class = 'post_text'>
@@ -47,6 +49,7 @@
         </div>
 
       </fieldset>
+      {% end comment %}
    </div>
 
 </div>
