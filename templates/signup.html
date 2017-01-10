@@ -2,6 +2,7 @@
 <html>
   <head>
     <!-- temporary css files as localhost was not working with css files-->
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="C:\Users\jfre7245\Desktop\projects-2017-3\templates\css\signup.css">
   </head>
   <body>
@@ -10,8 +11,10 @@
     </header>
     <main>
       <div>
-        <form action="">
+
+        <form action="/signup" method="post" enctype = "multipart/form-data">
           <fieldset class="input_field">
+
             <p>
               <label for="username">Username</label>
               <input type="text" name="username">
@@ -25,6 +28,10 @@
             <p>
               <label for="email">Email</label>
               <input type='text' name="email">
+            </p>
+            <p>
+              <label>Profile Image</label>
+              <input type="file" id="profile_picture" name="profile_picture">
             </p>
             <p>
               <input type="submit" value="submit">

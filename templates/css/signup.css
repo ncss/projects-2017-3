@@ -5,5 +5,7 @@ body {
 
 .input_field {
   border: 1px solid black;
-  maring-left: 0px auto;
+  width: 400px;
+  height: 400px;
+  margin: 0px auto;
 }
