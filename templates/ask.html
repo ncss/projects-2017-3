@@ -1,3 +1,7 @@
+<!--try: localhost:8888/ask?name=username -->
+<!--try: localhost:8888/ask -->
+<!--try: localhost:8888/ask?name=hey -->
+
 <!doctype html>
 <html>
   <head>
@@ -6,6 +10,7 @@
 
   <body>
     <p>Ask Question!</p>
+    <p>Username = {username}</p>
     <form action="/ask">
         <fieldset>
             <legend>
@@ -16,10 +21,9 @@
                 <input type="text" name="username">
                 <label>Images</label>
                 <input type="checkbox">
-
             </p>
+
         </fieldset>
     </form>
-    <
   </body>
 </html>
