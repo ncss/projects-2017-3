@@ -1,6 +1,7 @@
 import os
 from tornado.ncss import Server, ncssbook_log
 from auth import User
+users = []
 
 TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
@@ -26,9 +27,9 @@ def index_handler(response):
 def signup_handler_post(request):
     ident = request.get_field('id')
     username = request.get_field('username')
-    email = request.get_field('email')
+    nickname = request.get_field('nickname')
     password = request.get_field('password')
-    doc = request.get_field('doc')
+    email = request.get_field('email')
     gender = request.get_field('gender')
     dob = request.get_field('dob')
     profile_pic = request.get_file('profile_picture')
@@ -38,6 +39,8 @@ def signup_handler_post(request):
             f.write(data)
     else:
         print('It failed')
+    if username != None:
+        request.set_secure_cookie("current_user", username)
 
 def ask_handler(request):
     name = request.get_field("name")
