@@ -7,23 +7,13 @@ users = []
 TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
 
-def render_file(response, filename:str, variables):
-    """Renders the filename replaceing {name} with keys in variables"""
-    response.write(render(filename, variables))
 
-
-def get_template(filename):
-    """
-    Gets the template from TEMPLATE_DIR with name filename
-    """
-    with open(os.path.join(TEMPLATE_DIR, filename)) as f:
-        return f.read()
 
 def get_upload_path(filename):
     return os.path.join(UPLOADS_DIR, filename)
 
 def index_handler(response):
-    render_file(response, 'index.html', {})
+    response.write(render('index.html', {}))
 
 def signup_handler_post(request):
     ident = request.get_field('id')
@@ -49,7 +39,7 @@ def signup_handler_post(request):
 @requires_login
 def ask_handler(request):
     name = request.get_field("name")
-    render_file(request, "ask.html", {'username':str(name)})
+    request.write(render("ask.html", {}))
 
 @requires_login
 def ask_handler_post(request):
@@ -60,7 +50,7 @@ def ask_handler_post(request):
     request.write("Your image was uploaded! name=%s"%(file[0]))
 
 def signup_handler(request):
-    render_file(request, 'signup.html', {})
+    request.write(render('signup.html', {}))
     ident = request.get_field('id')
     username = request.get_field('username')
     email = request.get_field('email')
@@ -75,7 +65,7 @@ def view_question_handler(response, question_id):
     title = response.get_field('title')
     description = response.get_field('description')
     question = {'title': title, 'description': description}
-    render_file(response, 'view_question.html', question)
+    response.write(render('view_question.html', {'question' : question_id}))
 
 @requires_login
 def signout_handler(response):
