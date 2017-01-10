@@ -43,10 +43,12 @@ def signup_handler_post(request):
     if username != None:
         request.set_secure_cookie("current_user", username)
 
+@requires_login
 def ask_handler(request):
     name = request.get_field("name")
     render_file(request, "ask.html", {'username':str(name)})
 
+@requires_login
 def ask_handler_post(request):
     file = request.get_file('fileupload')
     if all(file):
@@ -80,7 +82,13 @@ def signout_handler(response):
 server = Server()
 server.register(r'/', index_handler)
 server.register(r'/view/(\d+)/?', view_question_handler)
+
 server.register(r'/signup', signup_handler, post = signup_handler_post)
+
 server.register(r'/ask', ask_handler, post=ask_handler_post)
-server.register(r'/signout', signout_handler)
+
+server.register(r'/logout', signout_handler)
+
+
+
 server.run()
