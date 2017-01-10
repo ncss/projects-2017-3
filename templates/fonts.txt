@@ -1,3 +1,7 @@
+Work sans[heading/title font]:
 <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-
 css font: font-family: 'Work Sans', sans-serif;
+
+Open sans[body font]:
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+css font: font-family: 'Open Sans', sans-serif;
