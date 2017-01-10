@@ -1,0 +1,9 @@
+body {
+  max-width: 1700px;
+  margin: 0px auto;
+}
+
+.input_field {
+  border: 1px solid black;
+  maring-left: 0px auto;
+}
