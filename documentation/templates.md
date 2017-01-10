@@ -1,4 +1,5 @@
 # Template Language
+---
 ## Importing and serverside use
 Importing the render function:
 ```python
@@ -153,7 +154,7 @@ Becomes:
 <p>Hello</p>
 <p>World</p>
 ```
-
+---
 ## Comment Statements
 Content inside a pair of `{% comment %}` and `{% end comment %}` tags is ignored and taken out of the HTML.
 ```html
