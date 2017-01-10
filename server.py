@@ -6,14 +6,19 @@ users = []
 
 TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
+IMAGE_DIR = os.path.join('static', 'images')
 
-
+UP_IMAGES = []
 
 def get_upload_path(filename):
     return os.path.join(UPLOADS_DIR, filename)
 
+def get_image_path(filename):
+    return os.path.join(IMAGE_DIR, filename)
+
 def index_handler(response):
-    response.write(render('index.html', {}))
+    print(UP_IMAGES)
+    response.write(render('index.html', {'images':UP_IMAGES})) # { 'post1': (image location, comment}
 
 def signup_handler_post(request):
     ident = request.get_field('id')
@@ -34,19 +39,25 @@ def signup_handler_post(request):
         request.set_secure_cookie("current_user", username)
     user = User(ident, username, password, nickname, email, gender, dob, None, None)
     users.append(user)
+    request.redirect('/')
     print(users[0].username)
 
-@requires_login
+#@requires_login
 def ask_handler(request):
     name = request.get_field("name")
-    request.write(render("ask.html", {}))
+    request.write(render("ask.html", {'username': 'rand'}))
 
-@requires_login
+#@requires_login
 def ask_handler_post(request):
     file = request.get_file('fileupload')
-    if all(file):
-        with open(get_upload_path(file[0]), 'wb') as f:
+    print(file)
+    if file != (None, None, None):
+        with open(get_image_path(file[0]), 'wb') as f:
             f.write(file[2])
+            print("uploaded")
+            UP_IMAGES.append(file[0])
+    else:
+        print("upload failed")
     request.write("Your image was uploaded! name=%s"%(file[0]))
 
 def signup_handler(request):
