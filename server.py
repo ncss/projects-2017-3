@@ -1,7 +1,7 @@
 import os
 from tornado.ncss import Server, ncssbook_log
 from template_engine.parser import render
-from auth import User
+from auth import User, requires_login
 users = []
 
 TEMPLATE_DIR = 'templates'
@@ -72,6 +72,7 @@ def view_question_handler(response, question_id):
     question = {'title': title, 'description': description}
     render_file(response, 'view_question.html', question)
 
+@requires_login
 def signout_handler(response):
     response.clear_cookie('current_user')
     response.redirect('/')
