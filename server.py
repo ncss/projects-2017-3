@@ -1,14 +1,15 @@
 import os
 from tornado.ncss import Server, ncssbook_log
+from template_engine.parser import render
 from auth import User
 users = []
 
 TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
 
-def render_file(response, filename:str, variables) -> None:
+def render_file(response, filename:str, variables):
     """Renders the filename replaceing {name} with keys in variables"""
-    response.write(get_template(filename).format(**variables))
+    response.write(render(filename, variables))
 
 
 def get_template(filename):
