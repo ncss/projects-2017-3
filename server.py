@@ -8,7 +8,7 @@ TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
 IMAGE_DIR = os.path.join('static', 'images')
 
-UP_IMAGES = ['cats.jpg', 'books.jpg', 'mountains.jpg']
+UP_IMAGES = []
 
 def get_upload_path(filename):
     return os.path.join(UPLOADS_DIR, filename)
@@ -18,7 +18,7 @@ def get_image_path(filename):
 
 def index_handler(response):
     print(UP_IMAGES)
-    response.write(render('index.html', {'images':UP_IMAGES})) # { 'post1': (image location, comment}
+    response.write(render('index.html', {'posts':UP_IMAGES})) # { 'post1': (image location, comment}
 
 def signup_handler_post(request):
     ident = request.get_field('id')

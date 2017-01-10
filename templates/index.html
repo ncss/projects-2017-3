@@ -20,12 +20,12 @@
       <h1>Feed</h1>
     </section>
     <div class = 'post_list'>
-      {% for image in images %}
+      {% for post in posts %}
       <fieldset>
-          <img class='post_image' src= "static/images/{{ image }}" alt= "Books">
+          <img class='post_image' src= "static/images/{{ post['image'] }}" alt= "Books">
           <div class = 'post_text'>
               <figcaption>
-                Where do I find this?
+                {{ post['question'] }}
               </figcaption>
           </div>
       </fieldset>
