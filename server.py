@@ -20,7 +20,6 @@ def get_upload_path(filename):
     return os.path.join(UPLOAD_DIR, filename)
 
 def index_handler(response):
-    response.set_secure_cookie("subwayCookie", "VISITED?")
     render_file(response, 'index.html', {})
 
 def signup_handler_post(request):
@@ -31,7 +30,6 @@ def signup_handler_post(request):
     doc = request.get_field('doc')
     gender = request.get_field('gender')
     dob = request.get_field('dob')
-    print(ident,username,email,password,doc,gender,dob)
     profile_pic = request.get_file('profile_picture')
     if profile_pic != (None, None, None):
         filename, content_type, data = profile_pic
@@ -60,6 +58,8 @@ def signup_handler(request):
     doc = request.get_field('doc')
     gender = request.get_field('gender')
     dob = request.get_field('dob')
+    if username != None:
+        request.set_secure_cookie("current_user", username)
 
 def view_question_handler(response, question_id):
     title = response.get_field('title')
@@ -67,9 +67,14 @@ def view_question_handler(response, question_id):
     question = {'title': title, 'description': description}
     render_file(response, 'view_question.html', question)
 
+def signout_handler(response):
+    response.clear_cookie('current_user')
+    response.redirect('/')
+
 server = Server()
 server.register(r'/', index_handler)
 server.register(r'/view/(\d+)/?', view_question_handler)
 server.register(r'/signup', signup_handler, post = signup_handler_post)
 server.register(r'/ask', ask_handler, post=ask_handler_post)
+server.register(r'/signout', signout_handler)
 server.run()

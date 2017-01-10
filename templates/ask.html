@@ -26,15 +26,15 @@
     <div class="wholething">
       <form action="/ask" method="post" enctype="multipart/form-data">
         <h1>Ask a Question</h1>
-        <p class="question">
+        <div class="question">
           <label for="question">Question:</label>
           <input type="text" name="question">
-        </p>
-        <p class="question">
-          <label for="upload">Upload an image of the product you want to find!</label>
-          <input type="file" name="upload">
-        </p>
-        <p class="question">
+        </div>
+        <div class="question">
+          <label for="fileupload">Upload an image of the product you want to find!</label>
+          <input type="file" name="fileupload" id="fileupload">
+        </div>
+        <div class="question">
           <label for="description">Description</label>
           <input type="text" name="description">
         </div>
