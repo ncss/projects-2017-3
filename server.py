@@ -78,6 +78,15 @@ def view_question_handler(response, question_id):
     question = {'title': title, 'description': description}
     response.write(render('view_question.html', {'question' : question_id}))
 
+def signin_handler(request):
+    username = request.get_field('username')
+    password = request.get_field('password')
+    signin = {'username': username, 'password': password}
+    request.write(render('signin.html', signin))
+
+def signin_handler_post(request):
+    pass
+
 @requires_login
 def signout_handler(response):
     response.clear_cookie('current_user')
@@ -92,6 +101,8 @@ server.register(r'/signup', signup_handler, post = signup_handler_post)
 server.register(r'/ask', ask_handler, post=ask_handler_post)
 
 server.register(r'/logout', signout_handler)
+
+server.register(r'/signin', signin_handler, post= signin_handler_post)
 
 
 
