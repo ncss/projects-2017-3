@@ -12,8 +12,8 @@ with sqlite3.connect('db.db') as conn:
     gender TEXT,
     dob TEXT,
     bio TEXT,
-    picture TEXT NOT NULL,
-    datetime TEXT NOT NULL)
+    picture TEXT,
+    datetime TEXT)
     '''
     )
 
@@ -64,9 +64,20 @@ with sqlite3.connect('db.db') as conn:
     )
 
 with sqlite3.connect('db.db') as conn:
+    cur = conn.cursor()
+    class CommentNotFoundException(Exception):
+        pass
+
+    class UserNotFound(Exception):
+        pass
+
+    class PostNotFound(Exception):
+        pass
+
+
     class User:
 
-        def __init__(self, id, username, password,  nickname, email, gender, dob, bio, picture, datetime):
+        def __init__(self, id, username, password,  nickname, email, gender = None, dob = None, bio = None, picture = None, datetime = None):
             self.id = id
             self.username = username
             self.password = password
@@ -80,18 +91,47 @@ with sqlite3.connect('db.db') as conn:
 
 
         @staticmethod
-        def sign_up(username, password, nickname, email, datetime):
-            cur = conn.excecute(
+        def find(username):
+            cur.execute(
             '''
-            INSERT INTO users VALUES (?, ?, ?, ?, ?)
+            SELECT *
+            FROM users
+            WHERE username = ? ''', (username,)
+            )
+            row = cur.fetchone()
+
+            if row is None:
+                raise UserNotFound('{} does not exist'.format(username))
+            return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+
+        @staticmethod
+        def find_multiple():
+            cur.execute(
+            '''
+            SELECT *
+            FROM users
+            ORDER BY datetime
+                ''')
+            all_users = cur.fetchall()
+            if row is None:
+                raise UserNotFound('{} does not exist'.format(username))
+            return all_users
+
+        @staticmethod
+        def sign_up(username, password, nickname, email, datetime):
+            cur.execute(
+            '''
+            INSERT INTO users (username, password, nickname, email, datetime) VALUES (?, ?, ?, ?, ?)
             ''', (username, password, nickname, email, datetime)
             )
-            return User(username, password, nickname, email)
+            id = cur.lastrowid
+            conn.commit()
+            return User(id, username, password, nickname, email, datetime)
 
 
         @staticmethod
         def update(username, password, nickname, email, gender, dob, bio, picture):
-            cur = conn.excecute(
+            cur.execute(
             '''
             UPDATE users
             SET password = ?,
@@ -104,28 +144,27 @@ with sqlite3.connect('db.db') as conn:
             WHERE username = ?
             ''', (password, nickname, email, gender, dob, bio, picture, username)
             )
+            conn.commit()
             return User(username, password, nickname, email, gender, dob, bio, picture)
 
 
         @staticmethod
-        def delete_user(username):
-            cur = conn.excecute('''
+        def delete(username):
+            cur.execute('''
             DELETE FROM users WHERE username = ?
             ''' , (username,))
+            conn.commit()
 
         @staticmethod
-        def find(username):
-            cur = conn.excecute(
-            '''
-            SELECT *
+        def login(username, password):
+            cur.execute('''
+            SELECT id
             FROM users
-            WHERE username = ? ''', (username,)
-            )
+            WHERE username = ? AND password = ? ''',
+            (username, password))
             row = cur.fetchone()
-
-            if row is None:
-                raise UsernNotFOund('{} does not exist'.format(username))
-            return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+            user_id = False if row is None else True
+            return user_id
 
     class Post:
 
@@ -209,6 +248,101 @@ with sqlite3.connect('db.db') as conn:
             conn.commit()
             return Post(id, user_id, description, title, date, files)
 
+<<<<<<< HEAD
     Post.create(1, 'some text', 'some title', 'probally a string', ['file1', 'file2', 'file3'])
     Post.find(1)
     Post.delete_photo(1, 'file1')
+=======
+        def delete(id, user_id):
+            #   to do
+            pass
+
+
+
+    class Comment:
+
+        def __init__(self, id, user_id, post_id, text, date, parent_id, score):
+            self.id = id
+            self.user_id = user_id
+            self.post_id = post_id
+            self.text = text
+            self.date = date
+            self.parent_id = parent_id
+            self.score = score
+
+        @staticmethod
+        def create(user_id, post_id, text, date, parent_id):
+            cur = conn.cursor(
+            '''
+            INSERT INTO comments (user_id, post_id, text, date, parent_id)
+            VALUES (?, ?, ?, ?, ?); ''', (user_id, post_id, text, date, parent_id))
+
+            return Comment(cur.lastrowid, user_id, post_id, text, date, parent_id, 0)
+
+        @staticmethod
+        def find(id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE id = ? ''', (id,)
+            )
+            row = cur.fetchone()
+
+            if row is None:
+                raise CommentNotFoundException('{} does not exist'.format(id))
+            return Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+
+        @staticmethod
+        def find_comments_for_post_id(post_id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE post_id = ?
+            ORDER BY date''', (post_id,)
+            )
+            rows = [Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) for row in cur.fetchall()]
+            return rows
+
+        @staticmethod
+        def find_comments_for_user(user_id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE user_id = ?
+            ORDER BY date''', (post_id,)
+            )
+            rows = [Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) for row in cur.fetchall()]
+            return rows
+
+        @staticmethod
+        def find_children_for_comment(parent_id):
+            cur = conn.excecute(
+            '''
+            SELECT *
+            FROM comments
+            WHERE parent_id = ?
+            ORDER BY date''', (parent_id,)
+
+            rows = [Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6]) for row in cur.fetchall()]
+            return rows
+
+        # Extra field to identify that it's edited? (int, represented as * on page | edited_date represented as string ¯\_(ツ)_/¯)
+        @staticmethod
+        def edit_comment_with_id(comment_id, new_text):
+            cur = conn.execute(
+            '''
+            UPDATE comments
+            SET text = ?
+            WHERE id = ?''', (new_text, comment_id)
+            )
+            return find(comment_id)
+
+    User.sign_up('ske', 'h3FR9R', 'steph', 'fdghasbka')
+    User.sign_up('hi', 'hfks', 'shdkd', 'jskfs')
+    User.login('ske', 'h3FR9R')
+    User.find_multiple()
+    conn.commit()
+>>>>>>> origin/db
