@@ -2,8 +2,13 @@
 
 ## Part one
 
+- **Courtney** Look for this line in templates/signup.html:
+  ```
+  <form action="/signup" method="post" enctype = "multipart/form-data">
+  ```
+  add a similar line to templates/signin.html to POST the data to the backend
 - **Rachel** Follow instructions in templates/_shared_head.html
-- **Sarah & Courtney** Follow instructions in static/css/base.css
+- **Sarah (Courtney join when finished)** Follow instructions in static/css/base.css
 - **Jack** Follow instructions in static/js/site.js
 
 ## Part two
