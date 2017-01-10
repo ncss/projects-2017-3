@@ -33,24 +33,7 @@ fieldset {
 
 .feed_title {
   font-size: 35px;
-  margin-left: 440px
-}
-
-.nav_bar li {
-  display: inline;
-  margin-left: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.title_navbar {
-  font-size: 20px;
-}
-
-.nav_bar ul {
-  display:flex;
-  justify-content: space-between;
-  font-size: 20px;
+  margin-left: 440px;
 }
 
 body > header {
