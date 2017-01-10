@@ -24,23 +24,23 @@
     </section>
     <div class="wholething">
       <form action="/ask" method="post" enctype="multipart/form-data">
-        <h2>Ask a Question</h2>
-        <div class="question">
-          <label>Question:</label>
+        <h1>Ask a Question</h1>
+        <p class="question">
+          <label for="question">Question:</label>
           <input type="text" name="question">
-        </div>
-        <div class="question">
-          <label>Upload an image of the product you want to find!</label>
-          <input type="file" name="fileupload" id="fileupload">
-        </div>
-        <div class="question">
-          <label>Description</label>
+        </p>
+        <p class="question">
+          <label for="upload">Upload an image of the product you want to find!</label>
+          <input type="file" name="upload">
+        </p>
+        <p class="question">
+          <label for="description">Description</label>
           <input type="text" name="description">
         </div>
         <div class="question">
           <input type="submit" value="Submit">
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </body>
 </html>
