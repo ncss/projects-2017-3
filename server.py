@@ -30,7 +30,6 @@ def signup_handler_post(request):
     doc = request.get_field('doc')
     gender = request.get_field('gender')
     dob = request.get_field('dob')
-    print(ident,username,email,password,doc,gender,dob)
     profile_pic = request.get_file('profile_picture')
     if profile_pic != (None, None, None):
         filename, content_type, data = profile_pic
