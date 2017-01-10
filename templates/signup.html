@@ -6,12 +6,14 @@
     <link rel="stylesheet" type="text/css" href="static/css/_header.css">
   </head>
   <body>
-    {% include _header.html %}
     <header>
-      <h2>Sign Up</h2>
+    <span class='navigation_bar'>
+      {% include _header.html %}
+    </span>
     </header>
     <main>
-      <div>
+      <div class="signup_form">
+        <h2>Sign Up</h2>
         <form action="/signup" method="post" enctype = "multipart/form-data">
           <fieldset>
             <div>

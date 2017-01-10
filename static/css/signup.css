@@ -9,3 +9,14 @@ body {
   height: 400px;
   margin: 0px auto;
 }
+.signup_form {
+  position: relative;
+  margin-top: 700px;
+  max-width: 600px;
+  height: 400px;
+  margin: 0px auto;
+}
+
+.nav_bar {
+  position: relative;
+}
