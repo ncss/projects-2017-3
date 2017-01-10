@@ -2,15 +2,18 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/signup.css">
+    <link rel="stylesheet" type="text/css" href="static/css/signup.css">
+    <link rel="stylesheet" type="text/css" href="static/css/_header.css">
   </head>
   <body>
     <header>
-      <h2>Sign Up</h2>
+    <span class='navigation_bar'>
+      {% include _header.html %}
+    </span>
     </header>
     <main>
-      <div>
+      <div class="signup_form">
+        <h2>Sign Up</h2>
         <form action="/signup" method="post" enctype = "multipart/form-data">
           <fieldset>
             <div>

@@ -1,0 +1,22 @@
+body {
+  max-width: 1700px;
+  margin: 0px auto;
+}
+
+.input_field {
+  border: 1px solid black;
+  width: 400px;
+  height: 400px;
+  margin: 0px auto;
+}
+.signup_form {
+  position: relative;
+  margin-top: 700px;
+  max-width: 600px;
+  height: 400px;
+  margin: 0px auto;
+}
+
+.nav_bar {
+  position: relative;
+}

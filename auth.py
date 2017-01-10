@@ -51,7 +51,7 @@ def render_no_login(response):
 
 def requires_login(func: Callable) -> Callable:
     """
-    Function decorator for requring login
+    Function decorator for requiring login
     """
     def ret(response, *args, **kwargs):
         if authenticate_cookie(response):

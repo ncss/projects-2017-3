@@ -3,8 +3,8 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-    <link rel="stylesheet" type='text/css' href='css/reset.css'>
-    <link rel="stylesheet" type='text/css' href='css/index.css'>
+    <link rel="stylesheet" type='text/css' href='static/css/reset.css'>
+    <link rel="stylesheet" type='text/css' href='static/css/index.css'>
     <title>
     </title>
   </head>
@@ -20,17 +20,19 @@
       <h1>Feed</h1>
     </section>
     <div class = 'post_list'>
+      {% for image in images %}
       <fieldset>
-          <img class='post_image' src= "images/books.jpg" alt= "Books">
+          <img class='post_image' src= "static/images/{{ image }}" alt= "Books">
           <div class = 'post_text'>
               <figcaption>
-                Where do I find these books?
+                Where do I find this?
               </figcaption>
           </div>
       </fieldset>
-
+      {% end for %}
+      {% comment %}
       <fieldset>
-          <img class='post_image' src= "images/cats.jpg" alt= "Cats">
+          <img class='post_image' src= "static/images/cats.jpg" alt= "Cats">
           <div class = 'post_text'>
             <figcaption>
                 Where do I find this cat?
@@ -39,7 +41,7 @@
       </fieldset>
 
       <fieldset>
-          <img class='post_image' src= "images/mountains.jpg" alt= "Mountains">
+          <img class='post_image' src= "static/images/mountains.jpg" alt= "Mountains">
           <div class = 'post_text'>
             <figcaption>
                 Where do I find this mountain?
@@ -47,6 +49,7 @@
         </div>
 
       </fieldset>
+      {% end comment %}
    </div>
 
 </div>
