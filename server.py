@@ -42,6 +42,9 @@ def signup_handler_post(request):
         print('It failed')
     if username != None:
         request.set_secure_cookie("current_user", username)
+    user = User(ident, username, password, nickname, email, gender, dob, None, None)
+    users.append(user)
+    print(users[0].username)
 
 @requires_login
 def ask_handler(request):
