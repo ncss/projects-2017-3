@@ -1,20 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" type='text/css' href='css/reset.css'>
-    <link rel="stylesheet" type='text/css' href='css/style.css'>
+    <link rel="stylesheet" type='text/css' href='css/ViewPost.css'>
     <title>View Question</title>
   </head>
-
   <body>
+    <h1>{title}</h1>
     <h2>{question}</h2>
     <img src="images/mountains.jpg" alt="Mountains">
-
-      <figcaption>
-          Where do I find this mountain?
-      </figcaption>
-
-    <p>{description}</p>
-    <input type="text" name="description">
+    <h3>{description}</h3>
+    <p>
+      <label for="addComment">Do you have an answer?</label>
+      <input type="text" name="addComment">
+    </p>
   </body>
 </html>
