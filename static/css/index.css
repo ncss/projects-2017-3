@@ -1,5 +1,7 @@
 body {
   margin-right: -10px;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #E0F7FA;
 }
 
 fieldset {
@@ -59,4 +61,9 @@ header > nav {
   position: absolute;
   right: 20px;
   top: 20px;
+}
+
+h1 {
+  font-family:'Work Sans', sans-serif;
+  color: #26C6DA
 }

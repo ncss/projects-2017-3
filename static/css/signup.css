@@ -1,6 +1,8 @@
 body {
   max-width: 1700px;
   margin: 0px auto;
+  background-color: #E0F7FA;
+  font-family: "Open Sans", sans-serif;
 }
 
 .input_field {
@@ -8,4 +10,9 @@ body {
   width: 400px;
   height: 400px;
   margin: 0px auto;
+}
+
+h1 {
+  font-family:'Work Sans', sans-serif;
+  color: #26C6DA
 }

@@ -9,3 +9,13 @@ label {
 fieldset {
   border: none;
 }
+
+h1 {
+  font-family:'Work Sans', sans-serif;
+  color: #26C6DA;
+}
+
+body {
+  background-color: #E0F7FA;
+  font-family: "Open Sans", sans-serif;
+}

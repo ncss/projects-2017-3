@@ -5,3 +5,17 @@
 .question {
   margin: auto;
 }
+
+h1 {
+  font-family:'Work Sans', sans-serif;
+  color: #26C6DA
+}
+
+a{
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  background-color: #E0F7FA;
+  font-family: "Open Sans", sans-serif;
+}
