@@ -1,8 +1,4 @@
 /*
-
-HINT
-add this file to _shared_head so it automatically gets included on every page
-
 Validate user input
 
 - sign up page
@@ -28,6 +24,15 @@ Validate user input
     * question
     * description
     * file (see http://stackoverflow.com/questions/46219/how-to-determine-if-user-selected-a-file-for-file-upload)
+
+HINT
+When _shared_head has been committed and synced do the following:
+- Add
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  to _shared_head so you automatically get jquery on every page
+
+- add THIS file to _shared_head so it automatically gets included on every page
+
 
 */
 

@@ -1,5 +1,14 @@
 # Frontend Todos
 
+## Committing notes
+- Do NOT commit until you've shown your work to someone else
+- Take turns to commit after each part:
+  + Sync before committing
+  + check your work (show it to someone!)
+  + Commit
+  + Sync after committing
+  + Tell the next person it's their turn to commit
+
 ## Part one
 
 - **Courtney** Look for this line in templates/signup.html:
