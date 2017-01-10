@@ -47,7 +47,7 @@ def render_no_login(response):
 
 def requires_login(func: Callable) -> Callable:
     """
-    Function decorator for requring login
+    Function decorator for requiring login
     """
     def ret(response, *args, **kwargs):
         if authenticate_cookie(response):
@@ -67,4 +67,3 @@ def foo(response, *args, **kwargs):
 #x = User('1', 'jack', 'hash', 'jack', 'email', 'm', '241-25', 'joegjlqejfgjawdlfkjd', '2012391934')
 #print(x.id)
 ALL_USER['jack'] = User('1', 'jack', '21i3u41234', 'jackywathy','jackywathy24@gmail.com', 'm', '24029999', 'jack is a person', '24/02/1111')
-
