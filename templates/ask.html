@@ -5,27 +5,42 @@
 <!doctype html>
 <html>
   <head>
-    <title>Ask Question!</title>
+    <link rel="stylesheet" type='text/css' href='site/css/reset.css'>
+    <link rel="stylesheet" type='text/css' href='site/css/style.css'>
+    <link rel="stylesheet" type='text/css' href='site/css/askQuestion.css'>
+    <title>Ask a Question!</title>
   </head>
-
   <body>
-    <p>Ask Question!</p>
-    <p>Username = {username}</p>
-    <form action="/ask" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend>
-                Details
-            </legend>
-            <p>
-                <label>Question:</label>
-                <input type="text" name="username">
-                <label>Images</label>
-                <input type="file" name="fileupload" id="fileupload">
-                <label for="fileupload"> Select a file to upload</label>
-                <input type="submit" value="submit">
-            </p>
-
-        </fieldset>
+    <section>
+      <div>
+        <nav>
+          <ul>
+            <li><a href="#">Logo here</a></li>
+            <li><a href="#">Title Here</a></li>
+            <li><a href="#">Username = {username}</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+    <div class="wholething">
+      <form action="/ask" method="post" enctype="multipart/form-data">
+        <h2>Ask a Question</h2>
+        <div class="question">
+          <label>Question:</label>
+          <input type="text" name="question">
+        </div>
+        <div class="question">
+          <label>Upload an image of the product you want to find!</label>
+          <input type="file" name="fileupload" id="fileupload">
+        </div>
+        <div class="question">
+          <label>Description</label>
+          <input type="text" name="description">
+        </div>
+        <div class="question">
+          <input type="submit" value="Submit">
+        </div>
+      </div>
     </form>
   </body>
 </html>
