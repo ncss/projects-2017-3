@@ -12,8 +12,8 @@ with sqlite3.connect('db.db') as conn:
     gender TEXT,
     dob TEXT,
     bio TEXT,
-    picture TEXT NOT NULL,
-    datetime TEXT NOT NULL)
+    picture TEXT,
+    datetime TEXT)
     '''
     )
 
@@ -64,9 +64,11 @@ with sqlite3.connect('db.db') as conn:
     )
 
 with sqlite3.connect('db.db') as conn:
+    cur = conn.cursor()
+
     class User:
 
-        def __init__(self, id, username, password,  nickname, email, gender, dob, bio, picture, datetime):
+        def __init__(self, id, username, password,  nickname, email, gender = None, dob = None, bio = None, picture = None, datetime = None):
             self.id = id
             self.username = username
             self.password = password
@@ -81,7 +83,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find(username):
-            cur = conn.excecute(
+            cur.execute(
             '''
             SELECT *
             FROM users
@@ -94,18 +96,33 @@ with sqlite3.connect('db.db') as conn:
             return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
 
         @staticmethod
-        def sign_up(username, password, nickname, email, datetime):
-            cur = conn.excecute(
+        def find_multiple():
+            cur.execute(
             '''
-            INSERT INTO users VALUES (?, ?, ?, ?, ?)
-            ''', (username, password, nickname, email, datetime)
+            SELECT *
+            FROM users
+            ORDER BY datetime
+                ''')
+            all_users = cur.fetchall()
+            #if row is None:
+                #raise UsernNotFOund('{} does not exist'.format(username))
+            return all_users
+
+        @staticmethod
+        def sign_up(username, password, nickname, email):
+            cur.execute(
+            '''
+            INSERT INTO users (username, password, nickname, email) VALUES (?, ?, ?, ?)
+            ''', (username, password, nickname, email)
             )
-            return User(username, password, nickname, email)
+            id = cur.lastrowid
+            conn.commit()
+            return User(id, username, password, nickname, email)
 
 
         @staticmethod
         def update(username, password, nickname, email, gender, dob, bio, picture):
-            cur = conn.excecute(
+            cur.execute(
             '''
             UPDATE users
             SET password = ?,
@@ -118,13 +135,30 @@ with sqlite3.connect('db.db') as conn:
             WHERE username = ?
             ''', (password, nickname, email, gender, dob, bio, picture, username)
             )
+            conn.commit()
             return User(username, password, nickname, email, gender, dob, bio, picture)
 
 
         @staticmethod
-        def delete_user(username):
-            cur = conn.excecute('''
+        def delete(username):
+            cur.execute('''
             DELETE FROM users WHERE username = ?
             ''' , (username,))
+            conn.commit()
 
-    
+        @staticmethod
+        def login(username, password):
+            cur.execute('''
+            SELECT id
+            FROM users
+            WHERE username = ? AND password = ? ''',
+            (username, password))
+            row = cur.fetchone()
+            user_id = False if row is None else True
+            return user_id
+
+    User.sign_up('ske', 'h3FR9R', 'steph', 'fdghasbka')
+    User.sign_up('hi', 'hfks', 'shdkd', 'jskfs')
+    User.login('ske', 'h3FR9R')
+    User.find_multiple()
+    conn.commit()
