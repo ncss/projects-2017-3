@@ -20,7 +20,11 @@ class User:
     def __str__(self):
         return "id=%s, user=%s, pass=%s, nick=%s, email=%s, gend=%s, dob=%s, bio=%s, date=%s" % (self.id, self.username, self.pasw, self.nick, self.email, self.gend,
                                                                                                  self.dob, self.bio, self.date
+                                                                                             self.dob, self.bio, self.date
                                                                                                  )
+
+def add_user(user):
+    ALL_USER[user.username] = user
 
 def check_cookie(response):
 

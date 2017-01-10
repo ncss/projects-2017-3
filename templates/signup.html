@@ -6,12 +6,14 @@
     <link rel="stylesheet" type="text/css" href="static/css/_header.css">
   </head>
   <body>
-    {% include _header.html %}
     <header>
-      <h1>Sign Up</h1>
+    <span class='navigation_bar'>
+      {% include _header.html %}
+    </span>
     </header>
     <main>
-      <div>
+      <div class="signup_form">
+        <h2>Sign Up</h2>
         <form action="/signup" method="post" enctype = "multipart/form-data">
           <fieldset>
             <div>
@@ -35,7 +37,7 @@
               <input type="file" id="profile_picture" name="profile_picture">
             </p>
             <p>
-              <input type="submit" value="Submit">
+              <input type="submit" value="submit">
             </p>
           </fieldset>
         </form>
