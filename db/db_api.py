@@ -48,8 +48,9 @@ with sqlite3.connect('db.db') as conn:
             ORDER BY datetime
                 ''')
             all_users = cur.fetchall()
-            if row is None:
-                raise UserNotFound('{} does not exist'.format(username))
+            for row in all_users:
+                if row is None:
+                    raise UserNotFound('{} does not exist'.format(username))
             return all_users
 
         @staticmethod
@@ -281,6 +282,18 @@ with sqlite3.connect('db.db') as conn:
         print("\033[93m" + " ".join(args) + '\033[0m')
 
     if __name__ == "__main__":
+        #sign_up(username, password, nickname, email, datetime)
+        User.sign_up('kay', '12345abc', 'kyap', 'yapkaymen@gmail.com', '1/10/2017')
+        User.sign_up('abc', 'ghsdak', 'paks', 'team@gmail.com', '1/10/2017')
+        details = User.find('kay')
+        assert details.username == 'kay'
+        try:
+            details1 = User.find('abc')
+
+        except UserNotFound:
+            pass
+        multidetails = User.find_multiple()
+#Georges
         my_user = User.sign_up('amazing-user', 'secure-password', '¯\_(ツ)_/¯', 'some@email.com', '1/10/2017')
 
         # -- Begin Post testing
