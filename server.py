@@ -99,8 +99,9 @@ def signout_handler(response):
 server = Server()
 server.register(r'/', index_handler)
 server.register(r'/view/(\d+)/?', view_question_handler)
-server.register(r'/signup', signup_handler, post = signup_handler_post)
+server.register(r'/signup', signup_handler, post=signup_handler_post)
 server.register(r'/ask', ask_handler, post=ask_handler_post)
+server.register(r'/signin', signin_handler, post=signin_handler_post)
 server.register(r'/logout', signout_handler)
 server.register(r'/list_users', handle_list_users)
 
