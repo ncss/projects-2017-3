@@ -39,12 +39,14 @@ class ForNode(Node):
         return "<ForNode: '" + self._iterator + '; ' + self._child + "'>"
 
     def render(self, context):
-        ivar = eval(self._iterator, {}, context)
+        iterable = eval(self._iterable, {}, context)
         rendered_children = []
-        for i in self._iterable:
+        for i in iterable:
             new_context = dict(context)
-            new_context[ivar] = i
-            rendered_children.append(self._child.render(new_context))
+            new_context[self._iterator] = i
+            rendered = self._child.render(new_context)
+            if rendered.strip():
+                rendered_children.append(rendered)
         return ''.join(rendered_children)
 
 class HTMLNode(Node):
@@ -109,3 +111,20 @@ class GroupNode(Node):
 
     def __repr__(self):
         return "<GroupNode: '" + str(self._children) + "'>"
+
+class CommentNode(Node):
+    def __init__(self):
+        self._children = []
+
+    def add_child(self, child):
+        self._children.append(child)
+
+    def render(self, context):
+        out = ''
+        return out
+
+    def __str__(self):
+        return self.__repr__()
+
+    def __repr__(self):
+        return "<CommentNode: '" + str(self._children) + "'>"
