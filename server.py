@@ -23,6 +23,23 @@ def index_handler(response):
     response.set_secure_cookie("subwayCookie", "VISITED?")
     render_file(response, 'index.html', {})
 
+def signup_handler_post(request):
+    ident = request.get_field('id')
+    username = request.get_field('username')
+    email = request.get_field('email')
+    password = request.get_field('password')
+    doc = request.get_field('doc')
+    gender = request.get_field('gender')
+    dob = request.get_field('dob')
+    print(ident,username,email,password,doc,gender,dob)
+    profile_pic = request.get_file('profile_picture')
+    if profile_pic != (None, None, None):
+        filename, content_type, data = profile_pic
+        with open(get_upload_path(filename), 'wb') as f:
+            f.write(data)
+    else:
+        print('It failed')
+
 def ask_handler(request):
     name = request.get_field("name")
     render_file(request, "ask.html", {'username':str(name)})
@@ -53,6 +70,6 @@ def view_question_handler(response, question_id):
 server = Server()
 server.register(r'/', index_handler)
 server.register(r'/view/(\d+)/?', view_question_handler)
-server.register(r'/signup', signup_handler)
+server.register(r'/signup', signup_handler, post = signup_handler_post)
 server.register(r'/ask', ask_handler, post=ask_handler_post)
 server.run()
