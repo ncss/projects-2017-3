@@ -91,3 +91,37 @@ with sqlite3.connect('db.db') as conn:
             if row is None:
                 raise UsernNotFOund('{} does not exist'.format(username))
             return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[0], row[0], row[0], row[0])
+
+    class Post:
+
+        def __init__(self, id, user_id, description, title, date):
+            self.id = id
+            self.user_id = user_id
+            self.description = description
+            self.title = title
+            self.date = date
+
+        def find(id):
+            cur = conn.cursor(
+            '''
+            SELECT *
+            FROM posts
+            WHERE id = ? ''', (id,)
+            )
+            row = cur.fetchone()
+
+            if row is None:
+                raise PostNotFound('{} does not correspond to a post that exists.'.format(id))
+            return Post(row[0], row[1], row[2], row[3], row[4])
+
+        def create(user_id, description, title, date):
+            cur = conn.cursor(
+            '''
+            INSERT INTO posts (user_id, description, title, post_date)
+            VALUES (?, ?, ?, ?); ''', (user_id, description, title, date))
+
+            return Post (cur.lastrowid, user_id, description, title, date)
+
+        def delete(id, user_id):
+            #   to do
+            pass
