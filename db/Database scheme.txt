@@ -1,0 +1,1 @@
+User- id, 	username, email, password, date of creation, gender, date of birth, bio, picture, nicknamePhotos- id, file_name, user_id, post_id, datePosts- id, user_id, description, title, dateComments- id, user_id, post_id, text, date, parent_id, score
