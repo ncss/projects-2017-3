@@ -48,7 +48,7 @@ with sqlite3.connect('db.db') as conn:
             ORDER BY datetime
                 ''')
             all_users = cur.fetchall()
-            if row is None:
+            if all_users is None:
                 raise UserNotFound('{} does not exist'.format(username))
             return all_users
 
