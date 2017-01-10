@@ -56,6 +56,7 @@ This HTML file:
 Becomes:
 ```html
 <p>Username is Luke Tuthill</p>
+<p>Email is thisisnotmyemail@gmail.com</p>
 ```
 
 ### Expression Rendering
