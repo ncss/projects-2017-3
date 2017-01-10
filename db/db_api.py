@@ -101,6 +101,12 @@ with sqlite3.connect('db.db') as conn:
 
     class Post:
 
+        def __str__(self):
+            return self.__repr__()
+
+        def __repr__(self):
+            return "<Post: ID: {}, title: \'{}\', User ID: {}>".format(self.id, self.title, self.user_id)
+
         def __init__(self, id, user_id, description, title, date, files):
             self.id = id
             self.user_id = user_id
@@ -167,7 +173,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def delete(id):
-            cur = conn.excecute(
+            cur = conn.execute(
             '''
             DELETE FROM posts
             WHERE id = ? ''' , (id,)
@@ -268,13 +274,35 @@ with sqlite3.connect('db.db') as conn:
             )
             return find(comment_id)
 
+    def print_p(*args):
+        print("\033[92m" + "[+] " + " ".join(args) + '\033[0m')
+
+    def print_w(*args):
+        print("\033[93m" + " ".join(args) + '\033[0m')
+
     if __name__ == "__main__":
-        #sign_up(username, password, nickname, email, datetime)
-        User.sign_up('kay', '12345abc', 'kyap', 'yapkaymen@gmail.com', '1/10/2017')
-        details = User.find('kay')
-        assert details.username == 'kay'
+        my_user = User.sign_up('amazing-user', 'secure-password', '¯\_(ツ)_/¯', 'some@email.com', '1/10/2017')
+
+        # -- Begin Post testing
+        print_w("Beginning Post tests")
+
+        my_post = Post.create(my_user.id, "Can y'all help me with finding out where I can get this water bottle from (and what brand it is)?", "What's this water bottle?", "1/10/2017", [])
+        # Post finding testing
+        assert Post.find(my_post.id).user_id == my_user.id  # Expected result: Pass
+        print_p("Existing Post finding test passed!")
         try:
-            details1 = User.find('abc')
-            assert False
-        except UserNotFound:
-            pass
+            Post.find(999) # Expected result: Fail
+            assert 0
+        except PostNotFound:
+            print_p("Uncreated Post finding test passed!")
+        # Post deleting testing
+        Post.delete(my_post.id)
+        try:
+            Post.find(my_post.id) # Expected result: Pass
+            assert 0
+        except PostNotFound:
+            print_p("Post deleting test passed!")
+        print()
+        print_p("Post tests passed!")
+
+        # -- End Post testing
