@@ -4,16 +4,16 @@ with sqlite3.connect('db.db') as conn:
     cur.execute(
     '''
     CREATE TABLE users
-    (username TEXT NOT NULL,
-    email TEXT NOT NULL,
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    (id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
     password TEXT NOT NULL,
-    datetime TEXT NOT NULL,
+    nickname TEXT,
+    email TEXT NOT NULL,
     gender TEXT,
     dob TEXT,
     bio TEXT,
     picture TEXT NOT NULL,
-    nickname TEXT)
+    datetime TEXT NOT NULL)
     '''
     )
 
@@ -66,21 +66,22 @@ with sqlite3.connect('db.db') as conn:
 with sqlite3.connect('db.db') as conn:
     class User:
 
-        def __init__(self, username, email, password, datetime, gender, dob, bio, picture, nickname):
+        def __init__(self, id, username, password,  nickname, email, gender, dob, bio, picture, datetime):
+            self.id = id
             self.username = username
-            self.email = email
             self.password = password
-            self.datetime = datetime
+            self.nickname = nickname
+            self.email = email
             self.gender = gender
             self.dob = dob
             self.bio = bio
             self.picture = picture
-            self.nickname = nickname
+            self.datetime = datetime
 
 
         @staticmethod
         def find(username):
-            cur = conn.cursor(
+            cur = conn.excecute(
             '''
             SELECT *
             FROM users
@@ -90,4 +91,40 @@ with sqlite3.connect('db.db') as conn:
 
             if row is None:
                 raise UsernNotFOund('{} does not exist'.format(username))
-            return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[0], row[0], row[0], row[0])
+            return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+
+        @staticmethod
+        def sign_up(username, password, nickname, email, datetime):
+            cur = conn.excecute(
+            '''
+            INSERT INTO users VALUES (?, ?, ?, ?, ?)
+            ''', (username, password, nickname, email, datetime)
+            )
+            return User(username, password, nickname, email)
+
+
+        @staticmethod
+        def update(username, password, nickname, email, gender, dob, bio, picture):
+            cur = conn.excecute(
+            '''
+            UPDATE users
+            SET password = ?,
+            nickname = ?,
+            email = ?,
+            gender = ?,
+            dob = ?,
+            bio = ?,
+            picture = ?
+            WHERE username = ?
+            ''', (password, nickname, email, gender, dob, bio, picture, username)
+            )
+            return User(username, password, nickname, email, gender, dob, bio, picture)
+
+
+        @staticmethod
+        def delete_user(username):
+            cur = conn.excecute('''
+            DELETE FROM users WHERE username = ?
+            ''' , (username,))
+
+    
