@@ -11,7 +11,7 @@
   <body>
     <p>Ask Question!</p>
     <p>Username = {username}</p>
-    <form action="/ask">
+    <form action="/ask" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>
                 Details
@@ -20,7 +20,9 @@
                 <label>Question:</label>
                 <input type="text" name="username">
                 <label>Images</label>
-                <input type="checkbox">
+                <input type="file" name="fileupload" id="fileupload">
+                <label for="fileupload"> Select a file to upload</label>
+                <input type="submit" value="submit">
             </p>
 
         </fieldset>
