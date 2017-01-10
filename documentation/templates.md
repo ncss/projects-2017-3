@@ -1,4 +1,26 @@
 # Template Language
+## Importing and serverside use
+Importing the render function:
+```python
+from template_engine.parser import render
+```
+
+Creating the template response handler:
+```python
+def template_handler(response):
+  rendered_text = render('template.html', {'variable': 'value'})
+  response.write(rendered_text)
+
+```
+
+Registering URLs and starting the server
+```python
+server = Server()
+server.register(r'/template', template_handler)
+server.run()
+```
+
+---
 ## Contextual Variable Rendering
 Using `{{ x }}` syntax you can pass variables and data to the HTML document.
 ### Single Variables
@@ -49,15 +71,31 @@ Becomes:
 </p>
 ```
 
+---
+
 ## If Statements
+
+Content inside a pair of `{% if %}` and `{% end if %}` tags is only generated if the python expression inside the `{% if expression %}` clause returns true.
+
 ```html
 {% if expression %}
 <p>code if expresion is true</p>
-{% endif %}
+{% end if %}
 ```
-Content inside a pair of `{% if %}` and `{% end if %}` tags is only generated if the python expression inside the `{% if expression %}` clause returns true.
+### Else Clause
+Optionally, you are able to add a third tag into the if statement that renders the HTML content inside it if the if expression evaluates to False.
 
+```html
+{% if expression %}
+  <p>code if expresion is true</p>
+{% else %}
+  <p>code if expresion is false</p>
+{% end if %}
+```
 
+Note that `else if` or `elif` statements are not supported.
+
+---
 ## Include Statements
 Include statements allow you to include sections of HTML in several files.
 
@@ -82,6 +120,7 @@ When rendered, `login.html` will become:
   <input type='submit'>
 </form>
 ```
+---
 ## For Statements
 For statements iterate through an iterable expression, passing the content returned from the iterable into an iterator variable. These iterator variables can be referenced locally using normal `{{ x }}` expression syntax.
 
@@ -134,3 +173,6 @@ Content inside a pair of `{% comment %}` and `{% end comment %}` tags is ignored
   Nulla facilisi. Nam luctus, lacus a bibendum tincidunt, purus magna malesuada felis, eget condimentum leo diam eu justo.
 </p>
 ```
+
+---
+Author: Luke Tuthill | [github](https://github.com/lyneca) | [linkedin](https://www.linkedin.com/in/lyneca)
