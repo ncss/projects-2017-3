@@ -1,0 +1,9 @@
+<body>
+{% for user in users %}
+<p>
+    {% for field in user %}
+      {{ field }}
+    {% end for %}
+</p>
+{% end for %}
+</body>
