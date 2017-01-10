@@ -30,12 +30,22 @@ def parse(tokens, up_to, parent, parent_type=None):
             up_to += 1
             parse_results = parse(tokens, up_to, node._children['True'], 'if')
             up_to = parse_results[1]
+            next_token = tokens[up_to]
+            if next_token['label'] == 'else':
+                up_to += 1
+                parse_results = parse(tokens, up_to, node._children['False'], 'else')
+                up_to = parse_results[1]
         elif token['label'] == 'end_if' :
-            if parent_type == 'if':
+            if parent_type == 'if' or parent_type == 'else':
                 up_to += 1
                 return parent, up_to
             else:
                 raise TemplateSyntaxException('Unexpected end of if')
+        elif token['label'] == 'else':
+            if parent_type == 'if':
+                return parent, up_to
+            else:
+                raise TemplateSyntaxException('Unexpected else')
         elif token['label'] == 'for':
             node = ForNode(**token['contents'])
             parent.add_child(node)
@@ -90,6 +100,8 @@ def identify_token(token):
             return create_token(None, 'comment')
         elif ' '.join(term_list) == 'end comment':
             return create_token(None, 'end_comment')
+        elif keyword == 'else':
+            return create_token(None, 'else')
         # TODO The rest of the keywords
     elif token.startswith('{{') and token.endswith('}}'):
         # expression
