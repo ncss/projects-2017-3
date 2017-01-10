@@ -17,8 +17,8 @@ def get_template(filename):
         return f.read()
 
 def index_handler(response):
+    response.set_secure_cookie("subwayCookie", "VISITED?")
     render_file(response, 'index.html', {})
-
 
 def ask_handler(request):
     name = request.get_field("name")
