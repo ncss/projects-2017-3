@@ -1,6 +1,6 @@
 import re
 import os
-from nodes import GroupNode, ExpressionNode, HTMLNode, IfNode
+from nodes import GroupNode, ExpressionNode, HTMLNode, IfNode, ForNode
 
 class TemplateSyntaxException(Exception):
     pass
@@ -8,14 +8,6 @@ class TemplateSyntaxException(Exception):
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), '..', 'templates')
 
 TOKEN_REGEX = re.compile(r'({[{%].*?[}%]})')
-
-'''
-{% for f in person.friends %}
-<li class='friend'>
-{{ f.name.title() }} {{ f.age }} {% if f.has_nickname() %} ({{ f.nickname }}) {% end if %}
-</li>
-{% end for %}
-'''
 
 def parse(tokens, up_to=0, parent=GroupNode(), parent_type=None):
     while up_to < len(tokens):
@@ -44,6 +36,20 @@ def parse(tokens, up_to=0, parent=GroupNode(), parent_type=None):
                 return parent, up_to
             else:
                 raise TemplateSyntaxException('Unexpected end of if')
+        elif token['label'] == 'for':
+            node = ForNode(**token['contents'])
+            parent.add_child(node)
+            up_to += 1
+            parse_results = parse(tokens, up_to, GroupNode(), 'for')
+            node.set_child(parse_results[0])
+            up_to = parse_results[1]
+        elif token['label'] == 'end_for':
+            if parent_type == 'for':
+                up_to += 1
+                return parent, up_to
+            else:
+                raise TemplateSyntaxException('Unexpected end of for')
+
     return parent, up_to
 
 def lexer(text):
@@ -83,4 +89,4 @@ def render(fname, context):
     return eval_tree.render(context)
 
 
-print(render('test_template.html', {'a': 1}))
+print(render('test_template.html', {'a': ['hello', 'world']}))
