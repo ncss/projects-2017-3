@@ -8,7 +8,7 @@ TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
 IMAGE_DIR = os.path.join('static', 'images')
 
-UP_IMAGES = []
+UP_IMAGES = ['cats.jpg', 'books.jpg', 'mountains.jpg']
 
 def get_upload_path(filename):
     return os.path.join(UPLOADS_DIR, filename)
@@ -49,15 +49,17 @@ def ask_handler(request):
 #@requires_login
 def ask_handler_post(request):
     file = request.get_file('fileupload')
-    print(file)
+    question = request.get_field("question")
+    #print(file)
     if file != (None, None, None):
         with open(get_image_path(file[0]), 'wb') as f:
             f.write(file[2])
             print("uploaded")
-            UP_IMAGES.append(file[0])
+            UP_IMAGES.append({'image':file[0], 'question':question})
     else:
         print("upload failed")
     request.write("Your image was uploaded! name=%s"%(file[0]))
+    request.redirect('/')
 
 def signup_handler(request):
     request.write(render('signup.html', {}))
