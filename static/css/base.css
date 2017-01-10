@@ -1,0 +1,30 @@
+/*
+This file should have all the styles that should be the same on every page
+
+This includes (but is not limited to):
+- h1
+- a
+- body
+- fieldset
+- label
+
+HINTS
+- There should be no references to classes in base.css, only element selectors
+- When you add a style to base.css you should delete it from any other files
+
+CHECK YOUR WORK
+When you are done updating base.css there should be no CSS rules in
+any other file that reference an element directly as the top selector.
+
+For example:
+
+- Not ok (in other files, this syle is correct ONLY for base.css)
+  a {
+    color: blue;
+  }
+
+- Should be
+  .post a {
+    color: blue;
+  }
+*/
