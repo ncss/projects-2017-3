@@ -1,7 +1,11 @@
 .nav_bar {
-  border: 2px solid black;
-  background-color: grey;
+  border-bottom: 5px solid #26C6DA;
+  background-color: white;
   margin-bottom: 40px;
+}
+
+.nav_bar ul {
+    margin: 0px;
 }
 
 /*New css*/
