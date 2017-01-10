@@ -1,14 +1,16 @@
 import os
+from datetime import datetime
 from tornado.ncss import Server, ncssbook_log
 from template_engine.parser import render
+from db import db_api as db
 from auth import User, requires_login, add_user
-
-
 TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
 IMAGE_DIR = os.path.join('static', 'images')
 
 UP_IMAGES = []
+def get_current_time():
+    return datetime.now().isoformat()
 
 def get_upload_path(filename):
     return os.path.join(UPLOADS_DIR, filename)
@@ -37,11 +39,12 @@ def signup_handler_post(request):
         print('It failed')
     if username != None:
         request.set_secure_cookie("current_user", username)
-    user = User(ident, username, password, nickname, email, gender, dob, None, None)
-    add_user(user)
+    db.User.sign_up(username, password, nickname, email, get_current_time())
 
+def handle_list_users(request):
+    request.write(render('list_users.html', {'users': db.User.find_multiple()}))
 
-#@requires_login
+@requires_login
 def ask_handler(request):
     name = request.get_field("name")
     request.write(render("ask.html", {'username': 'rand'}))
@@ -96,15 +99,9 @@ def signout_handler(response):
 server = Server()
 server.register(r'/', index_handler)
 server.register(r'/view/(\d+)/?', view_question_handler)
-
 server.register(r'/signup', signup_handler, post = signup_handler_post)
-
 server.register(r'/ask', ask_handler, post=ask_handler_post)
-
 server.register(r'/logout', signout_handler)
-
-server.register(r'/signin', signin_handler, post= signin_handler_post)
-
-
+server.register(r'/list_users', handle_list_users)
 
 server.run()
