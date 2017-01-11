@@ -1,7 +1,9 @@
 import os
 import hashlib
+import urllib.request
 from datetime import datetime
 from db import db_api as db
+
 UPLOADS_DIR = os.path.join('static', 'uploads')
 IMAGE_DIR = os.path.join('static', 'images')
 HASH_SALT = b'1U+q8L!TXEyws+5+OKEzf=q~ffCo>8-u/QJyL}cSqcg~~Ar`C{u{ZPP{Ky6M`l|b'
@@ -27,3 +29,7 @@ def get_username(request):
         if user is not None:
             return user.username
     return None
+
+def fetch_file(url, filename):
+    response = urllib.request.urlretrieve(url, filename)
+    return response[0]

@@ -122,12 +122,19 @@ Returns a `Comment` object
 ### Properties
 The `Post` object has some properties:
 ```python
-id, user_id, description, title, date, files
+id, user_id, description, title, date, file
 ```
 
 ---
 ## Comments
 The `Comment` object manipulates comments inside of the database. Similar to the above classes in terms of initialisation. Remember creation is done on behalf of the `User`, using the `Post` object as well. ^\_^
+
+### Creating comments
+This allows you to create a new comment object:
+```python
+Comment.create(user_id, post_id, text, date[, parent_id, loc_latitude, loc_longitude, score])
+```
+Everything inside the square brackets is optional.
 
 ### Finding comments
 There are a variety of ways on finding comments. Those ways are expressed in the function name:
@@ -155,7 +162,7 @@ Returns a `Comment` object
 ### Properties
 The `Comment` object has some properties:
 ```python
-id, user_id, post_id, text, date, parent_id[, score, loc_latitude, loc_longitude]
+id, user_id, post_id, text, date[, parent_id, loc_latitude, loc_longitude, score]
 ```
 
 ---

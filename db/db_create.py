@@ -42,7 +42,7 @@ with sqlite3.connect(DB_FILE) as conn:
     FOREIGN KEY(user_id) REFERENCES users(id))
     '''
     )
-    
+
     # Create the comments table
     cur.execute(
     '''
@@ -53,9 +53,9 @@ with sqlite3.connect(DB_FILE) as conn:
     parent_id INTEGER,
     text TEXT NOT NULL,
     date TEXT NOT NULL,
-    score INTEGER,
 	loc_latitude REAL,
 	loc_longitude REAL,
+    score INTEGER,
     FOREIGN KEY(parent_id) REFERENCES comments(id),
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(post_id) REFERENCES posts(id))
