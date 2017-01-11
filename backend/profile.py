@@ -12,7 +12,8 @@ def view_handler(request, username):
         request.write("username is not in db")
     else:
         request.write(render('profile.html', {'username':user.username, 'nickname': user.nickname,
-                                        'email': user.email, 'picture':user.picture, 'signed_in':authenticate_cookie(request)}))
+                                        'email': user.email, 'picture':user.picture if user.picture is not None and user.picture != "" else "nouser.png"
+                                        , 'signed_in':authenticate_cookie(request)}))
 
 
 
