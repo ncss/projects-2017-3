@@ -13,8 +13,8 @@
     </section>
     <div class = 'post_list'>
       {% for post in posts %}
-      <fieldset>
-          <img class='post_image' src= "static/images/{{ post['image'] }}" alt= "Books">
+      <fieldset class="image_fieldset">
+          <img class='post_image' src= "static/uploads/{{ post['image'] }}" alt= "{{ post['question'] }}">
           <div class = 'post_text'>
               <figcaption>
                 {{ post['question'] }}
@@ -23,6 +23,5 @@
       </fieldset>
       {% end for %}
    </div>
-</div>
 </body>
 </html>

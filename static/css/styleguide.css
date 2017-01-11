@@ -19,7 +19,6 @@ h2 {
   color: #26C6DA;
   font-size: 28px;
   padding-bottom: 5px;
-
 }
 
 main {
@@ -57,18 +56,36 @@ input[type="submit"] {
   margin-top: 10px;
 }
 
+input[type="submit"]:hover {
+  background-color: #e0f7fa;
+  color: #26C6DA;
+  border: 1px solid #26C6DA;
+}
+
 fieldset {
-  border: none;
+  border: 1px solid #26C6DA;
+  border-radius: 15px;
+  padding: 15px;
   margin-bottom: 10px;
   display: inline-block;
   margin: 10px;
   vertical-align: top;
-  border: 1px solid #26C6DA;
-  border-radius: 10px;
+  width: 700px;
 }
 
+.image_fieldset {
+  border: 1px solid #26C6DA;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: inline-block;
+  margin: 10px;
+  vertical-align: top;
+  width: auto;
+ }
+
 fieldset p {
-  padding-bottom: 15px;
+  padding-left: 15px;
 }
 
 header {
@@ -112,4 +129,12 @@ article h3 {
 
 *[hidden] {
   display: none !important;
+}
+
+main h1 {
+  padding: 20px;
+}
+
+main h2 {
+  padding: 20px;
 }
