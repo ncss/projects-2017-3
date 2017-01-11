@@ -58,10 +58,12 @@ with sqlite3.connect('db.db') as conn:
     (id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     post_id INTEGER NOT NULL,
-    parent_id INTEGER NOT NULL,
+    parent_id INTEGER,
     text TEXT NOT NULL,
     date TEXT NOT NULL,
     score INTEGER NOT NULL,
+	loc_latitude REAL,
+	loc_longitude REAL,
     FOREIGN KEY(parent_id) REFERENCES comments(id),
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(post_id) REFERENCES posts(id))
@@ -132,19 +134,19 @@ with sqlite3.connect('db.db') as conn:
     cur.execute(
     '''
     INSERT INTO photos VALUES
-    (NULL, '/images/cats.jpg', 0, '01/01/2017')
-    (NULL, '/images/cats.jpg', 1, '01/01/2017')
-    (NULL, '/images/cats.jpg', 3, '01/01/2017')
-    (NULL, '/images/cats.jpg', 7, '01/01/2017')
-    (NULL, '/images/cats.jpg', 8, '01/01/2017')
-    (NULL, '/images/cats.jpg', 10, '01/01/2017')
-    (NULL, '/images/cats.jpg', 10, '01/01/2017')
-    (NULL, '/images/cats.jpg', 12, '01/01/2017')
-    (NULL, '/images/cats.jpg', 15, '01/01/2017')
-    (NULL, '/images/cats.jpg', 18, '01/01/2017')
-    (NULL, '/images/cats.jpg', 19, '01/01/2017')
-    (NULL, '/images/cats.jpg', 22, '01/01/2017')
-    (NULL, '/images/cats.jpg', 22, '01/01/2017')
+    (NULL, '/images/cats.jpg', 0, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 1, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 3, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 7, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 8, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 10, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 10, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 12, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 15, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 18, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 19, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 22, '01/01/2017'),
+    (NULL, '/images/cats.jpg', 22, '01/01/2017'),
     (NULL, '/images/cats.jpg', 22, '01/01/2017')
     '''
     )
@@ -153,28 +155,28 @@ with sqlite3.connect('db.db') as conn:
     cur.execute(
     '''
     INSERT INTO comments VALUES
-    -- (user_id, post_id, parent_id, text, '01/01/2017', 1)
-    (NULL, 0, 0, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 1, 0, 1, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 4, 0, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 4, 2, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 4, 4, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 6, 6, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 7, 7, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 9, 8, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 4, 8, 9, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 4, 8, 9, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 4, 8, 10, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 4, 10, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 2, 10, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 0, 11, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 0, 14, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 0, 17, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 6, 17, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 0, 18, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 0, 20, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 12, 20, 19, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 0, 21, NULL, 'Nice meme!', '01/01/2017', 1)
-    (NULL, 0, 22, NULL, 'Nice meme!', '01/01/2017', 1)
+    (NULL, 0, 0, NULL, 'Nice meme!', '01/01/2017', 1, -33.8883064, 151.1941413),
+    (NULL, 1, 0, 1, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 4, 0, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 4, 2, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 4, 4, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 6, 6, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 7, 7, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 9, 8, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 4, 8, 9, 'Nice meme!', '01/01/2017', 1, -33.8883064, 151.1941413),
+    (NULL, 4, 8, 9, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 4, 8, 10, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 4, 10, NULL, 'Nice meme!', '01/01/2017', 1, -33.8883064, 151.1941413),
+    (NULL, 2, 10, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 0, 11, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 0, 14, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 0, 17, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 6, 17, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 0, 18, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 0, 20, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 12, 20, 19, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 0, 21, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL),
+    (NULL, 0, 22, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL)
     '''
     )
+	
