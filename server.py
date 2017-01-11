@@ -16,15 +16,13 @@ def index_handler(request):
     posts = db.Post.find_all()
     if posts:
         posts = [{'image':i.file if i.file != [] else 'notfound.jpg',
-                  'question':i.title} for i in posts]
-        request.write(render('index.html', {'posts':posts, 'signed_in':authenticate_cookie(request)})) # { 'post1': (image location, comment}
+                  'question':i.title, 'id': i.id} for i in posts]
+        request.write(render('index.html', {'posts':posts, 'signed_in':authenticate_cookie(request), 'username': get_username(request)})) # { 'post1': (image location, comment}
     else:
         request.write("no posts found")  # { 'post1': (image location, comment}
 
-
-
 def handle_list_users(request):
-    request.write(render('list_users.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request)}))
+    request.write(render('list_users.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
 
 
 
@@ -36,5 +34,5 @@ server.register(r'/ask'         , ask.ask_handler      , post=ask.ask_handler_po
 server.register(r'/signin'      , user.signin_handler  , post=user.signin_handler_post)
 server.register(r'/logout'      , user.signout_handler)
 server.register(r'/list_users'  , handle_list_users)
-server.register(r'/profile/(.+)', profile.view_handler)
+server.register(r'/profile/(.+)', profile.view_handler, post=profile.view_handler_post)
 server.run()

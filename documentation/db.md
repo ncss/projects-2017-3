@@ -38,7 +38,7 @@ Both return a `User` object if the user exists, otherwise `None`
 ### Create a Post on behalf of a User
 To create a `Post` on behalf of a `User`:
 ```python
-user.create_post('description', 'title', 'date', ['file1.jpg', 'file2.jpg'])
+user.create_post('user_id', 'description', 'title', 'photo_file')
 ```
 Returns a `Post` object
 
