@@ -73,6 +73,17 @@ fieldset {
   width: 700px;
 }
 
+.image_fieldset {
+  border: 1px solid #26C6DA;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: inline-block;
+  margin: 10px;
+  vertical-align: top;
+  width: auto;
+ }
+
 fieldset p {
   padding-left: 15px;
 }
