@@ -10,7 +10,6 @@ def view_question_handler(request, question_id):
         post = db.Post.find(question_id)
         post_info = {'user' : post.user_id, 'description' : post.description, 'question' : post.title, 'date' : post.date, 'file' : post.files}
         print(post.title)
-        #question = {'title': title, 'description': description}
         request.write(render('view_question.html', post_info))
     except:
         request.write('Invalid Id')

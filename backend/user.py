@@ -49,7 +49,7 @@ def signup_handler_post(request):
         if content_type.startswith('image/'):
             with open(get_upload_path(filename), 'wb') as f:
                 f.write(data)
-                db.User.sign_up(username, password, nickname, email, get_current_time())
+                db.User.sign_up(username, password, nickname, email)
                 request.redirect('/')
         else:
             request.write("uploaded file type not supported")
@@ -58,5 +58,5 @@ def signup_handler_post(request):
 
     if username is not None:
         request.set_secure_cookie("current_user", username)
-    db.User.sign_up(username, password, nickname, email, get_current_time())
+    db.User.sign_up(username, password, nickname, email)
     request.redirect('/')
