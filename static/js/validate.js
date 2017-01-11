@@ -1,16 +1,18 @@
 $(document).ready(function(){
 
   $('.submit').click(function(evt){
-       // return validateSignupForm();
+    return validateSignupForm();
   });
 
   $('.post_submit').click(function(evt){
-      //return validatePost();
+    //return validatePost();
   });
 
   function isPresent($input) {
     if ($input.val().length < 4) {
-      $input.parent().find('.error').text('this field is not long enough')
+      $input.parent()
+        .find('.error')
+        .text('This field is not long enough')
       return false;
     } else {
       return true;
@@ -20,7 +22,9 @@ $(document).ready(function(){
   function isValidEmail($input) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test($input.val())) {
-      $input.parent().find('.error').text('the email address you entered is not a valid email address')
+      $input.parent()
+        .find('.error')
+        .text('This is not a valid email address')
       return false;
     } else {
       return true;
@@ -30,7 +34,9 @@ $(document).ready(function(){
   function isValidName($input) {
     var nameReg = /^[A-Za-z0-9]+$/;
     if (!nameReg.test($input.val())) {
-      $input.parent().find('.error').text('the name you have entered for this field is invalid. Note that usernames and nicknames can only contain letters and numbers.')
+      $input.parent()
+        .find('.error')
+        .text('Usernames and nicknames can only contain letters and numbers.')
       return false;
     } else {
       return true;
@@ -39,7 +45,9 @@ $(document).ready(function(){
 
   function isImagePresent($input) {
     if ($input.error()) {
-      $input.parent().find('.error').text('you need to upload an image in order to ask a question')
+      $input.parent()
+        .find('.error')
+        .text('Image required');
       return false;
     } else {
       return true;
@@ -50,12 +58,13 @@ $(document).ready(function(){
   }
 
   function validateSignupForm() {
+    var $form = $('form.sign-in');
     $('.error').html("");
 
-    var $username = $('.username')
-    var $nickname = $('.nickname')
-    var $password = $('.password')
-    var $email = $('.email')
+    var $username = $form.find('.username');
+    var $nickname = $form.find('.nickname');
+    var $password = $form.find('.password');
+    var $email = $form.find('.email');
 
     var validUsername = isPresent($username) && isValidName($username);
     var validNickname = isPresent($nickname) && isValidName($nickname);
