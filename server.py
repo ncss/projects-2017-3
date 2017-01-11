@@ -13,8 +13,14 @@ IMAGE_DIR = os.path.join('static', 'images')
 UP_IMAGES = []
 
 def index_handler(request):
-    print(UP_IMAGES)
-    request.write(render('index.html', {'posts':UP_IMAGES, 'signed_in':authenticate_cookie(request)})) # { 'post1': (image location, comment}
+    posts = db.Post.find_all()
+    if posts:
+        posts = [{'image':i.file if i.file != [] else 'notfound.jpg',
+                  'question':i.title} for i in posts]
+        request.write(render('index.html', {'posts':posts, 'signed_in':authenticate_cookie(request)})) # { 'post1': (image location, comment}
+    else:
+        request.write("no posts found")  # { 'post1': (image location, comment}
+
 
 
 def handle_list_users(request):
