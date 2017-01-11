@@ -246,7 +246,7 @@ with sqlite3.connect('db.db') as conn:
 
     class Comment:
 
-        def __init__(self, id, user_id, post_id, text, date, parent_id = None, loc_latitude = None, loc_longitude = None, score = None):
+        def __init__(self, id, user_id, post_id, parent_id = None, text = None, date = None, loc_latitude = None, loc_longitude = None, score = None):
             self.id = id
             self.user_id = user_id
             self.post_id = post_id
@@ -261,8 +261,8 @@ with sqlite3.connect('db.db') as conn:
         def create(user_id, post_id, text, date, parent_id = None, loc_latitude = None, loc_longitude = None, score = None):
             cur = conn.execute(
             '''
-            INSERT INTO comments (user_id, post_id, text, date, parent_id, loc_latitude, loc_longitude, score)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?); ''', (user_id, post_id, text, date, parent_id, loc_latitude, loc_longitude, score))
+            INSERT INTO comments (user_id, post_id, parent_id, text, date, loc_latitude, loc_longitude, score)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?); ''', (user_id, post_id, parent_id, text, date, loc_latitude, loc_longitude, score))
 
             return Comment.find(cur.lastrowid)
 
