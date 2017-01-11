@@ -38,19 +38,8 @@ with sqlite3.connect(DB_FILE) as conn:
     description TEXT,
     title TEXT NOT NULL,
     post_date TEXT NOT NULL,
+    file TEXT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id))
-    '''
-    )
-
-    # Create the `photos` table
-    cur.execute(
-    '''
-    CREATE TABLE photos
-    (id INTEGER PRIMARY KEY AUTOINCREMENT,
-    file_name TEXT NOT NULL,
-    post_id INTEGER NOT NULL,
-    photo_date TEXT NOT NULL,
-    FOREIGN KEY(post_id) REFERENCES posts(id))
     '''
     )
 
@@ -64,9 +53,9 @@ with sqlite3.connect(DB_FILE) as conn:
     parent_id INTEGER,
     text TEXT NOT NULL,
     date TEXT NOT NULL,
-    score INTEGER,
 	loc_latitude REAL,
 	loc_longitude REAL,
+    score INTEGER,
     FOREIGN KEY(parent_id) REFERENCES comments(id),
     FOREIGN KEY(user_id) REFERENCES users(id),
     FOREIGN KEY(post_id) REFERENCES posts(id))
@@ -101,56 +90,35 @@ with sqlite3.connect(DB_FILE) as conn:
     cur.execute(
     '''
     INSERT INTO posts VALUES
-    (NULL, 0, 'Where can I find this watch from? It looks sick and I really want it :)', 'What watch is this?', '01/01/2017'),
-    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017'),
-    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017'),
-    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 2, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 2, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 8, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017')
-    '''
-    )
-
-    # Create dummy photos
-    cur.execute(
-    '''
-    INSERT INTO photos VALUES
-    (NULL, 'cats.jpg', 0, '01/01/2017'),
-    (NULL, 'cats.jpg', 1, '01/01/2017'),
-    (NULL, 'cats.jpg', 3, '01/01/2017'),
-    (NULL, 'cats.jpg', 7, '01/01/2017'),
-    (NULL, 'cats.jpg', 8, '01/01/2017'),
-    (NULL, 'cats.jpg', 10, '01/01/2017'),
-    (NULL, 'cats.jpg', 10, '01/01/2017'),
-    (NULL, 'cats.jpg', 12, '01/01/2017'),
-    (NULL, 'cats.jpg', 15, '01/01/2017'),
-    (NULL, 'cats.jpg', 18, '01/01/2017'),
-    (NULL, 'cats.jpg', 19, '01/01/2017'),
-    (NULL, 'cats.jpg', 22, '01/01/2017'),
-    (NULL, 'cats.jpg', 22, '01/01/2017'),
-    (NULL, 'cats.jpg', 22, '01/01/2017')
+    (NULL, 0, 'Where can I find this watch from? It looks sick and I really want it :)', 'What watch is this?', '01/01/2017', 'cats.jpg'),
+    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017', 'cats.jpg'),
+    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017', 'cats.jpg'),
+    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 2, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 2, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 8, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg')
     '''
     )
 

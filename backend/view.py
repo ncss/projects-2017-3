@@ -8,11 +8,11 @@ from auth import requires_login, authenticate_cookie
 def view_question_handler(request, question_id):
     #try:
         post = db.Post.find(question_id)
-
     #    with open('out.txt', 'w') as w:
     #        w.write(str(post.files[0]))
-        post_info = {'user' : post.user_id, 'description' : post.description, 'question' : post.title, 'date' : post.date, 'file' : post.files[0][0], 'signed_in':authenticate_cookie(request)}
         #print(post.files[0][0])
+        post_info = {'user' : post.user_id, 'description' : post.description, 'question' : post.title, 'date' : post.date, 'file' : post.file, 'signed_in':authenticate_cookie(request), 'username': get_username(request), 'photo_files': [], 'photo_id': post.id}
+        print(post.title)
         request.write(render('view_question.html', post_info))
     #except(ValueError):
         #request.write('Invalid Id')
