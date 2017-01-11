@@ -1,10 +1,10 @@
 $(document).ready(function(){
-
+/*
   $('.submit').click(function(evt){
     evt.preventDefault();
     validateForm();
   });
-
+*/
 function isPresent($input) {
   if ($input == "") {
 
