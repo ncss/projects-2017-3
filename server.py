@@ -1,5 +1,4 @@
 import os
-from datetime import datetime
 from tornado.ncss import Server, ncssbook_log
 from template_engine.parser import render
 from backend import ask, user
@@ -10,8 +9,6 @@ UPLOADS_DIR = os.path.join('static', 'uploads')
 IMAGE_DIR = os.path.join('static', 'images')
 
 UP_IMAGES = []
-def get_current_time():
-    return datetime.now().isoformat()
 
 def get_upload_path(filename):
     return os.path.join(UPLOADS_DIR, filename)
