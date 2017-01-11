@@ -54,7 +54,7 @@ def signin_handler_post(request):
     if db.User.find_by_username(username).password == password:
         request.set_secure_cookie("current_user", username)
         user = db.User.find(username)
-        uid = user.id
+        request.redirect('/')
     else:
         request.write("bad login details")
 
