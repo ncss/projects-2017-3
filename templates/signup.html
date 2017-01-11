@@ -28,11 +28,11 @@
               <input class="password" type="password" name="password">
               <p class ='error'> </p>
             </div>
-            <p>
+            <div>
               <label for="email">Email</label>
               <input class="email" type='text' name="email">
               <p class='error'> </p>
-            </p>
+            </div>
             <p>
               <label>Profile Image</label>
               <input type="file" id="profile_picture" name="profile_picture">
@@ -40,7 +40,7 @@
               <!-- Experimental video profile pic + Matilda and Tracey -->
 
               <video autoplay></video>
-              <img src="">
+              <img src="" class='profile_image'>
               <canvas hidden> </canvas>
 
               <script>
@@ -61,7 +61,7 @@
                     ctx.drawImage(video, 0, 0);
                     // "image/webp" works in Chrome.
                     // Other browsers will fall back to image/png.
-                    document.querySelector('img').src = canvas.toDataURL('image/webp');
+                    document.querySelector('.profile_image').src = canvas.toDataURL('image/webp');
                   }
                 }
 

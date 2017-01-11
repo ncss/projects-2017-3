@@ -71,107 +71,96 @@ user.edit('password', 'nickname', 'gender', 'dob', 'bio', 'filename.jpg')
 ```
 Returns a `Post` object
 
+### Properties
+The `User` object has some properties:
+```python
+id, username, password, nickname, email, gender, dob, bio, picture, creation_date
+```
+
 ---
 
 ## Posts
+The `Post` object manipulates posts inside of the database. Similar to the `User` object in terms of initialisation. Remember creation is done on behalf of the `User`.
 
-Content inside a pair of `{% if %}` and `{% end if %}` tags is only generated if the python expression inside the `{% if expression %}` clause returns true.
-
-```html
-{% if expression %}
-<p>code if expresion is true</p>
-{% end if %}
-```
-### Else Clause
-Optionally, you are able to add a third tag into the if statement that renders the HTML content inside it if the if expression evaluates to False.
-
-```html
-{% if expression %}
-  <p>code if expresion is true</p>
-{% else %}
-  <p>code if expresion is false</p>
-{% end if %}
-```
-
-Note that `else if` or `elif` statements are not supported.
-
----
-## Include Statements
-Include statements allow you to include sections of HTML in several files.
-
-File `header.html`:
-```html
-<h1>This is a header!</h1>
-```
-
-File `login.html`:
-```html
-{% include header.html %}
-<form>
-  <input type='text'>
-  <input type='submit'>
-</form>
-```
-When rendered, `login.html` will become:
-```html
-<h1>This is a header!</h1>
-<form>
-  <input type='text'>
-  <input type='submit'>
-</form>
-```
----
-## For Statements
-For statements iterate through an iterable expression, passing the content returned from the iterable into an iterator variable. These iterator variables can be referenced locally using normal `{{ x }}` expression syntax.
-
-This HTML:
-```html
-{% for i in range(5) %}
-  <p>Your number is {{ i }}!</p>
-{% end for %}
-```
-Becomes:
-```html
-<p>Your number is 0!</p>
-<p>Your number is 1!</p>
-<p>Your number is 2!</p>
-<p>Your number is 3!</p>
-<p>Your number is 4!</p>
-```
-
-You may also pass contextual variables to the for statement:
+### Find a Post
+To find a `Post`:
 ```python
-parser.render('some_template.html', {'array': ['hello', 'world']})
+Post.find(0) # The ID of a Post
 ```
-```html
-{% for i in array %}
-  <p>{{ i }}</p>
-{% end for %}
+Returns a `Post` object
+
+### Get all Posts
+To get all `Post`s, or to get all `Post`s by a user:
+```python
+Post.find_all() 	# Gets every post out there
+Post.find_all(0) 	# Gets every post by a user with an ID
 ```
-Becomes:
-```html
-<p>Hello</p>
-<p>World</p>
+Returns an array of `Post` objects
+
+### Delete a Photo from a Post
+To remove a photo from a `Post`:
+```python
+Post.delete_photo(0, "file_name") # 1st parameter is the post ID
 ```
+
+### Delete a Post
+To delete a `Post`:
+```python
+Post.delete(0) # 1st parameter is the post ID
+```
+
+*The below are instance methods (they require you to have an `Post` object to call them)*
+### Get all the comments on a Post
+To get all the comments on a `Post`:
+```python
+post.all_comments()
+```
+Returns an array of `Comment` objects
+
+### Find a specific comment
+To find a comment on a `Post`:
+```python
+post.find_comment(0) # 1st parameter is the comment ID
+```
+Returns a `Comment` object
+
+### Properties
+The `Post` object has some properties:
+```python
+id, user_id, description, title, date, files
+```
+
 ---
-## Comment Statements
-Content inside a pair of `{% comment %}` and `{% end comment %}` tags is ignored and taken out of the HTML.
-```html
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ipsum nisi, placerat eu felis vitae, consequat elementum justo.
-<p>
-<p>
-   Curabitur tellus felis, varius ac quam non, malesuada volutpat turpis. Nulla auctor porttitor sagittis. Aliquam quis dictum nulla.
-</p>
-  {% comment %}
-    Can someone change this placeholder text?
-  {% end comment %}
-<p>
-  Vivamus a condimentum metus. Vestibulum tempor erat a rhoncus tristique. Integer blandit nisi sit amet felis ultricies, et gravida est elementum. Praesent tincidunt purus semper, lacinia lectus sed, tincidunt nibh.
-</p>
-<p>
-  Nulla facilisi. Nam luctus, lacus a bibendum tincidunt, purus magna malesuada felis, eget condimentum leo diam eu justo.
-</p>
+## Comments
+The `Comment` object manipulates comments inside of the database. Similar to the above classes in terms of initialisation. Remember creation is done on behalf of the `User`, using the `Post` object as well. ^\_^
+
+### Finding comments
+There are a variety of ways on finding comments. Those ways are expressed in the function name:
+```python
+Post.find(0) 											# 1st parameter is the comment ID
+Post.find_comments_for_post_id(0)	# 1st parameter is the post ID
+Post.find_comments_for_user(0)		# 1st parameter is the user ID
+```
+`Post.find` returns a `Comment` object. The others return an array of `Comment` objects.
+
+### Find children
+To find children comments on a comment:
+```python
+Post.find_children_for_comment(0) # 1st parameter is the comment ID
+```
+Returns an array of `Comment` objects
+
+### Edit a comment
+To edit a comment:
+```python
+Post.edit_comment_with_id(0, "new_text") # 1st parameter is the comment ID
+```
+Returns a `Comment` object
+
+### Properties
+The `Comment` object has some properties:
+```python
+id, user_id, post_id, text, date, parent_id, score, loc_latitude, loc_longitude
 ```
 
 ---

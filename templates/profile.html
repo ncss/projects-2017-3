@@ -3,6 +3,19 @@
   <head>
   {% include _shared_head.html %}
   </head>
+  <header>
+    {% include _nav_bar.html %}
+  </header>
+  <main>
+    <div 'user_info'>
+      <p> Username: {{ username }} </p>
+      <p> Nickname: {{ nickname }} </p>
+      <p> Email: {{ email }} </p>
+      <!-- The user geneder is not data we are relating to the website -->
+      <!-- We are not collecting the user date of brith -->
+      <p> Picture: <img src= "static/images/{{ picture }}"></p>
+    </div>
+  </main>
   <body>
   </body>
 </html>
