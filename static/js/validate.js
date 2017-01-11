@@ -1,8 +1,11 @@
 $(document).ready(function(){
 
   $('.submit').click(function(evt){
-
        return validateForm();
+  });
+
+  $('.post_submit').click(function(evt){
+      //return validatePost();
   });
 
 function isPresent($input) {
@@ -38,6 +41,20 @@ function isValidName($input) {
   }
 }
 
+function isImagePresent($input) {
+  if ($input.error()) {
+    $input.parent().find('.error').text('you need to upload an image in order to ask a question')
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+function isvalidImage($input) {
+
+}
+
 
 
 function validateForm() {
@@ -63,4 +80,19 @@ function validateForm() {
     }
 
 }
+
+  function validatePost() {
+
+    $('.error').html("");
+
+    var $question = $('.ask_question')
+    var $image = $('.img_upload')
+    var $description = $('.description')
+
+    var validQuestion = isPresent($question);
+    var validImage = isImagePresent($image) && //make sure that image is a compatable file type
+
+
+  }
+
 });
