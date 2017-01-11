@@ -5,15 +5,9 @@ body {
 }
 
 .input_field {
-  border: 1px solid black;
   width: 400px;
   height: 400px;
   margin: 0px auto;
-}
-
-h1 {
-  font-family:'Work Sans', sans-serif;
-  color: #26C6DA
 }
 
 .signup_form {
@@ -38,5 +32,4 @@ h1 {
 .photobox img {
   width: 200px;
   height: 150px;
-
 }
