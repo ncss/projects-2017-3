@@ -124,7 +124,7 @@ with sqlite3.connect('db.db') as conn:
             return Post.create(self.id, description, title, date, photo_files)
 
         def all_posts(self):
-            return Post.findall(self.id)
+            return Post.find_all(self.id)
 
         def find_post(post_id):
             return Post.find(post_id)
@@ -194,7 +194,7 @@ with sqlite3.connect('db.db') as conn:
                 )
             row1 = cur.fetchall()
 
-            if row1:
+            if not row1:
                 return None
 
             posts = []
@@ -264,6 +264,12 @@ with sqlite3.connect('db.db') as conn:
             )
             conn.commit()
             return Post.find(id)
+
+        def all_comments(self):
+            return Comment.find_all(self.id)
+
+        def find_comment(comment_id):
+            return Comment.find(comment_id)
 
     class Comment:
 
