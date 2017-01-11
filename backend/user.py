@@ -50,11 +50,6 @@ def signup_handler_post(request):
         request.set_secure_cookie("current_user", username)
     db.User.sign_up(username, password, nickname, email, get_current_time())
 
-def signin_handler(request):
-    username = request.get_field('username')
-    password = request.get_field('password')
-    signin = {'username': username, 'password': password}
-    request.write(render('signin.html', signin))
 
 def signin_handler_post(request):
     pass
