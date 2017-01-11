@@ -20,3 +20,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+.nav_bar img {
+  width: 75px;
+  height: 75px;
+}

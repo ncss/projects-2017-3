@@ -25,9 +25,8 @@ class User:
 def add_user(user):
     ALL_USER[user.username] = user
 
-def check_cookie(response):
-
-    user_cookie = response.get_secure_cookie(USER_COOKIE)
+def check_cookie(request):
+    user_cookie = request.get_secure_cookie(USER_COOKIE)
     if user_cookie:
         user_cookie = user_cookie.decode("utf-8")
         print(user_cookie)
@@ -39,14 +38,14 @@ def check_cookie(response):
     return False
 
 
-def authenticate_cookie(response):
+def authenticate_cookie(request):
     """Returns True if cookies can be authenicated"""
-    if check_cookie(response):
+    if check_cookie(request):
         return True
     return False
 
-def render_no_login(response):
-    response.write(render('notsignedin.html',{}))
+def render_no_login(request):
+    request.write(render('notsignedin.html', {}))
 
 def requires_login(func: Callable) -> Callable:
     """
@@ -63,8 +62,8 @@ def requires_login(func: Callable) -> Callable:
 
 
 @requires_login
-def foo(response, *args, **kwargs):
-    print(response)
+def foo(request, *args, **kwargs):
+    print(request)
 
 
 #x = User('1', 'jack', 'hash', 'jack', 'email', 'm', '241-25', 'joegjlqejfgjawdlfkjd', '2012391934')
