@@ -9,7 +9,7 @@
     <nav>
       {% if signed_in %}
         <a class='plus_button' href="/ask">Ask</a>
-        <a class ='username' href="#">Username</a>
+        <a class ='username' href="/profile/{{ username }}">Username</a>
         <a href="/logout"> Log Out </a>
       {% end if %}
       {% if not signed_in %}
