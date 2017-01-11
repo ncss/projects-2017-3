@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   $('.submit').click(function(evt){
-    return validateSignupForm();
+    // return validateSignupForm();
   });
 
   $('.post_submit').click(function(evt){
