@@ -1,10 +1,10 @@
-from auth import requires_login, USER_COOKIE
+from auth import requires_login, USER_COOKIE, authenticate_cookie
 from template_engine.parser import render
 from backend.common import *
 from db import db_api as db
 
 def signup_handler(request):
-    request.write(render('signup.html', {}))
+    request.write(render('signup.html', {'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
     ident = request.get_field('id')
     username = request.get_field('username')
     email = request.get_field('email')
@@ -45,7 +45,7 @@ def signup_handler_post(request):
 def signin_handler(request):
     username = request.get_field('username')
     password = request.get_field('password')
-    signin = {'username': username, 'password': password}
+    signin = {'username': username, 'password': password, 'signed_in':authenticate_cookie(request), 'username': get_username(request)}
     request.write(render('signin.html', signin))
 
 def signin_handler_post(request):
@@ -53,7 +53,7 @@ def signin_handler_post(request):
     password = hash_string(request.get_field('password'))
     if db.User.find_by_username(username).password == password:
         request.set_secure_cookie("current_user", username)
-        user = db.User.find(username)
+        user = db.User.find_by_username(username)
         request.redirect('/')
     else:
         request.write("bad login details")
@@ -62,13 +62,3 @@ def signin_handler_post(request):
 def signout_handler(request):
     request.clear_cookie('current_user')
     request.redirect('/')
-
-def signup_handler(request):
-    request.write(render('signup.html', {}))
-    ident = request.get_field('id')
-    username = request.get_field('username')
-    email = request.get_field('email')
-    password = request.get_field('password')
-    doc = request.get_field('doc')
-    gender = request.get_field('gender')
-    dob = request.get_field('dob')

@@ -68,11 +68,11 @@ with sqlite3.connect('db.db') as conn:
             ORDER BY creation_date
                 ''')
             all_users = cur.fetchall()
-            for row in all_users:
-                if row is None:
-                    return None
-            rows = [User.find(row[0]) for row in all_users]
-            return rows
+            if all_users:
+                rows = [User.find(row[0]) for row in all_users]
+                return rows
+            else:
+                return None
 
         @staticmethod
         def sign_up(username, password, nickname, email):
@@ -146,13 +146,13 @@ with sqlite3.connect('db.db') as conn:
         def __repr__(self):
             return "<Post: ID: {}, title: \'{}\', User ID: {}>".format(self.id, self.title, self.user_id)
 
-        def __init__(self, id, user_id, description, title, date, files):
+        def __init__(self, id, user_id, description, title, date, file):
             self.id = id
             self.user_id = user_id
             self.description = description
             self.title = title
             self.date = date
-            self.files = files
+            self.file = file
 
         def return_id(self):
             return self.id
@@ -169,16 +169,7 @@ with sqlite3.connect('db.db') as conn:
 
             if row1 is None:
                 return None
-
-            cur = conn.execute(
-            '''
-            SELECT file_name
-            FROM photos
-            WHERE post_id = ? ''', (id,)
-            )
-            row2 = cur.fetchall()
-
-            return Post(row1[0], row1[1], row1[2], row1[3], row1[4], row2)
+            return Post(row1[0], row1[1], row1[2], row1[3], row1[4], row1[5])
 
         @staticmethod
         def find_all(user_id = None):
@@ -189,61 +180,27 @@ with sqlite3.connect('db.db') as conn:
                 FROM posts; '''
                 )
             else:
-                cur = conn.execute(
-                '''
+                cur = conn.execute('''
                 SELECT *
                 FROM posts
                 WHERE user_id = ? ''', (user_id,)
                 )
-            row1 = cur.fetchall()
-
-            if not row1:
+            all_posts = cur.fetchall()
+            if all_posts:
+                rows = [Post.find(row[0]) for row in all_posts]
+                return rows
+            else:
                 return None
 
-            posts = []
-            for row in row1:
-                id = row[0]
-                cur = conn.execute(
-                '''
-                SELECT file_name
-                FROM photos
-                WHERE post_id = ? ''', (id,)
-                )
-                posts.append(Post.find(id))
-
-            return posts
-
         @staticmethod
-        def add_photo(file_name, post_id, date):
+        def create(user_id, description, title, date, photo_file):
             cur = conn.execute(
             '''
-            INSERT INTO photos (file_name, post_id, photo_date)
-            VALUES (?, ?, ?); ''', (file_name, post_id, date)
-            )
-            conn.commit()
-            return (cur.lastrowid, file_name)
-
-        @staticmethod
-        def delete_photo(post_id, file_name):
-            cur = conn.execute(
-            '''
-            DELETE FROM photos
-            WHERE post_id = ? AND file_name = ? ''' , (post_id, file_name)
-            )
-            conn.commit()
-
-        @staticmethod
-        def create(user_id, description, title, date, photo_files):
-            cur = conn.execute(
-            '''
-            INSERT INTO posts (user_id, description, title, post_date)
-            VALUES (?, ?, ?, ?); ''', (user_id, description, title, date)
+            INSERT INTO posts (user_id, description, title, post_date, file)
+            VALUES (?, ?, ?, ?, ?); ''', (user_id, description, title, date, photo_file)
             )
             id = cur.lastrowid
             conn.commit()
-
-            for files in photo_files:
-                Post.add_photo(files, id, date)
             return Post.find(id)
 
         @staticmethod
@@ -256,8 +213,8 @@ with sqlite3.connect('db.db') as conn:
             conn.commit()
 
         @staticmethod
-        def update(id, user_id, description, title, date, files):
-            cur = conn.excecute(
+        def update(id, description, title):
+            cur = conn.execute(
             '''
             UPDATE posts
             SET description = ?,
@@ -276,7 +233,7 @@ with sqlite3.connect('db.db') as conn:
 
     class Comment:
 
-        def __init__(self, id, user_id, post_id, text, date, parent_id, score = None, loc_latitude = None, loc_longitude = None):
+        def __init__(self, id, user_id, post_id, text, date, parent_id = None, loc_latitude = None, loc_longitude = None, score = None):
             self.id = id
             self.user_id = user_id
             self.post_id = post_id
@@ -288,11 +245,11 @@ with sqlite3.connect('db.db') as conn:
             self.loc_longitude = loc_longitude
 
         @staticmethod
-        def create(user_id, post_id, text, date, parent_id):
+        def create(user_id, post_id, text, date, parent_id = None, loc_latitude = None, loc_longitude = None, score = None):
             cur = conn.execute(
             '''
-            INSERT INTO comments (user_id, post_id, text, date, parent_id)
-            VALUES (?, ?, ?, ?, ?); ''', (user_id, post_id, text, date, parent_id))
+            INSERT INTO comments (user_id, post_id, text, date, parent_id, loc_latitude, loc_longitude, score)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?); ''', (user_id, post_id, text, date, parent_id, loc_latitude, loc_longitude, score))
 
             return Comment.find(cur.lastrowid)
 
@@ -312,7 +269,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find_comments_for_post_id(post_id):
-            cur = conn.excecute(
+            cur = conn.execute(
             '''
             SELECT *
             FROM comments
@@ -324,7 +281,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find_comments_for_user(user_id):
-            cur = conn.excecute(
+            cur = conn.execute(
             '''
             SELECT *
             FROM comments
@@ -336,7 +293,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find_children_for_comment(parent_id):
-            cur = conn.excecute(
+            cur = conn.execute(
             '''
             SELECT *
             FROM comments
@@ -355,7 +312,7 @@ with sqlite3.connect('db.db') as conn:
             SET text = ?
             WHERE id = ?''', (new_text, comment_id)
             )
-            return find(comment_id)
+            return Comment.find(comment_id)
 
     def print_p(*args):
         print("\033[92m" + "[+] " + " ".join(args) + '\033[0m')
@@ -405,8 +362,11 @@ with sqlite3.connect('db.db') as conn:
         # -- End Post testing
         '''
         #kay = User(1, 'kay', '12345abc', 'kyap', 'yapkaymen@gmail.com')
-        #kay_post = Post(1, 1, 'description', 'title', 'date', ['files'])
-        #kay.create_post(self, 'Hi', 'One', '1/1/2017', 'file') - works
+        #kay_post = Post(2, 1, 'description', 'title', 'date', 'files')
+        #kay_comment = Comment.create(1, 1, 2, 'text', 'date')
+        #kay_comment.edit_comment_with_id(1, 'text1')
+        #kay_post.find_comment(1)
+        #kay.create_post(self, 'Hi', 'One', '1/1/2017', 'file')
         #print(kay.find_post(1))
         #print(Post.find_all()) - works
         #print(kay.all_posts())

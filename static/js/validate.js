@@ -1,9 +1,10 @@
 $(document).ready(function(){
 
   $('.submit').click(function(evt){
-    // return validateSignupForm();
+     //return validateSignupForm();
   });
 
+       //return validateForm();
   $('.post_submit').click(function(evt){
     //return validatePost();
   });
@@ -12,7 +13,7 @@ $(document).ready(function(){
     if ($input.val().length < 4) {
       $input.parent()
         .find('.error')
-        .text('At least four characters required')
+        .text('At least four characters are required in this field')
       return false;
     } else {
       return true;
@@ -43,19 +44,6 @@ $(document).ready(function(){
     }
   }
 
-  function isImagePresent($input) {
-    if ($input.error()) {
-      $input.parent()
-        .find('.error')
-        .text('Image required');
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  function isvalidImage($input) {
-  }
 
   function validateSignupForm() {
     var $form = $('form.sign-in');
@@ -82,10 +70,13 @@ $(document).ready(function(){
     $('.error').html("");
 
     var $question = $('.ask_question')
-    var $image = $('.img_upload')
-    var $description = $('.description')
 
     var validQuestion = isPresent($question);
-    var validImage = isImagePresent($image);  //make sure that image is a compatable file type
+
+    if (validQuestion) {
+      return true;
+    }else {
+      return false;
+    }
   }
 });
