@@ -12,7 +12,7 @@ def authenticate_cookie(request):
     if user_cookie:
         user_cookie = user_cookie.decode("utf-8")
         print(user_cookie)
-        user = db.User.find(user_cookie)  # type: User
+        user = db.User.find_by_username(user_cookie)  # type: User
         if user is not None:
             print('user_cookie in alluser')
             return True
