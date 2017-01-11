@@ -38,5 +38,7 @@ h1 {
 .photobox img {
   width: 200px;
   height: 150px;
-
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg);
+  -moz-transform:rotateY(180deg);
 }
