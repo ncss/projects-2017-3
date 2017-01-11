@@ -26,6 +26,9 @@ def signup_handler_post(request):
     dob = request.get_field('dob')
     profile_pic = request.get_file('profile_picture')
     print(username)
+    if db.User.find_by_username(username) is not None:
+        request.write("username already exists!")
+        return
     new_user = db.User.sign_up(username, password, nickname, email)
     if profile_pic != (None, None, None):
         filename, content_type, data = profile_pic
@@ -37,7 +40,6 @@ def signup_handler_post(request):
                                new_user.gender, new_user.dob,
                                new_user.bio,str(new_user.id) + '.jpg')
 
-                request.redirect('/')
         else:
             request.write("uploaded file type not supported")
     else:
@@ -45,7 +47,8 @@ def signup_handler_post(request):
 
     if username is not None:
         request.set_secure_cookie("current_user", username)
-    db.User.sign_up(username, password, nickname, email)
+
+
     request.redirect('/')
 
 def signin_handler(request):
