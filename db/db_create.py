@@ -61,7 +61,7 @@ with sqlite3.connect('db.db') as conn:
     parent_id INTEGER,
     text TEXT NOT NULL,
     date TEXT NOT NULL,
-    score INTEGER NOT NULL,
+    score INTEGER,
 	loc_latitude REAL,
 	loc_longitude REAL,
     FOREIGN KEY(parent_id) REFERENCES comments(id),

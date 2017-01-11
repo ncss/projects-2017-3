@@ -1,4 +1,5 @@
-
+import datetime
+#from ..backend.common import *
 import sqlite3
 with sqlite3.connect('db.db') as conn:
     cur = conn.cursor()
@@ -74,7 +75,9 @@ with sqlite3.connect('db.db') as conn:
             return rows
 
         @staticmethod
-        def sign_up(username, password, nickname, email, creation_date):
+        def sign_up(username, password, nickname, email):
+            #creation_date = get_current_time()
+            creation_date = datetime.now().isoformat()
             cur.execute(
             '''
             INSERT INTO users (username, password, nickname, email, creation_date) VALUES (?, ?, ?, ?, ?)
@@ -215,7 +218,7 @@ with sqlite3.connect('db.db') as conn:
             cur = conn.execute(
             '''
             INSERT INTO photos (file_name, post_id, photo_date)
-            VALUES (?, ?, ?, ?); ''', (file_name, post_id, date)
+            VALUES (?, ?, ?); ''', (file_name, post_id, date)
             )
             conn.commit()
             return (cur.lastrowid, file_name)
@@ -273,7 +276,7 @@ with sqlite3.connect('db.db') as conn:
 
     class Comment:
 
-        def __init__(self, id, user_id, post_id, text, date, parent_id, score, loc_latitude, loc_longitude):
+        def __init__(self, id, user_id, post_id, text, date, parent_id, score = None, loc_latitude = None, loc_longitude = None):
             self.id = id
             self.user_id = user_id
             self.post_id = post_id
@@ -286,7 +289,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def create(user_id, post_id, text, date, parent_id):
-            cur = conn.cursor(
+            cur = conn.execute(
             '''
             INSERT INTO comments (user_id, post_id, text, date, parent_id)
             VALUES (?, ?, ?, ?, ?); ''', (user_id, post_id, text, date, parent_id))
@@ -295,7 +298,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find(id):
-            cur = conn.excecute(
+            cur = conn.execute(
             '''
             SELECT *
             FROM comments
@@ -361,20 +364,21 @@ with sqlite3.connect('db.db') as conn:
         print("\033[93m" + " ".join(args) + '\033[0m')
 
     if __name__ == "__main__":
-        #sign_up(username, password, nickname, email, creation_date)
-        User.sign_up('kay', '12345abc', 'kyap', 'yapkaymen@gmail.com', '1/10/2017')
-        User.sign_up('abc', 'ghsdak', 'paks', 'team@gmail.com', '1/10/2017')
-        details = User.find('kay')
-        assert details.username == 'kay'
-        try:
-            details1 = User.find('abc')
-            User.update('kay', 'abc', 'bear', 'bear@gmail.com', 'M', '30/01/1999', 'Bear is bear', 'picture')
-            details = User.find('kay')
-        except UserNotFound:
-            pass
-        multidetails = User.find_multiple()
+        '''
+        #sign_up(username, password, nickname, email, datetime)
+        #User.sign_up('kay', '12345abc', 'kyap', 'yapkaymen@gmail.com', '1/10/2017')
+        #User.sign_up('abc', 'ghsdak', 'paks', 'team@gmail.com', '1/10/2017')
+        #details = User.find('kay')
+        #assert details.username == 'kay'
+        #try:
+            #details1 = User.find('abc')
+            #User.update('kay', 'abc', 'bear', 'bear@gmail.com', 'M', '30/01/1999', 'Bear is bear', 'picture')
+            #details = User.find('kay')
+        #except UserNotFound:
+            #pass
+        #multidetails = User.find_multiple()
 
-        my_user = User.sign_up('amazing-user', 'secure-password', '¯\_(ツ)_/¯', 'some@email.com', '1/10/2017')
+        #my_user = User.sign_up('amazing-user', 'secure-password', '¯\_(ツ)_/¯', 'some@email.com', '1/10/2017')
 
         # -- Begin Post testing
         print_w("Beginning Post tests")
@@ -399,3 +403,12 @@ with sqlite3.connect('db.db') as conn:
         print_p("Post tests passed!")
 
         # -- End Post testing
+        '''
+        #kay = User(1, 'kay', '12345abc', 'kyap', 'yapkaymen@gmail.com')
+        #kay_post = Post(1, 1, 'description', 'title', 'date', ['files'])
+        #kay.create_post(self, 'Hi', 'One', '1/1/2017', 'file') - works
+        #print(kay.find_post(1)) - works
+        #print(Post.find_all()) - works
+        #print(kay.all_posts()) - works
+        #print(kay.find_post(5)) - works
+        #print(kay.create_comment(kay_post, 'text', 'date', None))
