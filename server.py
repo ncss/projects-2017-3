@@ -16,7 +16,7 @@ def index_handler(request):
     posts = db.Post.find_all()
     if posts:
         posts = [{'image':i.file if i.file != [] else 'notfound.jpg',
-                  'question':i.title} for i in posts]
+                  'question':i.title, 'id': i.id} for i in posts]
         request.write(render('index.html', {'posts':posts, 'signed_in':authenticate_cookie(request), 'username': get_username(request)})) # { 'post1': (image location, comment}
     else:
         request.write("no posts found")  # { 'post1': (image location, comment}
