@@ -1,6 +1,6 @@
 from auth import requires_login
 from template_engine.parser import render
-from backend.common import *
+from backend.common import get_upload_path, get_image_path, get_current_time
 import db
 
 def signin_handler(request):
