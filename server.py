@@ -10,12 +10,6 @@ IMAGE_DIR = os.path.join('static', 'images')
 
 UP_IMAGES = []
 
-def get_upload_path(filename):
-    return os.path.join(UPLOADS_DIR, filename)
-
-def get_image_path(filename):
-    return os.path.join(IMAGE_DIR, filename)
-
 def index_handler(response):
     print(UP_IMAGES)
     response.write(render('index.html', {'posts':UP_IMAGES})) # { 'post1': (image location, comment}
