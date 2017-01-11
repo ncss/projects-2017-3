@@ -50,7 +50,7 @@ def signin_handler(request):
 
 def signin_handler_post(request):
     username = request.get_field('username')
-    password = request.get_field('password')
+    password = hash_string(request.get_field('password'))
     if db.User.find_by_username(username).password == password:
         request.set_secure_cookie("current_user", username)
         user = db.find(username)

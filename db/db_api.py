@@ -129,7 +129,7 @@ with sqlite3.connect('db.db') as conn:
         def all_posts(self):
             return Post.find_all(self.id)
 
-        def find_post(post_id):
+        def find_post(self, post_id):
             return Post.find(post_id)
 
         def create_comment(self, Post, text, date, parent_id):
@@ -269,9 +269,9 @@ with sqlite3.connect('db.db') as conn:
             return Post.find(id)
 
         def all_comments(self):
-            return Comment.find_all(self.id)
+            return Comment.find_comments_for_post_id(self.id)
 
-        def find_comment(comment_id):
+        def find_comment(self, comment_id):
             return Comment.find(comment_id)
 
     class Comment:
@@ -407,8 +407,12 @@ with sqlite3.connect('db.db') as conn:
         #kay = User(1, 'kay', '12345abc', 'kyap', 'yapkaymen@gmail.com')
         #kay_post = Post(1, 1, 'description', 'title', 'date', ['files'])
         #kay.create_post(self, 'Hi', 'One', '1/1/2017', 'file') - works
-        #print(kay.find_post(1)) - works
+        #print(kay.find_post(1))
         #print(Post.find_all()) - works
-        #print(kay.all_posts()) - works
+        #print(kay.all_posts())
         #print(kay.find_post(5)) - works
-        #print(kay.create_comment(kay_post, 'text', 'date', None))
+        #kay.create_comment(kay_post, 'text', 'date', None)
+        #kay.edit('password', 'nickname', 'email', 'gender', 'dob', 'bio', 'picture')
+        #edit = kay.find(kay.id)
+        #print(edit)
+        #kay_post.find_comment(1)
