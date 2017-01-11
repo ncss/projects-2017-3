@@ -3,7 +3,7 @@ import os
 from template_engine.parser import render
 from backend import ask, user, profile, view
 from db import db_api as db
-from auth import requires_login
+from auth import requires_login, authenticate_cookie
 from backend.common import *
 
 TEMPLATE_DIR = 'templates'
@@ -14,11 +14,11 @@ UP_IMAGES = []
 
 def index_handler(request):
     print(UP_IMAGES)
-    request.write(render('index.html', {'posts':UP_IMAGES})) # { 'post1': (image location, comment}
+    request.write(render('index.html', {'posts':UP_IMAGES, 'signed_in':authenticate_cookie(request)})) # { 'post1': (image location, comment}
 
 
 def handle_list_users(request):
-    request.write(render('list_users.html', {'users': db.User.find_multiple()}))
+    request.write(render('list_users.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request)}))
 
 
 

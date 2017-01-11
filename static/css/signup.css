@@ -5,6 +5,7 @@ body {
 }
 
 .input_field {
+  border: 1px solid black;
   width: 400px;
   height: 400px;
   margin: 0px auto;
@@ -28,8 +29,18 @@ body {
 
 }
 
+.photobox label {
+  width: 200px;
+  height: 150px;
+  text-align: center;
+  align-items: center;
+}
+
 .photobox video,
 .photobox img {
   width: 200px;
   height: 150px;
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg);
+  -moz-transform:rotateY(180deg);
 }

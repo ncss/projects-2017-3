@@ -3,6 +3,7 @@ body{
   line-height: 22px;
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
+  /*background-color: white;*/
   background-color: #E0F7FA;
 }
 
@@ -13,16 +14,12 @@ h1 {
   color: #26C6DA;
 }
 
-
 h2 {
   font-family: "Work Sans", sans-serif;
   color: #26C6DA;
-  font-size: 20px;
+  font-size: 28px;
   padding-bottom: 5px;
-}
 
-div h2 {
-  font-size:30px;
 }
 
 main {
@@ -62,15 +59,12 @@ input[type="submit"] {
 
 fieldset {
   border: none;
-  width: 300px;
-  max-height: 270px;
   margin-bottom: 10px;
   display: inline-block;
   margin: 10px;
   vertical-align: top;
-  border: 1px solid black;
+  border: 1px solid #26C6DA;
   border-radius: 10px;
-  padding: 15px 15px 15px 15px;
 }
 
 fieldset p {
@@ -81,6 +75,7 @@ header {
   border-bottom: 1px solid #26C6DA;
   background-color: white;
   margin-bottom: 40px;
+  padding: 10px;
 }
 
 header div {

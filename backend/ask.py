@@ -2,11 +2,12 @@ from auth import requires_login
 from backend.common import *
 from template_engine import render
 from db import db_api as db
+from auth import requires_login, authenticate_cookie
 
 @requires_login
 def ask_handler(request):
     name = request.get_field("name")
-    request.write(render("ask.html", {'username': 'rand'}))
+    request.write(render("ask.html", {'username': 'rand', 'signed_in':authenticate_cookie(request)}))
 
 @requires_login
 def ask_handler_post(request):
@@ -20,6 +21,7 @@ def ask_handler_post(request):
             db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
             request.write("Your image was uploaded! name=%s"%(photo_files[0]))
             request.redirect('/')
+            request.redirect('/view/' + str(post.id))
         else:
             request.write("uploaded file type not supported")
 

@@ -87,4 +87,5 @@ ENV/
 
 # Rope project settings
 .ropeproject
+db/db.db
 db.db

@@ -9,6 +9,7 @@
     {% include _nav_bar.html %}
     <section Class = 'feed_title'>
       <h1>Feed</h1>
+      {{ signed_in }}
     </section>
     <div class = 'post_list'>
       {% for post in posts %}

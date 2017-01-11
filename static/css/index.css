@@ -22,11 +22,10 @@ body {
 
 .feed_title {
   font-size: 35px;
+  margin-left: 440px;
 }
 
-section h1 {
+h1 {
   font-family:'Work Sans', sans-serif;
-  color: #26C6DA;
-  font-size: 30px;
-  text-align: center;
+  color: #26C6DA
 }
