@@ -32,7 +32,7 @@ def handle_list_users(request):
     request.write(render('list_users.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
 
 def not_found_handler(request):
-    request.write(render('404.html', {'signed_in':authenticate_cookie(request)}))
+    request.write(render('404.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
 
 server = Server()
 server.register(r'/', index_handler)
