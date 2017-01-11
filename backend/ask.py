@@ -14,10 +14,14 @@ def ask_handler_post(request):
     title = request.get_field("question")
     description = request.get_field("description")
     if photo_files != (None, None, None):
-        user_id = request.get_secure_cookie("current_user")
-        '''photo_files from database needs to be discussed regarding single/multiple photo uploads'''
-        db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
+        if photo_files[1].startswith('image/'):
+            user_id = request.get_secure_cookie("current_user")
+            '''photo_files from database needs to be discussed regarding single/multiple photo uploads'''
+            db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
+            request.write("Your image was uploaded! name=%s"%(photo_files[0]))
+            request.redirect('/')
+        else:
+            request.write("uploaded file type not supported")
+
     else:
-        print("upload failed")
-    request.write("Your image was uploaded! name=%s"%(photo_files[0]))
-    request.redirect('/')
+        request.write('We couldn\'t find an uploaded file.')

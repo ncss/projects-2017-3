@@ -1,14 +1,19 @@
 $(document).ready(function(){
 /*
   $('.submit').click(function(evt){
-    evt.preventDefault();
     validateForm();
   });
 */
 function isPresent($input) {
-  if ($input == "") {
-
+  if ($input.val().length < 8) {
+    $input.parent().find('.error').text('your is not long enough')
   }
+
+function isValidEmail($input) {
+
+}
+
+
 }
 
 function validateForm() {
@@ -18,14 +23,14 @@ function validateForm() {
     var nicknameReg = /^[A-Za-z]+$/
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
-    var username = $('.username').val();
-    var nickname = $('.nickname').val();
-    var password = $('.password').val();
-    var email = $('.email').val();
+    var $username = $('.username')
+    var $nickname = $('.nickname')
+    var $password = $('.password')
+    var $email = $('.email')
 
-    if (username.length < 8 ) {
+    isPresent($username);
 
-    }
+
 
 
 }

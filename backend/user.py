@@ -46,10 +46,16 @@ def signup_handler_post(request):
     profile_pic = request.get_file('profile_picture')
     if profile_pic != (None, None, None):
         filename, content_type, data = profile_pic
-        with open(get_upload_path(filename), 'wb') as f:
-            f.write(data)
+        if content_type.startswith('image/'):
+            with open(get_upload_path(filename), 'wb') as f:
+                f.write(data)
+                db.User.sign_up(username, password, nickname, email, get_current_time())
+                request.redirect('/')
+        else:
+            request.write("uploaded file type not supported")
     else:
-        print('It failed')
+        request.write('We couldn\'t find an uploaded file.')
+
     if username is not None:
         request.set_secure_cookie("current_user", username)
     db.User.sign_up(username, password, nickname, email, get_current_time())
