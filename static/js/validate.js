@@ -5,6 +5,7 @@ $(document).ready(function(){
   });
 
   $('.post_submit').click(function(evt){
+      //return validatePost();
   });
 
 function isPresent($input) {
@@ -41,6 +42,7 @@ function isValidName($input) {
 }
 
 function isImagePresent($input) {
+  if ($input.error()) {
     $input.parent().find('.error').text('you need to upload an image in order to ask a question')
     return false;
   }
@@ -50,6 +52,7 @@ function isImagePresent($input) {
 }
 
 function isvalidImage($input) {
+
 }
 
 
