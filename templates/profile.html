@@ -1,21 +1,20 @@
 <!doctype html>
 <html>
   <head>
-  {% include _shared_head.html %}
+    <link rel="stylesheet" type='text/css' href='/static/css/Profile.css'>
+    {% include _shared_head.html %}
   </head>
-  <header>
+  <body>
     {% include _nav_bar.html %}
-  </header>
-  <main>
-    <div class='user_info'>
-      <p> Username: {{ username }} </p>
-      <p> Nickname: {{ nickname }} </p>
-      <p> Email: {{ email }} </p>
+    <main>
+      <div class='user_info'>
+        <p class="username_profile"> Username: <span class="profile_info">{{ username }}</span> </p>
+        <p> Nickname: <span class="profile_info">{{ nickname }}</span> </p>
+        <p> Email: <span class="profile_info">{{ email }}</span> </p>
       <!-- The user geneder is not data we are relating to the website -->
       <!-- We are not collecting the user date of brith -->
-      <p> Picture: <img src= "static/images/{{ picture }}"></p>
-    </div>
-  </main>
-  <body>
+        <p> Picture: <img src= "static/images/{{ picture }}"></p>
+      </div>
+    </main>
   </body>
 </html>
