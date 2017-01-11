@@ -12,7 +12,7 @@ $(document).ready(function(){
     if ($input.val().length < 4) {
       $input.parent()
         .find('.error')
-        .text('This field is not long enough')
+        .text('At least four characters required')
       return false;
     } else {
       return true;
