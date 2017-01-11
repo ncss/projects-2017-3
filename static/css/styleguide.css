@@ -14,9 +14,9 @@ h1 {
 }
 
 h2 {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Work Sans", sans-serif;
   color: #26C6DA;
-  font-size: 20px;
+  font-size: 28px;
   padding-bottom: 5px;
 
 }
@@ -64,7 +64,6 @@ fieldset {
   display: inline-block;
   margin: 10px;
   vertical-align: top;
-  border: 1px solid black;
   border-radius: 10px;
 }
 
