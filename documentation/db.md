@@ -97,11 +97,6 @@ Post.find_all(1) 	# Gets every post by a user with an ID
 ```
 Returns an array of `Post` objects
 
-### Delete a Photo from a Post
-To remove a photo from a `Post`:
-```python
-Post.delete_photo(1, "file_name") # 1st parameter is the post ID
-```
 
 ### Delete a Post
 To delete a `Post`:
