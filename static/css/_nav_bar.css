@@ -35,20 +35,22 @@
   color:white;
 }
 
-header a {
-  text-decoration: none;
-}
-
 header a:hover {
     background-color: #E0F7FA;
     color: #26C6DA;
 }
 
 header a {
+    text-decoration: none;
     color: #26C6DA;
     margin-right: 15px;
 }
 
 header h1 {
-  margin-right: 200px;
+  display: inline-block;
+  margin-left: 33%;
+}
+
+header h1 a:hover {
+  background-color: transparent;
 }

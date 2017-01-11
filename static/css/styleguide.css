@@ -63,10 +63,7 @@ fieldset {
   display: inline-block;
   margin: 10px;
   vertical-align: top;
-<<<<<<< HEAD
-=======
   border: 1px solid #26C6DA;
->>>>>>> origin/dev
   border-radius: 10px;
 }
 
@@ -78,6 +75,7 @@ header {
   border-bottom: 1px solid #26C6DA;
   background-color: white;
   margin-bottom: 40px;
+  padding: 10px;
 }
 
 header div {
