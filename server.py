@@ -26,7 +26,7 @@ def index_handler(request):
         request.write("no posts found")  # { 'post1': (image location, comment}
 
 def aboutus_handler(request):
-    request.write(render('aboutus.html', {'signed_in':authenticate_cookie(request)}))
+    request.write(render('aboutus.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
 
 def handle_list_users(request):
     request.write(render('list_users.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
