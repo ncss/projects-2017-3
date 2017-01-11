@@ -6,10 +6,22 @@
 <body>
   {% include _nav_bar.html %}
 {% for user in users %}
-<p>
+<table>
+  <tr>
+    <td>id</td>
+    <td>username</td>
+    <td>password</td>
+    <td>nickname</td>
+    <td>email</td>
+    <td></td>
+  </tr>
+  <tr>
     {% for field in user %}
-      {{ field }}
+      <td>
+        {{ field }}
+      </td>
     {% end for %}
-</p>
+  </tr>
+</table>
 {% end for %}
 </body>
