@@ -7,12 +7,11 @@
       <a href="/">Find It!</a>
     </h1>
     <nav>
-      {% if True %}
+      {% if signed_in %}
         <a class='plus_button' href="/ask">Ask</a>
-        <a class ='username' href="#">Username</a>
+        <a class ='username' href="#">Profile</a>
         <a href="/logout"> Log Out </a>
-      {% end if %}
-      {% if True %}
+      {% else %}
         <a href="/signin"> Sign in </a>
         <a href="/signup"> Sign Up </a>
       {% end if %}
