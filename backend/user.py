@@ -26,7 +26,7 @@ def signup_handler(request):
     doc = request.get_field('doc')
     gender = request.get_field('gender')
     dob = request.get_field('dob')
-    if username != None:
+    if username is not None:
         request.set_secure_cookie("current_user", username)
 
 
