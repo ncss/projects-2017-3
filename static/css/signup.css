@@ -34,6 +34,13 @@ h1 {
 
 }
 
+.photobox label {
+  width: 200px;
+  height: 150px;
+  text-align: center;
+  align-items: center;
+}
+
 .photobox video,
 .photobox img {
   width: 200px;
@@ -41,5 +48,5 @@ h1 {
   transform: rotateY(180deg);
   -webkit-transform:rotateY(180deg);
   -moz-transform:rotateY(180deg);
-  
+
 }
