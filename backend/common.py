@@ -20,5 +20,5 @@ def get_current_time():
     return datetime.now().isoformat()
 
 def fetch_file(url, filename):
-    response = urllib.request.urlretrieve('https://groklearning-cdn.com/static/images/challenge/ncss-logo-fb.png', filename)
+    response = urllib.request.urlretrieve(url, filename)
     return response[0]
