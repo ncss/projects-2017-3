@@ -18,6 +18,7 @@ def view_question_handler(request, question_id):
         'username': get_username(request),
         'comments': post.all_comments(),
         'user_ids': db.User.find_multiple(),
+        'photo_id': post.id,
     }
     print(post.title)
     request.write(render('view_question.html', post_info))
