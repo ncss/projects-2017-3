@@ -40,12 +40,15 @@
               <!-- Experimental video profile pic + Matilda and Tracey -->
             <div class='photobox'>
               <video autoplay></video>
-              <img src="" class='profile_image'>
+              <img src="" hidden class='profile_image'>
               <canvas hidden width='200' height='150'> </canvas>
+              <label>Click on preview to take snapshot</label>
             </div>
 
               <script>
               var canvas = document.querySelector('canvas');
+              var profile_image = document.querySelector('.profile_image');
+              var profile_label = document.querySelector('.photobox label');
               var ctx = canvas.getContext('2d');
               var video = document.querySelector('video');
               var localMediaStream = null;
@@ -62,7 +65,9 @@
                     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
                     // "image/webp" works in Chrome.
                     // Other browsers will fall back to image/png.
-                    document.querySelector('.profile_image').src = canvas.toDataURL('image/webp');
+                    profile_image.src = canvas.toDataURL('image/webp');
+                    profile_image.hidden = false;
+                    profile_label.hidden = true;
                   }
                 }
 

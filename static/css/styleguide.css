@@ -109,3 +109,7 @@ header img {
 article h3 {
   font-size: 12px;
 }
+
+*[hidden] {
+  display: none !important;
+}
