@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   $('.submit').click(function(evt){
-      return validateForm();
+      //return validateForm();
   });
 
 function isPresent($input) {
