@@ -1,9 +1,9 @@
 $(document).ready(function(){
-
+/*
   $('.submit').click(function(evt){
     validateForm();
   });
-
+*/
 function isPresent($input) {
   if ($input.val().length < 8) {
     $input.parent().find('.error').text('your is not long enough')
