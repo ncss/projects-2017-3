@@ -36,5 +36,20 @@
         </form>
       </div>
     </main>
+    <script>
+    const ignore = event => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    'drag dragstart dragend dragover dragenter dragleave drop'.split(/\s+/).forEach(name => {
+      document.addEventListener(name, ignore);
+    });
+document.addEventListener('drop', event =>{
+  droppedFiles = event.dataTransfer.files;
+  console.info(droppedFiles);
+  const fileupload = document.getElementById('fileupload');
+  fileupload.files = droppedFiles;
+})
+    </script>
   </body>
 </html>
