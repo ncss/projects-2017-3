@@ -172,6 +172,18 @@ with sqlite3.connect('db.db') as conn:
             return Post(row1[0], row1[1], row1[2], row1[3], row1[4], row1[5])
 
         @staticmethod
+        def get_next_post_id():
+            cur = conn.execute(
+            '''
+            SELECT id
+            FROM posts
+            ORDER BY id desc
+            '''
+            )
+            row1 = cur.fetchone()[0] + 1
+            return row1
+
+        @staticmethod
         def find_all(user_id = None):
             if not user_id:
                 cur = conn.execute(
@@ -193,7 +205,8 @@ with sqlite3.connect('db.db') as conn:
                 return None
 
         @staticmethod
-        def create(user_id, description, title, date, photo_file):
+        def create(user_id, description, title, photo_file):
+            date = datetime.now().isoformat()
             cur = conn.execute(
             '''
             INSERT INTO posts (user_id, description, title, post_date, file)
@@ -361,8 +374,10 @@ with sqlite3.connect('db.db') as conn:
 
         # -- End Post testing
         '''
-        #kay = User(1, 'kay', '12345abc', 'kyap', 'yapkaymen@gmail.com')
-        #kay_post = Post(2, 1, 'description', 'title', 'date', 'files')
+        kay = User(1, 'kay', '12345abc', 'kyap', 'yapkaymen@gmail.com')
+        kay_post = Post(2, 1, 'description', 'title', 'date', 'files')
+        print(kay_post.get_next_post_id())
+        #kay_post.find(2)
         #kay_comment = Comment.create(1, 1, 2, 'text', 'date')
         #kay_comment.edit_comment_with_id(1, 'text1')
         #kay_post.find_comment(1)

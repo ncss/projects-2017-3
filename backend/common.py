@@ -1,6 +1,7 @@
 import os
 import hashlib
 import urllib.request
+import tempfile
 from datetime import datetime
 from db import db_api as db
 
@@ -32,4 +33,4 @@ def get_username(request):
 
 def fetch_file(url, filename):
     response = urllib.request.urlretrieve(url, filename)
-    return response[0]
+    return response

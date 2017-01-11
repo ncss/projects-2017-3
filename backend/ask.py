@@ -1,8 +1,11 @@
+import time
+from os import rename
 from auth import requires_login
 from backend.common import *
 from template_engine import render
 from db import db_api as db
 from auth import requires_login, authenticate_cookie
+from mimetypes import guess_extension
 
 @requires_login
 def ask_handler(request):
@@ -24,13 +27,15 @@ def ask_handler_post(request):
             request.redirect('/view/' + str(post.id))
         else:
             request.write("uploaded file type not supported")
-
     else:
         user_id = request.get_secure_cookie("current_user")
         # TODO discussed regarding single/multiple photo uploads
-        fname = url.split('/')[-1].split('#')[0]
-        fetch_file(url, os.path.join(UPLOADS_DIR, fname))
-        db.Post.create(user_id, description, title, get_current_time(), fname)
+        tempfile_name = str(int(time.time()))
+        filename, response = fetch_file(url, tempfile_name)
+        filename = filename + guess_extension(response['Content-Type'])
+        filepath = get_upload_path(filename)
+        rename(tempfile_name, filepath)
+        db.Post.create(user_id, description, title, get_current_time(), filename)
         request.redirect('/')
 
 
