@@ -1,27 +1,39 @@
 $(document).ready(function(){
 
   $('.submit').click(function(evt){
-      //return validateForm();
+      // return validateForm();
   });
 
 function isPresent($input) {
-  if ($input.val().length < 8) {
+  if ($input.val().length < 4) {
     $input.parent().find('.error').text('this field is not long enough')
+    return false;
+  }
+
+  else {
+    return true;
   }
 }
 
 function isValidEmail($input) {
-  debugger
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  if (!emailReg.test($input)) {
-    $input.parent().find('.error').text('the email address you entered is not a valide email address')
+  if (!emailReg.test($input.val())) {
+    $input.parent().find('.error').text('the email address you entered is not a valid email address')
+    return false;
+  }
+  else {
+    return true;
   }
 }
 
 function isValidName($input) {
   var nameReg = /^[A-Za-z0-9]+$/;
   if (!nameReg.test($input)) {
-    $input.parent().find('.error').text('the name you entered for this field is invalid. Note that usernames and nicknames can only contain letters and numbers.')
+    $input.parent().find('.error').text('the name you have entered for this field is invalid. Note that usernames and nicknames can only contain letters and numbers.')
+    return false;
+  }
+  else {
+    return true;
   }
 }
 
@@ -35,9 +47,9 @@ function validateForm() {
     var $email = $('.email')
 
     var validUsername = isPresent($username) && isValidName($username);
-    var validNickname = isPresent($nickname) && isValidName($username) ;
+    var validNickname = isPresent($nickname) && isValidName($username);
     var validPassword = isPresent($password);
-    var validEmail = isPresent($email) && isValidEmail$(email);
+    var validEmail = isPresent($email) && isValidEmail($email);
 
     if (validUsername && validNickname && validPassword && validEmail) {
       return true;
