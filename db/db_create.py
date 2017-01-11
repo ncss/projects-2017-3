@@ -90,14 +90,14 @@ with sqlite3.connect(DB_FILE) as conn:
     cur.execute(
     '''
     INSERT INTO posts VALUES
-    (NULL, 1, 'I was walking down Sydney the other day, and I saw this amazing backpack. Does anyone know which company made this?', 'Where is this backpack from?', '01/01/2017', '1.jpeg'),
-    (NULL, 1, 'I''ve always loved this book series, but got out of touch with it some time ago. I decided to pick it back up, but I wasn''t sure where to start.', 'Which part of the series is this book from?', '01/01/2017', '2.jpg'),
-    (NULL, 3, 'I''m looking into purchasing a new pet. I saw this cat the other day, but I''m not sure what breed it is. Could anyone tell me?', 'What breed of kitten is this?', '01/01/2017', '3.jpg'),
-    (NULL, 4, '', 'Where could I buy this particular dice?', '01/01/2017', '4.jpg'),
-    (NULL, 7, 'I''ve had my eye on these pair of shoes, but the shops near me don''t have them. Does anyone know of stores in Canberra who have this pair of shoes for sale?', 'Where can I buy these shoes?', '01/01/2017', '5.jpg'),
-    (NULL, 8, 'Anyone know where these socks are from?', 'Game-themed socks', '01/01/2017', '6.jpg'),
-    (NULL, 10, 'Is this t-shirt limited edition? It looks amazing O_O', 'Fancy T-Shirt', '01/01/2017', '7.jpg'),
-    (NULL, 12, 'It looks really simplistic, and I would like to know where I could purchase it in Sydney', 'What watch is this?', '01/01/2017', '8.jpg')
+    (NULL, 1, 'I was walking down Sydney the other day, and I saw this amazing backpack. Does anyone know which company made this?', 'Where is this backpack from?', '01/01/2017', 'uploads/questions/1.jpeg'),
+    (NULL, 1, 'I''ve always loved this book series, but got out of touch with it some time ago. I decided to pick it back up, but I wasn''t sure where to start.', 'Which part of the series is this book from?', '01/01/2017', 'uploads/questions/2.jpg'),
+    (NULL, 3, 'I''m looking into purchasing a new pet. I saw this cat the other day, but I''m not sure what breed it is. Could anyone tell me?', 'What breed of kitten is this?', '01/01/2017', 'uploads/questions/3.jpg'),
+    (NULL, 4, '', 'Where could I buy this particular dice?', '01/01/2017', 'uploads/questions/4.jpg'),
+    (NULL, 7, 'I''ve had my eye on these pair of shoes, but the shops near me don''t have them. Does anyone know of stores in Canberra who have this pair of shoes for sale?', 'Where can I buy these shoes?', '01/01/2017', 'uploads/questions/5.jpg'),
+    (NULL, 8, 'Anyone know where these socks are from?', 'Game-themed socks', '01/01/2017', 'uploads/questions/6.jpg'),
+    (NULL, 10, 'Is this t-shirt limited edition? It looks amazing O_O', 'Fancy T-Shirt', '01/01/2017', 'uploads/questions/7.jpg'),
+    (NULL, 12, 'It looks really simplistic, and I would like to know where I could purchase it in Sydney', 'What watch is this?', '01/01/2017', 'uploads/questions/8.jpg')
     '''
     )
 
