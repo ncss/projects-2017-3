@@ -12,7 +12,7 @@
         <a class ='username' href="#">Username</a>
         <a href="/logout"> Log Out </a>
       {% end if %}
-      {% if True %}
+      {% if not signed_in %}
         <a href="/signin"> Sign in </a>
         <a href="/signup"> Sign Up </a>
       {% end if %}
