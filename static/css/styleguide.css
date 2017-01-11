@@ -3,7 +3,8 @@ body{
   line-height: 22px;
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
-  background-color: white;
+  /*background-color: white;*/
+  background-color: #E0F7FA;
 }
 
 h1 {

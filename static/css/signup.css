@@ -11,11 +11,6 @@ body {
   margin: 0px auto;
 }
 
-h1 {
-  font-family:'Work Sans', sans-serif;
-  color: #26C6DA
-}
-
 .signup_form {
   position: relative;
   margin-top: 700px;
