@@ -1,8 +1,8 @@
 from auth import requires_login
 from backend.common import *
 from template_engine import render
+from db import db_api as db
 
-UP_IMAGES = []
 @requires_login
 def ask_handler(request):
     name = request.get_field("name")
@@ -10,15 +10,14 @@ def ask_handler(request):
 
 @requires_login
 def ask_handler_post(request):
-    file = request.get_file('fileupload')
-    question = request.get_field("question")
-    #print(file)
-    if file != (None, None, None):
-        with open(get_image_path(file[0]), 'wb') as f:
-            f.write(file[2])
-            print("uploaded")
-            UP_IMAGES.append({'image':file[0], 'question':question})
+    photo_files = request.get_file("fileupload")
+    title = request.get_field("question")
+    description = request.get_field("description")
+    if photo_files != (None, None, None):
+        user_id = request.get_secure_cookie("current_user")
+        '''photo_files from database needs to be discussed regarding single/multiple photo uploads'''
+        db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
     else:
         print("upload failed")
-    request.write("Your image was uploaded! name=%s"%(file[0]))
+    request.write("Your image was uploaded! name=%s"%(photo_files[0]))
     request.redirect('/')
