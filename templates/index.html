@@ -7,9 +7,6 @@
   </head>
   <body>
     {% include _nav_bar.html %}
-    <section Class = 'feed_title'>
-      <h1>Feed</h1>
-    </section>
     <div class = 'post_list'>
       {% for post in posts %}
       <a href="view/{{post['id'] }}">
