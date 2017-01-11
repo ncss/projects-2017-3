@@ -1,7 +1,7 @@
 from tornado.ncss import Server, ncssbook_log
 import os
 from template_engine.parser import render
-from backend import ask, user
+from backend import ask, user, profile
 from db import db_api as db
 from auth import User, requires_login, add_user
 from backend.common import *
@@ -37,5 +37,5 @@ server.register(r'/ask'         , ask.ask_handler      , post=ask.ask_handler_po
 server.register(r'/signin'      , user.signin_handler  , post=user.signin_handler_post)
 server.register(r'/logout'      , user.signout_handler)
 server.register(r'/list_users'  , handle_list_users)
-
+server.register(r'/profile/(.+)', profile.view_handler)
 server.run()
