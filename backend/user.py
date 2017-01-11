@@ -51,12 +51,16 @@ def signin_handler(request):
 def signin_handler_post(request):
     username = request.get_field('username')
     password = hash_string(request.get_field('password'))
-    if db.User.find_by_username(username).password == password:
-        request.set_secure_cookie("current_user", username)
-        user = db.User.find_by_username(username)
-        request.redirect('/')
+    if db.User.find_by_username(username):
+        if db.User.find_by_username(username).password == password:
+            request.set_secure_cookie("current_user", username)
+            user = db.User.find_by_username(username)
+            request.redirect('/')
+        else:
+            request.write("bad login details")
     else:
-        request.write("bad login details")
+        request.write("Usrname cannot be found")
+        return(None)
 
 @requires_login
 def signout_handler(request):

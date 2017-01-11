@@ -26,12 +26,13 @@ def index_handler(request):
         request.write("no posts found")  # { 'post1': (image location, comment}
 
 def aboutus_handler(request):
-    request.write(render('aboutus.html', {}))
+    request.write(render('aboutus.html', {'signed_in':authenticate_cookie(request)}))
 
 def handle_list_users(request):
     request.write(render('list_users.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
 
-
+def not_found_handler(request):
+    request.write(render('404.html', {'signed_in':authenticate_cookie(request)}))
 
 server = Server()
 server.register(r'/', index_handler)
@@ -43,4 +44,5 @@ server.register(r'/logout'      , user.signout_handler)
 server.register(r'/list_users'  , handle_list_users)
 server.register(r'/profile/(.+)', profile.view_handler, post=profile.view_handler_post)
 server.register(r'/aboutus'     , aboutus_handler)
+server.register(r'/.*'     , not_found_handler)
 server.run()
