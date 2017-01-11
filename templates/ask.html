@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    {% include _shared_head.html %}
+    <link rel="stylesheet" type='text/css' href='css/askQuestion.css'>
+    <title>Ask a Question!</title>
+  </head>
+  <body>
+    {% include _nav_bar.html %}
+    <section>
+      <div>
+        <nav>
+          <ul>
+            <li><a href="#">Logo here</a></li>
+            <li><a href="#">Title Here</a></li>
+            <li><a href="#">Username ={{ username }}</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+    <div class="wholething">
+      <form action="/ask" method="post" enctype = "multipart/form-data">
+        <h1>Ask a Question</h1>
+        <p class="question">
+          <label for="question">Question:</label>
+          <input type="text" name="question">
+        </p>
+        <p class="question">
+          <label for="upload">Upload an image of the product you want to find!</label>
+          <input type="file" name="fileupload" id="fileupload">
+        </p>
+        <p class="question">
+          <label for="description">Description</label>
+          <input type="text" name="description" >
+        </p>
+        <p class="question">
+          <input type="submit" value="Submit">
+        </p>
+      </form>
+    </div>
+  </body>
+</html>

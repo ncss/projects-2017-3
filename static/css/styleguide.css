@@ -1,0 +1,36 @@
+body{
+  max-width: 100%;
+  margin-left: 100px;
+  line-height: 22px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+}
+
+h1 {
+  font-family: "Work Sans", sans-serif;
+  font-size: 18px;
+  padding-bottom: 5px;
+}
+
+h2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  padding-bottom: 5px;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0px auto;
+}
+
+p {
+  padding-bottom: 15px;
+}
+
+header a {
+  font-family: "Work Sans", sans-serif;
+}
+
+header h1 {
+  font-size: 18px;
+}

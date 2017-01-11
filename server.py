@@ -1,23 +1,34 @@
-import os
 from tornado.ncss import Server, ncssbook_log
+import os
+from template_engine.parser import render
+from backend import ask, user, view
+from db import db_api as db
+from auth import requires_login
+from backend.common import *
 
 TEMPLATE_DIR = 'templates'
+UPLOADS_DIR = os.path.join('static', 'uploads')
+IMAGE_DIR = os.path.join('static', 'images')
 
-def render_file(response, filename:str, variables) -> None:
-    """Renders the filename replaceing {name} with keys in variables"""
-    response.write(get_template(filename).format(**variables))
-
-def get_template(filename):
-    """
-    Gets the template from TEMPLATE_DIR with name filename
-    """
-    with open(os.path.join(TEMPLATE_DIR, filename)) as f:
-        return f.read()
+UP_IMAGES = []
 
 def index_handler(request):
-    request.write("hello there")
+    print(UP_IMAGES)
+    request.write(render('index.html', {'posts':UP_IMAGES})) # { 'post1': (image location, comment}
+
+
+def handle_list_users(request):
+    request.write(render('list_users.html', {'users': db.User.find_multiple()}))
+
 
 
 server = Server()
 server.register(r'/', index_handler)
+server.register(r'/view/(\d+)/?', view.view_question_handler)
+server.register(r'/signup'      , user.signup_handler  , post=user.signup_handler_post)
+server.register(r'/ask'         , ask.ask_handler      , post=ask.ask_handler_post)
+server.register(r'/signin'      , user.signin_handler  , post=user.signin_handler_post)
+server.register(r'/logout'      , user.signout_handler)
+server.register(r'/list_users'  , handle_list_users)
+
 server.run()

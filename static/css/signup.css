@@ -1,0 +1,31 @@
+body {
+  max-width: 1700px;
+  margin: 0px auto;
+  background-color: #E0F7FA;
+  font-family: "Open Sans", sans-serif;
+}
+
+.input_field {
+  border: 1px solid black;
+  width: 400px;
+  height: 400px;
+  margin: 0px auto;
+}
+
+h1 {
+  font-family:'Work Sans', sans-serif;
+  color: #26C6DA
+}
+
+.signup_form {
+  position: relative;
+  margin-top: 700px;
+  max-width: 600px;
+  height: 400px;
+  margin: 0px auto;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}

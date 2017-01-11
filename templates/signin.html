@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include _shared_head.html %}
+    <link rel="stylesheet" type="text/css" href="static/css/signin.css">
+  </head>
+  <body>
+    {% include _nav_bar.html %}
+    <header>
+      <h1>Sign In </h1>
+    </header>
+    <main>
+      <div>
+        <form action="/signin" method="post" enctype = "multipart/form-data">
+          <fieldset class="signin_form">
+            <div>
+              <label for="username">Username</label>
+              <input type="text" name="username">
+            </div>
+            <div>
+              <label for="password">Password</label>
+              <input type="password" name="password">
+            </div>
+            <p>
+              <input class="login_button" type="submit" value="login">
+            </p>
+          </fieldset>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

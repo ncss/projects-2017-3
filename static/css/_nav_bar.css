@@ -1,0 +1,27 @@
+.nav_bar {
+  border-bottom: 5px solid #26C6DA;
+  background-color: white;
+  margin-bottom: 40px;
+}
+
+.nav_bar ul {
+    margin: 0px;
+}
+
+/*New css*/
+.nav_bar nav ul li {
+  text-decoration: none;
+  list-style: none;
+  display: inline;
+}
+
+
+.nav_bar nav ul  {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav_bar img {
+  width: 75px;
+  height: 75px;
+}

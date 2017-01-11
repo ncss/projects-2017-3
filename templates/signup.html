@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include _shared_head.html %}
+    <link rel="stylesheet" type="text/css" href="static/css/signup.css">
+    <script src='/static/js/jquery.js'></script>
+    <script src='/static/js/validate.js'></script>
+  </head>
+  <body>
+      {% include _nav_bar.html %}
+    <main>
+      <div class="signup_form">
+        <h2>Sign Up</h2>
+        <form action="/signup" method="post" enctype = "multipart/form-data">
+          <fieldset>
+            <div>
+              <label for="username">Username</label>
+              <input class="username" type="text" name="username">
+              <p class='error'> </p>
+            </div>
+            <div>
+              <label for="nickname">Nickname</label>
+              <input class="nickname" type="text" name="nickname">
+              <p class='error'> </p>
+            </div>
+            <div>
+              <label for="password">Password</label>
+              <input class="password" type="password" name="password">
+              <p class ='error'> </p>
+            </div>
+            <p>
+              <label for="email">Email</label>
+              <input class="email" type='text' name="email">
+              <p class='error'> </p>
+            </p>
+            <p>
+              <label>Profile Image</label>
+              <input type="file" id="profile_picture" name="profile_picture">
+
+              <!-- Experimental video profile pic + Matilda and Tracey -->
+
+              <video autoplay></video>
+              <img src="">
+              <canvas hidden> </canvas>
+
+              <script>
+              var canvas = document.querySelector('canvas');
+              var ctx = canvas.getContext('2d');
+              var video = document.querySelector('video');
+              var localMediaStream = null;
+              navigator.getUserMedia  = navigator.getUserMedia ||
+                          navigator.webkitGetUserMedia ||
+                          navigator.mozGetUserMedia ||
+                          navigator.msGetUserMedia;
+                var errorCallback = function(e) {
+                  console.log('Reeeejected!', e);
+                };
+
+                function snapshot() {
+                  if (localMediaStream) {
+                    ctx.drawImage(video, 0, 0);
+                    // "image/webp" works in Chrome.
+                    // Other browsers will fall back to image/png.
+                    document.querySelector('img').src = canvas.toDataURL('image/webp');
+                  }
+                }
+
+                video.addEventListener('click', snapshot, false);
+
+                // Not showing vendor prefixes.
+                navigator.getUserMedia({video: true, audio: false}, function(stream) {
+                  video.src = window.URL.createObjectURL(stream);
+
+                  localMediaStream = stream;
+
+                  // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+                  // See crbug.com/110938.
+                  video.onloadedmetadata = function(e) {
+                    // Ready to go. Do some stuff.
+                  };
+                }, errorCallback);
+              </script>
+            </p>
+            <p>
+              <input class="submit" type="submit" value="submit">
+            </p>
+          </fieldset>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

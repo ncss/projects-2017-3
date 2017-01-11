@@ -1,0 +1,34 @@
+<!doctype html>
+<!--url: file:///C:/Users/sh8151/Desktop/projects-2017-3/site/index.html -->
+<html>
+  <head>
+    {% include _shared_head.html %}
+    <link rel="stylesheet" type='text/css' href='static/css/index.css'>
+  </head>
+  <body>
+    {% include _nav_bar.html %}
+    <section Class = 'feed_title'>
+      <h1>Feed</h1>
+    </section>
+    <!-- for the back-end. Will need to be moved later-->
+    <section>
+      <a href="\signin"> Sign in </a>
+      <a href="\signup"> Sign Up </a>
+      <a href="\logout"> Log Out </a>
+    </section>
+    <!-- for the back-end. Will need to be moved later-->
+    <div class = 'post_list'>
+      {% for post in posts %}
+      <fieldset>
+          <img class='post_image' src= "static/images/{{ post['image'] }}" alt= "Books">
+          <div class = 'post_text'>
+              <figcaption>
+                {{ post['question'] }}
+              </figcaption>
+          </div>
+      </fieldset>
+      {% end for %}
+   </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+
+<head>
+  {% include _shared_head.html %}
+</head>
+
+<body>
+  {% include _nav_bar.html %}
+  <table>
+    <tr>
+      <td>id</td>
+      <td>username</td>
+      <td>password</td>
+      <td>nickname</td>
+      <td>email</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+{% for user in users %}
+  <tr>
+    {% for field in user %}
+      <td>
+        {{ field }}
+      </td>
+    {% end for %}
+  </tr>
+{% end for %}
+</table>
+</body>
