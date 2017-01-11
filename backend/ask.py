@@ -2,11 +2,12 @@ from auth import requires_login
 from backend.common import *
 from template_engine import render
 from db import db_api as db
+from auth import requires_login, authenticate_cookie
 
 @requires_login
 def ask_handler(request):
     name = request.get_field("name")
-    request.write(render("ask.html", {'username': 'rand'}))
+    request.write(render("ask.html", {'username': 'rand', 'signed_in':authenticate_cookie(request)}))
 
 @requires_login
 def ask_handler_post(request):
