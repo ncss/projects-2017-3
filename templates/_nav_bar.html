@@ -3,7 +3,15 @@
     <img src="static\images\logo_without_background.png"/>
     <h1>Find It!</h1>
     <nav>
-        <a href="/ask">+</a><a href="#">Username</a>
+      {% if True %}
+        <a class='plus_button' href="/ask">+</a>
+        <a class ='username' href="#">Username</a>
+        <a href="\logout"> Log Out </a>
+      {% end if %}
+      {% if True %}
+        <a href="\signin"> Sign in </a>
+        <a href="\signup"> Sign Up </a>
+      {% end if %}
       </nav>
   </div>
 </header>

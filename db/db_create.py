@@ -134,20 +134,20 @@ with sqlite3.connect('db.db') as conn:
     cur.execute(
     '''
     INSERT INTO photos VALUES
-    (NULL, '/images/cats.jpg', 0, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 1, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 3, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 7, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 8, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 10, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 10, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 12, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 15, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 18, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 19, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 22, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 22, '01/01/2017'),
-    (NULL, '/images/cats.jpg', 22, '01/01/2017')
+    (NULL, 'cats.jpg', 0, '01/01/2017'),
+    (NULL, 'cats.jpg', 1, '01/01/2017'),
+    (NULL, 'cats.jpg', 3, '01/01/2017'),
+    (NULL, 'cats.jpg', 7, '01/01/2017'),
+    (NULL, 'cats.jpg', 8, '01/01/2017'),
+    (NULL, 'cats.jpg', 10, '01/01/2017'),
+    (NULL, 'cats.jpg', 10, '01/01/2017'),
+    (NULL, 'cats.jpg', 12, '01/01/2017'),
+    (NULL, 'cats.jpg', 15, '01/01/2017'),
+    (NULL, 'cats.jpg', 18, '01/01/2017'),
+    (NULL, 'cats.jpg', 19, '01/01/2017'),
+    (NULL, 'cats.jpg', 22, '01/01/2017'),
+    (NULL, 'cats.jpg', 22, '01/01/2017'),
+    (NULL, 'cats.jpg', 22, '01/01/2017')
     '''
     )
 
