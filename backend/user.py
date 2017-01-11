@@ -1,6 +1,6 @@
 from auth import requires_login
 from template_engine.parser import render
-from backend.common import get_upload_path, get_image_path, get_current_time
+from backend.common import get_upload_path, get_image_path, get_current_time, hash_string
 import db
 
 def signin_handler(request):
@@ -35,7 +35,7 @@ def signup_handler_post(request):
     ident = request.get_field('id')
     username = request.get_field('username')
     nickname = request.get_field('nickname')
-    password = request.get_field('password')
+    password = hash_string(request.get_field('password').encode())
     email = request.get_field('email')
     gender = request.get_field('gender')
     dob = request.get_field('dob')
