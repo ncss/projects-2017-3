@@ -169,17 +169,6 @@ with sqlite3.connect('db.db') as conn:
 
             if row1 is None:
                 return None
-            """
-            cur = conn.execute(
-            '''
-
-            SELECT file_name
-            FROM photos
-            WHERE post_id = ? ''', (id,)
-
-            )
-            row2 = cur.fetchall()
-            """
             return Post(row1[0], row1[1], row1[2], row1[3], row1[4], row1[5])
 
         @staticmethod
@@ -202,41 +191,7 @@ with sqlite3.connect('db.db') as conn:
                 return rows
             else:
                 return None
-        """
-            posts = []
 
-            for row in row1:
-                id = row[0]
-                cur = conn.execute(
-                '''
-                SELECT file_name
-                FROM photos
-                WHERE post_id = ? ''', (id,)
-                )
-                posts.append(Post.find(id))
-            return posts
-
-
-
-        @staticmethod
-        def add_photo(file_name, post_id, date):
-            cur = conn.execute(
-            '''
-            INSERT INTO photos (file_name, post_id, photo_date)
-            VALUES (?, ?, ?); ''', (file_name, post_id, date)
-            )
-            conn.commit()
-            return (cur.lastrowid, file_name)
-
-        @staticmethod
-        def delete_photo(post_id, file_name):
-            cur = conn.execute(
-            '''
-            DELETE FROM photos
-            WHERE post_id = ? AND file_name = ? ''' , (post_id, file_name)
-            )
-            conn.commit()
-        """
         @staticmethod
         def create(user_id, description, title, date, photo_file):
             cur = conn.execute(
@@ -409,9 +364,9 @@ with sqlite3.connect('db.db') as conn:
 
         # -- End Post testing
         '''
-        kay = User(1, 'kay', '12345abc', 'kyap', 'yapkaymen@gmail.com')
-        kay_post = Post(2, 1, 'description', 'title', 'date', 'files')
-        kay_post.find_comment(1)
+        #kay = User(1, 'kay', '12345abc', 'kyap', 'yapkaymen@gmail.com')
+        #kay_post = Post(2, 1, 'description', 'title', 'date', 'files')
+        #kay_post.find_comment(1)
         #kay.create_post(self, 'Hi', 'One', '1/1/2017', 'file')
         #print(kay.find_post(1))
         #print(Post.find_all()) - works
