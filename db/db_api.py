@@ -201,9 +201,6 @@ with sqlite3.connect('db.db') as conn:
             )
             id = cur.lastrowid
             conn.commit()
-            '''
-            for files in photo_files:
-                Post.add_photo(files, id, date)'''
             return Post.find(id)
 
         @staticmethod
@@ -236,7 +233,7 @@ with sqlite3.connect('db.db') as conn:
 
     class Comment:
 
-        def __init__(self, id, user_id, post_id, text, date, parent_id, score = None, loc_latitude = None, loc_longitude = None):
+        def __init__(self, id, user_id, post_id, text, date, parent_id = None, loc_latitude = None, loc_longitude = None, score = None):
             self.id = id
             self.user_id = user_id
             self.post_id = post_id
@@ -248,11 +245,11 @@ with sqlite3.connect('db.db') as conn:
             self.loc_longitude = loc_longitude
 
         @staticmethod
-        def create(user_id, post_id, text, date, parent_id):
+        def create(user_id, post_id, text, date, parent_id = None, loc_latitude = None, loc_longitude = None, score = None):
             cur = conn.execute(
             '''
-            INSERT INTO comments (user_id, post_id, text, date, parent_id)
-            VALUES (?, ?, ?, ?, ?); ''', (user_id, post_id, text, date, parent_id))
+            INSERT INTO comments (user_id, post_id, text, date, parent_id, loc_latitude, loc_longitude, score)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?); ''', (user_id, post_id, text, date, parent_id, loc_latitude, loc_longitude, score))
 
             return Comment.find(cur.lastrowid)
 
@@ -315,7 +312,7 @@ with sqlite3.connect('db.db') as conn:
             SET text = ?
             WHERE id = ?''', (new_text, comment_id)
             )
-            return find(comment_id)
+            return Comment.find(comment_id)
 
     def print_p(*args):
         print("\033[92m" + "[+] " + " ".join(args) + '\033[0m')
@@ -366,6 +363,8 @@ with sqlite3.connect('db.db') as conn:
         '''
         #kay = User(1, 'kay', '12345abc', 'kyap', 'yapkaymen@gmail.com')
         #kay_post = Post(2, 1, 'description', 'title', 'date', 'files')
+        #kay_comment = Comment.create(1, 1, 2, 'text', 'date')
+        #kay_comment.edit_comment_with_id(1, 'text1')
         #kay_post.find_comment(1)
         #kay.create_post(self, 'Hi', 'One', '1/1/2017', 'file')
         #print(kay.find_post(1))
