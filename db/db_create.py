@@ -1,6 +1,9 @@
+from os import path
 import sqlite3
 
-with sqlite3.connect('db.db') as conn:
+DB_FILE = path.realpath(path.join(path.dirname(path.realpath(__file__)),'../db.db'))
+
+with sqlite3.connect(DB_FILE) as conn:
     cur = conn.cursor()
 
     # Drop tables if they exist
