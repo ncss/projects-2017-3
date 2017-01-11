@@ -58,13 +58,11 @@ input[type="submit"] {
 
 fieldset {
   border: none;
-  width: 300px;
-  max-height: 270px;
   margin-bottom: 10px;
   display: inline-block;
   margin: 10px;
   vertical-align: top;
-  border: 1px solid black;
+  border: 1px solid #26C6DA;
   border-radius: 10px;
 }
 
