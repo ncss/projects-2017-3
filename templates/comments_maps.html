@@ -13,7 +13,8 @@ var map = L.mapbox.map('map', 'mapbox.streets', {
 });
 var marker = new L.Marker([lat, long]).addTo(map);
 {% if False %}
-{% comment %}For backend: To get the marker position, you will need to (somehow) execute marker.getLatLng(), which returns an object with lat and lng properties{% end comment %}
+{% comment %}For backend: To get the marker position, you will need to (somehow) execute marker.getLatLng(), which returns an object with lat and lng properties
+Also replace False with a variable that switches depending if it is a new comment{% end comment %}
 map.on('click', function (e) {
 	marker.setLatLng(e.latlng);
 })
