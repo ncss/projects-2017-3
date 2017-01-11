@@ -12,14 +12,14 @@
   </head>
   <body>
     <header>
-      <a href="#">Logo here</a>
-      <h1>Title here</h1>
-      <nav>
-          <a href="/ask">+</a>
-          <a href="#">Username</a>
-      </nav>
+      <div>
+        <img src="static\images\findIt.jpg"/>
+        <h1>Find It!</h1>
+        <nav>
+            <a href="/ask">+</a><a href="#">Username</a>
+          </nav>
+      </div>
     </header>
-
     <main>
       <h1>Heading</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis, velit vel finibus auctor, ex leo dignissim dui, convallis blandit neque magna sit amet augue. Donec tincidunt lacus sit amet ornare elementum. Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Sed quis sem magna. Suspendisse aliquam hendrerit magna ac elementum. Suspendisse tellus dolor, venenatis eget nulla ac, convallis consequat leo. Nullam molestie erat eget pellentesque vehicula. Ut lacinia diam vitae lectus dignissim lobortis.</p>
@@ -32,7 +32,6 @@
         <h2>Add Comment</h2>
         <form>
           <fieldset>
-            <legend>Details</legend>
             <p>
               <label>Name</label>
               <input type="text" name="name" id="comment-name">
@@ -45,9 +44,6 @@
               <label>File</label>
               <input type="file" name="file" id="comment-file">
             </p>
-          </fieldset>
-          <fieldset>
-            <legend>Comment</legend>
             <p>
               <label>Comment</label>
               <textarea name="comment-comment"></textarea>

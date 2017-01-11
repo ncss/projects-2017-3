@@ -1,22 +1,25 @@
 body{
   max-width: 100%;
-  margin-left: 100px;
   overflow: hidden;
   line-height: 22px;
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
+  background-color: white;
 }
 
 h1 {
   font-family: "Work Sans", sans-serif;
-  font-size: 18px;
+  font-size: 30px;
   padding-bottom: 5px;
+  color: #26C6DA;
 }
 
 h2 {
   font-family: "Open Sans", sans-serif;
-  font-size: 16px;
+  color: #26C6DA;
+  font-size: 20px;
   padding-bottom: 5px;
+
 }
 
 main {
@@ -26,12 +29,77 @@ main {
 
 p {
   padding-bottom: 15px;
+  padding-left: 15px;
+  padding-top: 5px;
 }
 
 header a {
   font-family: "Work Sans", sans-serif;
 }
 
+label {
+  display: block;
+}
+
+input[type="text"] {
+  width: 90%;
+}
+
+input[type="password"] {
+  width: 90%;
+}
+
+textarea {
+  width: 90%;
+}
+
+input[type="submit"] {
+  margin-top: 10px;
+}
+
+fieldset {
+  border: none;
+  width: 300px;
+  max-height: 270px;
+  margin-bottom: 10px;
+  display: inline-block;
+  margin: 10px;
+  vertical-align: top;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+fieldset p {
+  padding-bottom: 15px;
+}
+
+header {
+  border-bottom: 1px solid #26C6DA;
+  background-color: white;
+  margin-bottom: 40px;
+}
+
+header div {
+  width: 1000px;
+  margin: 0px auto;
+  position: relative;
+}
+
 header h1 {
-  font-size: 18px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 36px;
+  font-weight: bolder;
+}
+
+header nav {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  line-height: 50px;
+}
+header img {
+  position: absolute;
+  left: 0px;
+  top: 0px;
 }
