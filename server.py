@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 from tornado.ncss import Server, ncssbook_log
 from template_engine.parser import render
+from backend import ask, user
 from db import db_api as db
 from auth import User, requires_login, add_user
 TEMPLATE_DIR = 'templates'
@@ -22,59 +23,10 @@ def index_handler(response):
     print(UP_IMAGES)
     response.write(render('index.html', {'posts':UP_IMAGES})) # { 'post1': (image location, comment}
 
-def signup_handler_post(request):
-    ident = request.get_field('id')
-    username = request.get_field('username')
-    nickname = request.get_field('nickname')
-    password = request.get_field('password')
-    email = request.get_field('email')
-    gender = request.get_field('gender')
-    dob = request.get_field('dob')
-    profile_pic = request.get_file('profile_picture')
-    if profile_pic != (None, None, None):
-        filename, content_type, data = profile_pic
-        with open(get_upload_path(filename), 'wb') as f:
-            f.write(data)
-    else:
-        print('It failed')
-    if username != None:
-        request.set_secure_cookie("current_user", username)
-    db.User.sign_up(username, password, nickname, email, get_current_time())
 
 def handle_list_users(request):
     request.write(render('list_users.html', {'users': db.User.find_multiple()}))
 
-@requires_login
-def ask_handler(request):
-    name = request.get_field("name")
-    request.write(render("ask.html", {'username': 'rand'}))
-
-#@requires_login
-def ask_handler_post(request):
-    file = request.get_file('fileupload')
-    question = request.get_field("question")
-    #print(file)
-    if file != (None, None, None):
-        with open(get_image_path(file[0]), 'wb') as f:
-            f.write(file[2])
-            print("uploaded")
-            UP_IMAGES.append({'image':file[0], 'question':question})
-    else:
-        print("upload failed")
-    request.write("Your image was uploaded! name=%s"%(file[0]))
-    request.redirect('/')
-
-def signup_handler(request):
-    request.write(render('signup.html', {}))
-    ident = request.get_field('id')
-    username = request.get_field('username')
-    email = request.get_field('email')
-    password = request.get_field('password')
-    doc = request.get_field('doc')
-    gender = request.get_field('gender')
-    dob = request.get_field('dob')
-    if username != None:
-        request.set_secure_cookie("current_user", username)
 
 def view_question_handler(response, question_id):
     title = response.get_field('title')
@@ -82,27 +34,15 @@ def view_question_handler(response, question_id):
     question = {'title': title, 'description': description}
     response.write(render('view_question.html', {'question' : question_id}))
 
-def signin_handler(request):
-    username = request.get_field('username')
-    password = request.get_field('password')
-    signin = {'username': username, 'password': password}
-    request.write(render('signin.html', signin))
 
-def signin_handler_post(request):
-    pass
-
-@requires_login
-def signout_handler(response):
-    response.clear_cookie('current_user')
-    response.redirect('/')
 
 server = Server()
 server.register(r'/', index_handler)
 server.register(r'/view/(\d+)/?', view_question_handler)
-server.register(r'/signup', signup_handler, post=signup_handler_post)
-server.register(r'/ask', ask_handler, post=ask_handler_post)
-server.register(r'/signin', signin_handler, post=signin_handler_post)
-server.register(r'/logout', signout_handler)
+server.register(r'/signup', user.signup_handler, post=user.signup_handler_post)
+server.register(r'/ask',    ask.ask_handler,     post=ask.ask_handler_post)
+server.register(r'/signin', user.signin_handler, post=user.signin_handler_post)
+server.register(r'/logout', user.signout_handler)
 server.register(r'/list_users', handle_list_users)
 
 server.run()
