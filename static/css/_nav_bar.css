@@ -15,7 +15,6 @@
   display: inline;
 }
 
-
 .nav_bar nav ul  {
   display: flex;
   justify-content: space-between;
@@ -43,4 +42,13 @@ header a {
 header a:hover {
     background-color: #E0F7FA;
     color: #26C6DA;
+}
+
+header a {
+    color: #26C6DA;
+    margin-right: 15px;
+}
+
+header h1 {
+  margin-right: 200px;
 }
