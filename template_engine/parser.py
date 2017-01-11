@@ -12,6 +12,8 @@ TOKEN_REGEX = re.compile(r'({[{%].*?[}%]})')
 def parse(tokens, up_to, parent, parent_type=None):
     while up_to < len(tokens):
         token = tokens[up_to]
+        if token['label'] is None:
+            print('TOKEN! ' + token)
         if token['label'] == 'expression':
             node = ExpressionNode(token['contents'])
             parent.add_child(node)
@@ -71,6 +73,8 @@ def parse(tokens, up_to, parent, parent_type=None):
                 return parent, up_to
             else:
                 raise TemplateSyntaxException('Unexpected end of comment')
+        else:
+            raise TemplateSyntaxException('Invalid template tag: {}'.format(token['label']))
     return parent, up_to
 
 def lexer(text):
@@ -102,6 +106,8 @@ def identify_token(token):
             return create_token(None, 'end_comment')
         elif keyword == 'else':
             return create_token(None, 'else')
+        else:
+            raise TemplateSyntaxException('Invalid template tag: {}'.format(token))
         # TODO The rest of the keywords
     elif token.startswith('{{') and token.endswith('}}'):
         # expression

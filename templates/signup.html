@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+    {% include _shared_head.html %}
     <link rel="stylesheet" type="text/css" href="static/css/signup.css">
-    <link rel="stylesheet" type="text/css" href="static/css/_nav_bar.css">
     <script src='/static/js/jquery.js'></script>
     <script src='/static/js/validate.js'></script>
   </head>
   <body>
-      {% include _nav_bar.html %}
+    {% include _nav_bar.html %}
     <main>
       <div class="signup_form">
         <h2>Sign Up</h2>
@@ -17,19 +16,23 @@
             <div>
               <label for="username">Username</label>
               <input class="username" type="text" name="username">
+              <p class='error'> </p>
             </div>
             <div>
               <label for="nickname">Nickname</label>
               <input class="nickname" type="text" name="nickname">
+              <p class='error'> </p>
             </div>
             <div>
               <label for="password">Password</label>
               <input class="password" type="password" name="password">
+              <p class ='error'> </p>
             </div>
-            <p>
+            <div>
               <label for="email">Email</label>
               <input class="email" type='text' name="email">
-            </p>
+              <p class='error'> </p>
+            </div>
             <p>
               <label>Profile Image</label>
               <input type="file" id="profile_picture" name="profile_picture">
@@ -37,7 +40,7 @@
               <!-- Experimental video profile pic + Matilda and Tracey -->
 
               <video autoplay></video>
-              <img src="">
+              <img src="" class='profile_image'>
               <canvas hidden> </canvas>
 
               <script>
@@ -58,7 +61,7 @@
                     ctx.drawImage(video, 0, 0);
                     // "image/webp" works in Chrome.
                     // Other browsers will fall back to image/png.
-                    document.querySelector('img').src = canvas.toDataURL('image/webp');
+                    document.querySelector('.profile_image').src = canvas.toDataURL('image/webp');
                   }
                 }
 
@@ -80,9 +83,6 @@
             </p>
             <p>
               <input class="submit" type="submit" value="submit">
-            </p>
-            <p class='error'>
-
             </p>
           </fieldset>
         </form>

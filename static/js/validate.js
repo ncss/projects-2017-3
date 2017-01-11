@@ -1,32 +1,63 @@
 $(document).ready(function(){
-/*
-  $('.submit').click(function(evt){
-    evt.preventDefault();
-    validateForm();
-  });
-*/
-function isPresent($input) {
-  if ($input == "") {
 
+  $('.submit').click(function(evt){
+      // return validateForm();
+  });
+
+function isPresent($input) {
+  if ($input.val().length < 4) {
+    $input.parent().find('.error').text('this field is not long enough')
+    return false;
+  }
+
+  else {
+    return true;
   }
 }
 
+function isValidEmail($input) {
+  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  if (!emailReg.test($input.val())) {
+    $input.parent().find('.error').text('the email address you entered is not a valid email address')
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+function isValidName($input) {
+  var nameReg = /^[A-Za-z0-9]+$/;
+  if (!nameReg.test($input)) {
+    $input.parent().find('.error').text('the name you have entered for this field is invalid. Note that usernames and nicknames can only contain letters and numbers.')
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+
+
 function validateForm() {
 
-    var nameReg = /^[A-Za-z]+$/
-    var usernameReg = /^[A-Za-z]+$/
-    var nicknameReg = /^[A-Za-z]+$/
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    var $username = $('.username')
+    var $nickname = $('.nickname')
+    var $password = $('.password')
+    var $email = $('.email')
 
-    var username = $('.username').val();
-    var nickname = $('.nickname').val();
-    var password = $('.password').val();
-    var email = $('.email').val();
+    var validUsername = isPresent($username) && isValidName($username);
+    var validNickname = isPresent($nickname) && isValidName($username);
+    var validPassword = isPresent($password);
+    var validEmail = isPresent($email) && isValidEmail($email);
 
-    if (username.length < 8 ) {
-
+    if (validUsername && validNickname && validPassword && validEmail) {
+      return true;
     }
 
+    else {
+      return false;
+    }
 
 }
 });

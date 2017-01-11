@@ -1,7 +1,7 @@
 from db import db_api as db
 
-def view_handler(request, regex):
-    user = db.User.find(regex)
+def view_handler(request, username):
+    user = db.User.find_by_username(username)
     if user is None:
         request.write("username is imvalid")
     else:

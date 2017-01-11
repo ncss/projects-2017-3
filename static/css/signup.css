@@ -1,5 +1,4 @@
 body {
-  max-width: 1700px;
   margin: 0px auto;
   background-color: #E0F7FA;
   font-family: "Open Sans", sans-serif;
@@ -26,5 +25,6 @@ h1 {
 }
 
 .error {
-    display: none;
+  color: red;
+  font-size: 16px;
 }

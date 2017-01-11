@@ -1,9 +1,9 @@
 from tornado.ncss import Server, ncssbook_log
 import os
 from template_engine.parser import render
-from backend import ask, user, profile
+from backend import ask, user, profile, view
 from db import db_api as db
-from auth import User, requires_login, add_user
+from auth import requires_login
 from backend.common import *
 
 TEMPLATE_DIR = 'templates'
@@ -21,17 +21,10 @@ def handle_list_users(request):
     request.write(render('list_users.html', {'users': db.User.find_multiple()}))
 
 
-def view_question_handler(request, question_id):
-    title = request.get_field('title')
-    description = request.get_field('description')
-    question = {'title': title, 'description': description}
-    request.write(render('view_question.html', {'question' : question_id}))
-
-
 
 server = Server()
 server.register(r'/', index_handler)
-server.register(r'/view/(\d+)/?', view_question_handler)
+server.register(r'/view/(\d+)/?', view.view_question_handler)
 server.register(r'/signup'      , user.signup_handler  , post=user.signup_handler_post)
 server.register(r'/ask'         , ask.ask_handler      , post=ask.ask_handler_post)
 server.register(r'/signin'      , user.signin_handler  , post=user.signin_handler_post)
