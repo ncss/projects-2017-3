@@ -1,6 +1,7 @@
 import os
 import hashlib
 import urllib.request
+import tempfile
 from datetime import datetime
 
 UPLOADS_DIR = os.path.join('static', 'uploads')
@@ -21,4 +22,4 @@ def get_current_time():
 
 def fetch_file(url, filename):
     response = urllib.request.urlretrieve(url, filename)
-    return response[0]
+    return response
