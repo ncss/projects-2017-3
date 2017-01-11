@@ -38,10 +38,11 @@
               <input type="file" id="profile_picture" name="profile_picture">
 
               <!-- Experimental video profile pic + Matilda and Tracey -->
-
+            <div class='photobox'>
               <video autoplay></video>
               <img src="" class='profile_image'>
-              <canvas hidden> </canvas>
+              <canvas hidden width='200' height='150'> </canvas>
+            </div>
 
               <script>
               var canvas = document.querySelector('canvas');
@@ -58,7 +59,7 @@
 
                 function snapshot() {
                   if (localMediaStream) {
-                    ctx.drawImage(video, 0, 0);
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
                     // "image/webp" works in Chrome.
                     // Other browsers will fall back to image/png.
                     document.querySelector('.profile_image').src = canvas.toDataURL('image/webp');

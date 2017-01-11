@@ -28,3 +28,15 @@ h1 {
   color: red;
   font-size: 16px;
 }
+
+.photobox {
+  display: flex;
+
+}
+
+.photobox video,
+.photobox img {
+  width: 200px;
+  height: 150px;
+
+}
