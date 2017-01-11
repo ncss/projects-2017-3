@@ -4,6 +4,7 @@ $(document).ready(function(){
     // return validateSignupForm();
   });
 
+       //return validateForm();
   $('.post_submit').click(function(evt){
     //return validatePost();
   });
