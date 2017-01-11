@@ -4,6 +4,8 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="static/css/signup.css">
     <link rel="stylesheet" type="text/css" href="static/css/_nav_bar.css">
+    <script src='/static/js/jquery.js'></script>
+    <script src='/static/js/validate.js'></script>
   </head>
   <body>
     <header>
@@ -16,19 +18,19 @@
           <fieldset>
             <div>
               <label for="username">Username</label>
-              <input type="text" name="username">
+              <input class="username" type="text" name="username">
             </div>
             <div>
               <label for="nickname">Nickname</label>
-              <input type="text" name="nickname">
+              <input class="nickname" type="text" name="nickname">
             </div>
             <div>
               <label for="password">Password</label>
-              <input type="password" name="password">
+              <input class="password" type="password" name="password">
             </div>
             <p>
               <label for="email">Email</label>
-              <input type='text' name="email">
+              <input class="email" type='text' name="email">
             </p>
             <p>
               <label>Profile Image</label>
@@ -79,7 +81,10 @@
               </script>
             </p>
             <p>
-              <input type="submit" value="submit">
+              <input class="submit" type="submit" value="submit">
+            </p>
+            <p class='error'>
+
             </p>
           </fieldset>
         </form>

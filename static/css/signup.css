@@ -24,3 +24,7 @@ h1 {
   height: 400px;
   margin: 0px auto;
 }
+
+.error {
+    display: none;
+}
