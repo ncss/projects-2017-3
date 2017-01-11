@@ -1,7 +1,8 @@
 $(document).ready(function(){
 
   $('.submit').click(function(evt){
-      // return validateForm();
+
+       return validateForm();
   });
 
 function isPresent($input) {
@@ -28,7 +29,7 @@ function isValidEmail($input) {
 
 function isValidName($input) {
   var nameReg = /^[A-Za-z0-9]+$/;
-  if (!nameReg.test($input)) {
+  if (!nameReg.test($input.val())) {
     $input.parent().find('.error').text('the name you have entered for this field is invalid. Note that usernames and nicknames can only contain letters and numbers.')
     return false;
   }
@@ -41,13 +42,15 @@ function isValidName($input) {
 
 function validateForm() {
 
+    $('.error').html("");
+
     var $username = $('.username')
     var $nickname = $('.nickname')
     var $password = $('.password')
     var $email = $('.email')
 
     var validUsername = isPresent($username) && isValidName($username);
-    var validNickname = isPresent($nickname) && isValidName($username);
+    var validNickname = isPresent($nickname) && isValidName($nickname);
     var validPassword = isPresent($password);
     var validEmail = isPresent($email) && isValidEmail($email);
 
