@@ -10,57 +10,31 @@
   <body>
     {% include _nav_bar.html %}
     <main>
-<<<<<<< HEAD
       <div class="wholething">
         <form action="/ask" method="post" enctype = "multipart/form-data">
           <h1>Ask a Question</h1>
-          <div class="question">
-            <label for="question">Question:</label>
-            <input class='ask_question' type="text" name="question">
-            <p class='error' class='error'></p>
-          </div>
-          <div class="question">
-            <label for="upload">Upload an image of the product you want to find!</label>
-            <input class="img_upload" type="file" name="fileupload" id="fileupload">
-            <p class='error'></p>
-          </div>
-          <div class="question">
-            <label for="description">Description</label>
-            <input class='description' type="text" name="description" >
-            <p class='error'></p>
-          </div>
           <p class="question">
-            <input class='post_submit' type="submit" value="Submit">
+            <label for="question">Question:</label>
+            <input type="text" name="question" id="question">
+          </p>
+          <p class="question">
+            <label for="fileupload">Upload an image of the product you want to find!</label>
+            <input type="file" name="fileupload" id="fileupload">
+          </p>
+          Or
+          <p class="question">
+            <label for="url">Submit a URL to an image!</label>
+            <input type="text" name="url" id="url" />
+          </p>
+          <p class="question">
+            <label for="description">Description</label>
+            <input type="text" name="description" id="description" >
+          </p>
+          <p class="question">
+            <input type="submit" value="Submit">
           </p>
         </form>
       </div>
-=======
-    <div class="wholething">
-      <form action="/ask" method="post" enctype = "multipart/form-data">
-        <h1>Ask a Question</h1>
-        <p class="question">
-          <label for="question">Question:</label>
-          <input type="text" name="question" id="question">
-        </p>
-        <p class="question">
-          <label for="fileupload">Upload an image of the product you want to find!</label>
-          <input type="file" name="fileupload" id="fileupload">
-        </p>
-        Or
-        <p class="question">
-          <label for="url">Submit a URL to an image!</label>
-          <input type="text" name="url" id="url" />
-        </p>
-        <p class="question">
-          <label for="description">Description</label>
-          <input type="text" name="description" id="description" >
-        </p>
-        <p class="question">
-          <input type="submit" value="Submit">
-        </p>
-      </form>
-    </div>
->>>>>>> 314dfbbd0cfd3099535aaf30e0127ce518ce33df
     </main>
   </body>
 </html>
