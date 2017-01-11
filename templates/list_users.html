@@ -10,21 +10,12 @@
       <td>id</td>
       <td>username</td>
       <td>password</td>
-      <td>nickname</td>
-      <td>email</td>
-      <td>?</td>
-      <td>?</td>
-      <td>?</td>
-      <td>?</td>
-      <td>?</td>
     </tr>
 {% for user in users %}
   <tr>
-    {% for field in user %}
-      <td>
-        {{ field }}
-      </td>
-    {% end for %}
+    <td>{{ user.id }}</td>
+    <td>{{ user.username }}</td>
+    <td>{{ user.password }}</td>
   </tr>
 {% end for %}
 </table>
