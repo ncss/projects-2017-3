@@ -1,4 +1,10 @@
+
+<head>
+  <link rel="stylesheet" type='text/css' href='static/css/_nav_bar.css'>
+</head>
+
 <body>
+  {% include _nav_bar.html %}
 {% for user in users %}
 <p>
     {% for field in user %}
