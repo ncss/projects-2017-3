@@ -26,5 +26,6 @@ h1 {
 }
 
 .error {
-    display: none;
+  color: red;
+  font-size: 16px;
 }

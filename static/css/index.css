@@ -1,18 +1,5 @@
 body {
   margin-right: -10px;
-  font-family: 'Open Sans', sans-serif;
-  background-color: #E0F7FA;
-}
-
-fieldset {
-  width: 300px;
-  max-height: 270px;
-  margin-bottom: 10px;
-  display: inline-block;
-  margin: 10px;
-  vertical-align: top;
-  border: 1px solid black;
-  border-radius: 10px;
 }
 
 .post_text figcaption {

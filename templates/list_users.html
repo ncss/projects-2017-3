@@ -1,15 +1,31 @@
 
 <head>
-  <link rel="stylesheet" type='text/css' href='static/css/_nav_bar.css'>
+  {% include _shared_head.html %}
 </head>
 
 <body>
   {% include _nav_bar.html %}
+  <table>
+    <tr>
+      <td>id</td>
+      <td>username</td>
+      <td>password</td>
+      <td>nickname</td>
+      <td>email</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
 {% for user in users %}
-<p>
+  <tr>
     {% for field in user %}
-      {{ field }}
+      <td>
+        {{ field }}
+      </td>
     {% end for %}
-</p>
+  </tr>
 {% end for %}
+</table>
 </body>

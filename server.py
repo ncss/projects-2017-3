@@ -3,7 +3,7 @@ import os
 from template_engine.parser import render
 from backend import ask, user
 from db import db_api as db
-from auth import User, requires_login, add_user
+from auth import requires_login
 from backend.common import *
 
 TEMPLATE_DIR = 'templates'
