@@ -59,6 +59,7 @@ def signin_handler_post(request):
         else:
             request.write("bad login details")
     else:
+        request.write("Usrname cannot be found")
         return(None)
 
 @requires_login
