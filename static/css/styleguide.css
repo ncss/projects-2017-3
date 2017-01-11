@@ -10,7 +10,7 @@ body{
 h1 {
   font-family: "Work Sans", sans-serif;
   font-size: 30px;
-  padding-bottom: 5px;
+  padding: 5px;
   color: #26C6DA;
 }
 
@@ -18,8 +18,9 @@ h2 {
   font-family: "Work Sans", sans-serif;
   color: #26C6DA;
   font-size: 28px;
-  padding-bottom: 5px;
+  padding: 5px;
 }
+
 
 main {
   max-width: 1000px;
@@ -85,6 +86,9 @@ fieldset {
  }
 
 fieldset p {
+  padding-left: 15px;
+}
+fieldset h3 {
   padding-left: 15px;
 }
 
