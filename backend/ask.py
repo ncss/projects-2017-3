@@ -2,13 +2,13 @@ from auth import requires_login
 from backend.common import *
 from template_engine import render
 from db import db_api as db
-from requests import get
 from auth import requires_login, authenticate_cookie
+# from requests import get
 
 @requires_login
 def ask_handler(request):
     name = request.get_field("name")
-    request.write(render("ask.html", {'username': 'rand', 'signed_in':authenticate_cookie(request)}))
+    request.write(render("ask.html", {'username': 'rand', 'signed_in': authenticate_cookie(request)}))
 
 @requires_login
 def ask_handler_post(request):
@@ -20,16 +20,15 @@ def ask_handler_post(request):
         if photo_files[1].startswith('image/'):
             user_id = request.get_secure_cookie("current_user")
             '''photo_files from database needs to be discussed regarding single/multiple photo uploads'''
-            db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
+            post = db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
             request.write("Your image was uploaded! name=%s"%(photo_files[0]))
-            request.redirect('/')
             request.redirect('/view/' + str(post.id))
         else:
             request.write("uploaded file type not supported")
 
     else:
         user_id = request.get_secure_cookie("current_user")
-        '''photo_files from database needs to be discussed regarding single/multiple photo uploads'''
+        # TODO discussed regarding single/multiple photo uploads
         db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
         request.redirect('/')
 
