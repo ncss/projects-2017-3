@@ -65,7 +65,7 @@ with sqlite3.connect('db.db') as conn:
             '''
             SELECT *
             FROM users
-            ORDER BY creation_date
+            ORDER BY id ASC
                 ''')
             all_users = cur.fetchall()
             if all_users:
@@ -132,8 +132,8 @@ with sqlite3.connect('db.db') as conn:
         def find_post(self, post_id):
             return Post.find(post_id)
 
-        def create_comment(self, Post, text, date, parent_id):
-            return Comment.create(self.id, Post.return_id(), text, date, parent_id)
+        def create_comment(self, Post, text, parent_id):
+            return Comment.create(self.id, Post.return_id(), text, datetime.now(), parent_id)
 
         def edit(self, password, nickname, email, gender, dob, bio, picture):
             return User.update(self.id, password, nickname, email, gender, dob, bio, picture)
@@ -264,6 +264,7 @@ with sqlite3.connect('db.db') as conn:
             INSERT INTO comments (user_id, post_id, parent_id, text, date, loc_latitude, loc_longitude, score)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?); ''', (user_id, post_id, parent_id, text, date, loc_latitude, loc_longitude, score))
 
+            conn.commit()
             return Comment.find(cur.lastrowid)
 
         @staticmethod
@@ -324,7 +325,8 @@ with sqlite3.connect('db.db') as conn:
             UPDATE comments
             SET text = ?
             WHERE id = ?''', (new_text, comment_id)
-            )
+            )            
+            conn.commit()
             return Comment.find(comment_id)
 
     def print_p(*args):

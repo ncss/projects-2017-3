@@ -150,3 +150,5 @@ with sqlite3.connect(DB_FILE) as conn:
     (NULL, 0, 22, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL)
     '''
     )
+
+    conn.commit()

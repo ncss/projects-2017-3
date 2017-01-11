@@ -8,21 +8,24 @@
     {% include _nav_bar.html %}
     <main class="centered">
       <h1>Question</h1>
-      <fieldset>
-        <h2>{{ question }}</h2>
-        <img src="/static/uploads/{{ file }}" alt="{{ description }}">
-        <h3>{{ description }}</h3>
-        <p>
-          <label for="addComment">Do you have an answer?</label>
-          <textarea type="text" name="addComment"></textarea>
-        </p>
-        <p>
-          <input type="submit" value="Submit">
-        </p>
-      </fieldset>
+      <form action="/post_comment/{{ photo_id }}" method="post" enctype = "multipart/form-data">
+        <fieldset>
+          <input type=text hidden="hidden" name='{{ photo_id }}'/>
+          <h2>{{ question }}</h2>
+          <img src="/static/uploads/{{ file }}" alt="{{ description }}">
+          <h3>{{ description }}</h3>
+          <p>
+            <label for="addComment">Do you have an answer?</label>
+            <textarea type="text" name="addComment"></textarea>
+          </p>
+          <p>
+            <input type="submit" value="Submit">
+          </p>
+        </fieldset>
+      </form>
       {% for comment in comments %}
         <p>
-          {{ user_ids[comment.user_id - 1].username }}: {{ comment.text }}
+          {{ user_ids[comment.user_id-1].username }}: {{ comment.text }}
         </p>
       {% end for %}
     </main>

@@ -25,3 +25,12 @@ def view_question_handler(request, question_id):
     # except Exception as e:
         # print(e.with_traceback)
         # request.write('Invalid Id')
+
+def comment_handler_post(request, photo_id):
+    text = request.get_field('addComment')
+    if request.get_secure_cookie(USER_COOKIE):
+        user_cookie = request.get_secure_cookie(USER_COOKIE).decode()
+        print(user_cookie)
+        user = db.User.find_by_username(user_cookie)
+        print(user.create_comment(db.Post.find(photo_id), text, None))
+    # request.redirect('/')
