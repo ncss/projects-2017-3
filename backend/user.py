@@ -13,8 +13,7 @@ def signin_handler(request):
 def signin_handler_post(request):
     username = request.get_field('username')
     password = request.get_field('password')
-    print(hash_string(password), hash_string(db.User.find(username).password))
-    if db.User.find(username).password == password:
+    if db.User.find_by_username(username).password == password:
         request.set_secure_cookie("current_user", username)
 
 @requires_login
