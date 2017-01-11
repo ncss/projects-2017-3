@@ -57,7 +57,7 @@ with sqlite3.connect('db.db') as conn:
 
             if row is None:
                 return None
-            return User.find(row[0])
+            return  User.find(row[0])
 
         @staticmethod
         def find_multiple():

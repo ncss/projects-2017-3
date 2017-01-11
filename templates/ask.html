@@ -13,28 +13,45 @@
       <div class="wholething">
         <form action="/ask" method="post" enctype = "multipart/form-data">
           <h1>Ask a Question</h1>
-          <p class="question">
-            <label for="question">Question:</label>
-            <input type="text" name="question" id="question">
-          </p>
-          <p class="question">
-            <label for="fileupload">Upload an image of the product you want to find!</label>
-            <input type="file" name="fileupload" id="fileupload">
-          </p>
-          Or
-          <p class="question">
-            <label for="url">Submit a URL to an image!</label>
-            <input type="text" name="url" id="url" />
-          </p>
-          <p class="question">
-            <label for="description">Description</label>
-            <input type="text" name="description" id="description" >
-          </p>
-          <p class="question">
-            <input type="submit" value="Submit">
-          </p>
+          <fieldset>
+            <p class="question">
+              <label for="question">Question:</label>
+              <input type="text" name="question" id="question">
+            </p>
+            <p class="question">
+              <label for="fileupload">Upload an image of the product you want to find!</label>
+              <input type="file" name="fileupload" id="fileupload">
+            </p>
+            <p class="centered_or">Or</p>
+            <p class="question">
+              <label for="url">Submit a URL to an image!</label>
+              <input type="text" name="url" id="url" />
+            </p>
+            <p class="question">
+              <label for="description">Description</label>
+              <input type="text" name="description" id="description" >
+            </p>
+            <p class="question">
+              <input type="submit" value="Submit">
+            </p>
+          </fieldset>
         </form>
       </div>
     </main>
+    <script>
+    const ignore = event => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    'drag dragstart dragend dragover dragenter dragleave drop'.split(/\s+/).forEach(name => {
+      document.addEventListener(name, ignore);
+    });
+document.addEventListener('drop', event =>{
+  droppedFiles = event.dataTransfer.files;
+  console.info(droppedFiles);
+  const fileupload = document.getElementById('fileupload');
+  fileupload.files = droppedFiles;
+})
+    </script>
   </body>
 </html>

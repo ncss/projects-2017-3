@@ -6,7 +6,7 @@ $(document).ready(function(){
 
        //return validateForm();
   $('.post_submit').click(function(evt){
-    //return validatePost();
+  //  return validatePost();
   });
 
   function isPresent($input) {
