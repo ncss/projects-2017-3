@@ -97,8 +97,15 @@ header nav {
   top: 0px;
   line-height: 50px;
 }
+
 header img {
   position: absolute;
   left: 0px;
   top: 0px;
+  width: 50px;
+  height: 50px;
+}
+
+article h3 {
+  font-size: 12px;
 }
