@@ -3,7 +3,6 @@ from backend.common import *
 from template_engine import render
 from db import db_api as db
 from auth import requires_login, authenticate_cookie
-# from requests import get
 
 @requires_login
 def ask_handler(request):
@@ -29,8 +28,11 @@ def ask_handler_post(request):
     else:
         user_id = request.get_secure_cookie("current_user")
         # TODO discussed regarding single/multiple photo uploads
-        db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
+        fname = fetch_file(url, os.path.join(UPLOADS_DIR, url.split('/')[-1].split('#')[0]))
+        db.Post.create(user_id, description, title, get_current_time(), fname)
         request.redirect('/')
+
+
 
         # TODO Actually handle any errors of any kind???
 
