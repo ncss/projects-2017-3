@@ -1,4 +1,4 @@
-from auth import requires_login
+from auth import requires_login, USER_COOKIE
 from template_engine.parser import render
 from backend.common import *
 import db
@@ -13,10 +13,9 @@ def signin_handler_post(request):
     pass
 
 @requires_login
-def signout_handler(response):
-    response.clear_cookie('current_user')
-    response.redirect('/')
-
+def signout_handler(request):
+    request.clear_cookie('current_user')
+    request.redirect('/')
 
 def signup_handler(request):
     request.write(render('signup.html', {}))
@@ -46,6 +45,8 @@ def signup_handler_post(request):
             f.write(data)
     else:
         print('It failed')
-    if username != None:
+    if username is not None:
         request.set_secure_cookie("current_user", username)
+
     db.User.sign_up(username, password, nickname, email, get_current_time())
+    request.redirect('/')
