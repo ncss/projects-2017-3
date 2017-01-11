@@ -14,7 +14,7 @@ with sqlite3.connect('db.db') as conn:
     '''
     CREATE TABLE users
     (id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
+    username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     nickname TEXT,
     email TEXT NOT NULL,
@@ -179,4 +179,3 @@ with sqlite3.connect('db.db') as conn:
     (NULL, 0, 22, NULL, 'Nice meme!', '01/01/2017', 1, NULL, NULL)
     '''
     )
-	
