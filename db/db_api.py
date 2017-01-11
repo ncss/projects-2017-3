@@ -11,7 +11,6 @@ with sqlite3.connect('db.db') as conn:
     class PostNotFound(Exception):
         pass
 
-
     class User:
 
         def __init__(self, id, username, password,  nickname, email, gender = None, dob = None, bio = None, picture = None, datetime = None):
@@ -25,19 +24,24 @@ with sqlite3.connect('db.db') as conn:
             self.bio = bio
             self.picture = picture
             self.datetime = datetime
+            #list of questions
+            #make date time more meaningful
+
+        #method to ask question
+
 
         @staticmethod
-        def find(username):
+        def find(id):
             cur.execute(
             '''
             SELECT *
             FROM users
-            WHERE username = ? ''', (username,)
+            WHERE id = ? ''', (id,)
             )
             row = cur.fetchone()
 
             if row is None:
-                raise UserNotFound('{} does not exist'.format(username))
+                raise UserNotFound('{} does not exist'.format(id))
             return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
 
         @staticmethod
@@ -52,7 +56,8 @@ with sqlite3.connect('db.db') as conn:
             for row in all_users:
                 if row is None:
                     raise UserNotFound('{} does not exist'.format(username))
-            return all_users
+            rows = [User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]) for row in all_users]
+            return rows
 
         @staticmethod
         def sign_up(username, password, nickname, email, datetime):
@@ -66,7 +71,7 @@ with sqlite3.connect('db.db') as conn:
             return User(id, username, password, nickname, email, datetime)
 
         @staticmethod
-        def update(username, password, nickname, email, gender, dob, bio, picture):
+        def update(id, password, nickname, email, gender, dob, bio, picture):
             cur.execute(
             '''
             UPDATE users
@@ -77,11 +82,11 @@ with sqlite3.connect('db.db') as conn:
             dob = ?,
             bio = ?,
             picture = ?
-            WHERE username = ?
-            ''', (password, nickname, email, gender, dob, bio, picture, username)
+            WHERE id = ?
+            ''', (password, nickname, email, gender, dob, bio, picture, id)
             )
             conn.commit()
-            return User(username, password, nickname, email, gender, dob, bio, picture)
+            return User.find(id)
 
         @staticmethod
         def delete(username):
@@ -101,6 +106,25 @@ with sqlite3.connect('db.db') as conn:
             user_id = False if row is None else True
             return user_id
 
+        def create_post(self, description, title, date, photo_files):
+            return Post.create(self.id, description, title, date, photo_files)
+
+        def all_posts(self):
+            return Post.findall(self.id)
+
+        def find_post(post_id):
+            return Post.find(post_id)
+
+        def create_comment(self, Post, text, date, parent_id):
+            return Comment.create(self.id, Post.return_id(), text, date, parent_id)
+
+        def edit(self, password, nickname, email, gender, dob, bio, picture):
+            return User.update(self.id, password, nickname, email, gender, dob, bio, picture)
+
+        def view_profile(self):
+            return User.find(self.id)
+
+
     class Post:
 
         def __str__(self):
@@ -116,6 +140,9 @@ with sqlite3.connect('db.db') as conn:
             self.title = title
             self.date = date
             self.files = files
+
+        def return_id(self):
+            return self.id
 
         @staticmethod
         def find(id):
@@ -141,11 +168,37 @@ with sqlite3.connect('db.db') as conn:
             return Post(row1[0], row1[1], row1[2], row1[3], row1[4], row2)
 
         @staticmethod
-        def add_photo(file_name, user_id, post_id, date):
+        def findall(user_id):
             cur = conn.execute(
             '''
-            INSERT INTO photos (file_name, user_id, post_id, photo_date)
-            VALUES (?, ?, ?, ?); ''', (file_name, user_id, post_id, date)
+            SELECT *
+            FROM posts
+            WHERE user_id = ? ''', (user_id,)
+            )
+            row1 = cur.fetchall()
+
+            if row1:
+                raise PostNotFound('{} does have any posts.'.format(id))
+
+            posts = []
+            for row in row1:
+                id = row[0]
+                cur = conn.execute(
+                '''
+                SELECT file_name
+                FROM photos
+                WHERE post_id = ? ''', (id,)
+                )
+                posts.append(Post(row[0], row[1], row[2], row[3], row[4], cur.fetchall())
+
+            return posts
+
+        @staticmethod
+        def add_photo(file_name, post_id, date):
+            cur = conn.execute(
+            '''
+            INSERT INTO photos (file_name, post_id, photo_date)
+            VALUES (?, ?, ?, ?); ''', (file_name, post_id, date)
             )
             conn.commit()
             return (cur.lastrowid, file_name)
@@ -170,7 +223,7 @@ with sqlite3.connect('db.db') as conn:
             conn.commit()
 
             for files in photo_files:
-                Post.add_photo(files, user_id, id, date)
+                Post.add_photo(files, id, date)
             return Post (id, user_id, description, title, date, photo_files)
 
         @staticmethod
