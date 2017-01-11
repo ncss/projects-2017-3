@@ -78,19 +78,19 @@ with sqlite3.connect('db.db') as conn:
     cur.execute(
     '''
     INSERT INTO users VALUES
-    (NULL, 'george', 'password', 'G', 'some@email.com', 'Male', '01/01/2000', 'I''m a cool kid.', '', '11/1/2017'),
-    (NULL, 'tim', 'password', 'TimmyD', 'some@email.com', 'Male', '01/01/1990', 'Only tutor who knows what a Finite State Automata is :\).', '', '07/1/2017'),
-    (NULL, 'will', 'password', '', 'some@email.com', 'Male', '01/01/1993', 'Full Full-stack developer', '', '07/1/2017'),
-    (NULL, 'steph',	'password', 'Stiff', 'some@email.com', 'Female', '01/01/2000', 'New Zealand is the best country', '', '08/01/2016'),
-    (NULL, 'evan', 'password', 'CompSci', 'some@email.com', 'Male',	'01/01/1995', 'Computer Science is obviously the best subject', '', '08/01/2016'),
-    (NULL, 'liam', 'password', '', 'some@email.com', 'Male', '01/01/1995', 'Don''t scare me please :O', '', '08/01/2017'),
-    (NULL, 'james', 'password', 'God', 'some@email.com', 'Male', '01/01/1989', 'God to NCSS students. I read stories to children for a living. I lost my hat :\(', '', '08/01/2016'),
-    (NULL, 'rachel', 'password', 'Rad Rachel', 'some@email.com', 'Female', '01/01/2000', '¯\\_\(ツ\)_/¯', '', '08/01/2016'),
-    (NULL, 'luke', 'password', 'GitOut', 'some@email.com', 'Male', '01/01/1999', 'Git King. Git Kraken. Git Merge without mr merge monkey',	'', '08/01/2016'),
-    (NULL, 'lucy', 'password', '', 'some@email.com', 'Female', '01/01/1990', 'Atlassian.', '', '08/01/2016'),
-    (NULL, 'julia', 'password', '', 'some@email.com', 'Female', '01/01/1990', ':)', '', '08/01/2016'),
-    (NULL, 'robot', 'password', 'Mr Robot', 'some@email.com', '', '01/01/1999', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non mattis odio. Suspendisse mollis tristique sapien. Proin ac mi ornare nibh tempus luctus. Ut in ex scelerisque felis lacinia hendrerit. Nulla scelerisque ultricies tempus. Vestibulum ullamcorper eros mi, non ultricies erat dapibus sed. Aenean pretium nisi a magna vestibulum varius. Phasellus odio ex, porta quis erat rhoncus, malesuada cursus libero. Nam nec nibh eget felis eleifend vestibulum. Aenean lobortis eleifend dolor vitae elementum. Nullam tincidunt tellus id dolor tempus, laoreet hendrerit lorem commodo.', '', '01/01/1970'),
-    (NULL, 'generic', 'password', 'Generico', 'some@email.com', '', '01/01/2017', 'Your Generic User Bio', '', '11/01/2017')
+    (NULL, 'george', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'G', 'some@email.com', 'Male', '01/01/2000', 'I''m a cool kid.', '', '11/1/2017'),
+    (NULL, 'tim', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'TimmyD', 'some@email.com', 'Male', '01/01/1990', 'Only tutor who knows what a Finite State Automata is :\).', '', '07/1/2017'),
+    (NULL, 'will', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', '', 'some@email.com', 'Male', '01/01/1993', 'Full Full-stack developer', '', '07/1/2017'),
+    (NULL, 'steph',	'15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'Stiff', 'some@email.com', 'Female', '01/01/2000', 'New Zealand is the best country', '', '08/01/2016'),
+    (NULL, 'evan', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'CompSci', 'some@email.com', 'Male',	'01/01/1995', 'Computer Science is obviously the best subject', '', '08/01/2016'),
+    (NULL, 'liam', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', '', 'some@email.com', 'Male', '01/01/1995', 'Don''t scare me please :O', '', '08/01/2017'),
+    (NULL, 'james', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'God', 'some@email.com', 'Male', '01/01/1989', 'God to NCSS students. I read stories to children for a living. I lost my hat :\(', '', '08/01/2016'),
+    (NULL, 'rachel', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'Rad Rachel', 'some@email.com', 'Female', '01/01/2000', '¯\\_\(ツ\)_/¯', '', '08/01/2016'),
+    (NULL, 'luke', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'GitOut', 'some@email.com', 'Male', '01/01/1999', 'Git King. Git Kraken. Git Merge without mr merge monkey',	'', '08/01/2016'),
+    (NULL, 'lucy', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', '', 'some@email.com', 'Female', '01/01/1990', 'Atlassian.', '', '08/01/2016'),
+    (NULL, 'julia', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', '', 'some@email.com', 'Female', '01/01/1990', ':)', '', '08/01/2016'),
+    (NULL, 'robot', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'Mr Robot', 'some@email.com', '', '01/01/1999', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non mattis odio. Suspendisse mollis tristique sapien. Proin ac mi ornare nibh tempus luctus. Ut in ex scelerisque felis lacinia hendrerit. Nulla scelerisque ultricies tempus. Vestibulum ullamcorper eros mi, non ultricies erat dapibus sed. Aenean pretium nisi a magna vestibulum varius. Phasellus odio ex, porta quis erat rhoncus, malesuada cursus libero. Nam nec nibh eget felis eleifend vestibulum. Aenean lobortis eleifend dolor vitae elementum. Nullam tincidunt tellus id dolor tempus, laoreet hendrerit lorem commodo.', '', '01/01/1970'),
+    (NULL, 'generic', '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'Generico', 'some@email.com', '', '01/01/2017', 'Your Generic User Bio', '', '11/01/2017')
     '''
     )
 
