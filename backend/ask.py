@@ -21,6 +21,7 @@ def ask_handler_post(request):
             db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
             request.write("Your image was uploaded! name=%s"%(photo_files[0]))
             request.redirect('/')
+            request.redirect('/view/' + str(post.id))
         else:
             request.write("uploaded file type not supported")
 
