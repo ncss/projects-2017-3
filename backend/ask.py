@@ -8,7 +8,7 @@ from auth import requires_login, authenticate_cookie
 @requires_login
 def ask_handler(request):
     name = request.get_field("name")
-    request.write(render("ask.html", {'username': 'rand', 'signed_in': authenticate_cookie(request)}))
+    request.write(render("ask.html", {'username': 'rand', 'signed_in': authenticate_cookie(request), 'username': get_username(request)}))
 
 @requires_login
 def ask_handler_post(request):

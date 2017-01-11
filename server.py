@@ -14,11 +14,11 @@ UP_IMAGES = []
 
 def index_handler(request):
     print(UP_IMAGES)
-    request.write(render('index.html', {'posts':UP_IMAGES, 'signed_in':authenticate_cookie(request)})) # { 'post1': (image location, comment}
+    request.write(render('index.html', {'posts':UP_IMAGES, 'signed_in':authenticate_cookie(request), 'username': get_username(request)})) # { 'post1': (image location, comment}
 
 
 def handle_list_users(request):
-    request.write(render('list_users.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request)}))
+    request.write(render('list_users.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
 
 
 
