@@ -19,6 +19,14 @@ body {
   margin: 0px auto;
 }
 
+input[type="text"] {
+  width: 40%;
+}
+
+input[type="password"] {
+  width: 40%;
+}
+
 .error {
   color: red;
   font-size: 16px;

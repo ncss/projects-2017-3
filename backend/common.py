@@ -1,7 +1,6 @@
 import os
 import hashlib
 import urllib.request
-import tempfile
 from datetime import datetime
 from db import db_api as db
 

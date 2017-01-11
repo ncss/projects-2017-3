@@ -12,7 +12,7 @@ from mimetypes import guess_extension
 @requires_login
 def ask_handler(request):
     name = request.get_field("name")
-    request.write(render("ask.html", {'username': 'rand', 'signed_in': authenticate_cookie(request), 'username': get_username(request)}))
+    request.write(render("ask.html", {'signed_in': authenticate_cookie(request), 'username': get_username(request)}))
 
 @requires_login
 def ask_handler_post(request):
