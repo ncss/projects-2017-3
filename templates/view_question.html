@@ -7,17 +7,19 @@
   <body>
     {% include _nav_bar.html %}
     <main class="centered">
-      <h1>Question:</h1>
-      <h2>{{ question }}</h2>
-      <img src="static/images/{{ file }}" alt="Mountains">
-      <h3>{{ description }}</h3>
-      <p>
-        <label for="addComment">Do you have an answer?</label>
-        <textarea type="text" name="addComment"></textarea>
-      </p>
-      <p>
-        <input type="submit" value="Submit">
-      </p>
+      <h1>Question</h1>
+      <fieldset>
+        <h2>{{ question }}</h2>
+        <img src="static/images/{{ file }}" alt="Mountains">
+        <h3>{{ description }}</h3>
+        <p>
+          <label for="addComment">Do you have an answer?</label>
+          <textarea type="text" name="addComment"></textarea>
+        </p>
+        <p>
+          <input type="submit" value="Submit">
+        </p>
+      </fieldset>
     </main>
   </body>
 </html>

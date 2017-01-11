@@ -70,6 +70,7 @@ fieldset {
   display: inline-block;
   margin: 10px;
   vertical-align: top;
+  width: 700px;
 }
 
 fieldset p {
@@ -117,13 +118,6 @@ article h3 {
 
 *[hidden] {
   display: none !important;
-}
-
-.centered {
-  max-width: 700px;
-  border: 1px solid #26C6DA;
-  border-radius: 10px;
-  padding: 10px;
 }
 
 main h1 {
