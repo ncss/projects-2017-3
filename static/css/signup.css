@@ -34,13 +34,12 @@ input[type="password"] {
 
 .photobox {
   display: flex;
+  align-items: center;
 }
 
 .photobox label {
   width: 200px;
-  height: 150px;
   text-align: center;
-  align-items: center;
 }
 
 .photobox video,

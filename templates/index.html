@@ -9,18 +9,19 @@
     {% include _nav_bar.html %}
     <section Class = 'feed_title'>
       <h1>Feed</h1>
-      {{ signed_in }}
     </section>
     <div class = 'post_list'>
       {% for post in posts %}
+      <a href="view/{{post['id'] }}">
       <fieldset class="image_fieldset">
+
           <img class='post_image' src= "static/uploads/{{ post['image'] }}" alt= "{{ post['question'] }}">
           <div class = 'post_text'>
               <figcaption>
                 {{ post['question'] }}
               </figcaption>
           </div>
-      </fieldset>
+      </fieldset></a>
       {% end for %}
    </div>
 </body>

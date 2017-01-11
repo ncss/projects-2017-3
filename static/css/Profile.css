@@ -1,0 +1,15 @@
+.user_info {
+  border: 1px solid #26C6DA;
+  border-radius: 15px;
+}
+
+.username_profile {
+  align-content: center;
+  font-size: 18px;
+}
+
+.profile_info {
+  font-weight: bold;
+  color: #26C6DA;
+  font-style: italic;
+}

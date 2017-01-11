@@ -10,9 +10,7 @@
       <h1>Question</h1>
       <fieldset>
         <h2>{{ question }}</h2>
-        <p>
-          <img src="static/images/{{ file }}" alt="Mountains">
-        </p>
+        <img src="/static/{{ file }}" alt="{{ description }}">
         <h3>{{ description }}</h3>
         <p>
           <label for="addComment">Do you have an answer?</label>
@@ -22,6 +20,11 @@
           <input type="submit" value="Submit">
         </p>
       </fieldset>
+      {% for comment in comments %}
+        <p>
+          {{ user_ids[comment.user_id - 1].username }}: {{ comment.text }}
+        </p>
+      {% end for %}
     </main>
   </body>
 </html>

@@ -17,9 +17,16 @@ def index_handler(request):
     if posts:
         posts = [{'image':i.file if i.file != [] else 'notfound.jpg',
                   'question':i.title, 'id': i.id} for i in posts]
-        request.write(render('index.html', {'posts':posts, 'signed_in':authenticate_cookie(request), 'username': get_username(request)})) # { 'post1': (image location, comment}
+        request.write(render('index.html',
+            {'posts':posts,
+            'signed_in':authenticate_cookie(request),
+            'username': get_username(request),
+            'link': 'view/()'})) # { 'post1': (image location, comment}
     else:
         request.write("no posts found")  # { 'post1': (image location, comment}
+
+def aboutus_handler(request):
+    request.write(render('aboutus.html', {}))
 
 def handle_list_users(request):
     request.write(render('list_users.html', {'users': db.User.find_multiple(), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
@@ -35,4 +42,5 @@ server.register(r'/signin'      , user.signin_handler  , post=user.signin_handle
 server.register(r'/logout'      , user.signout_handler)
 server.register(r'/list_users'  , handle_list_users)
 server.register(r'/profile/(.+)', profile.view_handler, post=profile.view_handler_post)
+server.register(r'/aboutus'     , aboutus_handler)
 server.run()
