@@ -90,7 +90,7 @@ function validateForm() {
     var $description = $('.description')
 
     var validQuestion = isPresent($question);
-    var validImage = isImagePresent($image) && //make sure that image is a compatable file type
+    var validImage = isImagePresent($image);  //make sure that image is a compatable file type
 
 
   }
