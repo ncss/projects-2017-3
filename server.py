@@ -10,8 +10,7 @@ TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
 IMAGE_DIR = os.path.join('static', 'images')
 
-UP_IMAGES = []
-
+UP_IMAGES = ask.UP_IMAGES
 
 def index_handler(request):
     print(UP_IMAGES)
