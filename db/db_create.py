@@ -38,10 +38,11 @@ with sqlite3.connect(DB_FILE) as conn:
     description TEXT,
     title TEXT NOT NULL,
     post_date TEXT NOT NULL,
+    file TEXT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id))
     '''
     )
-
+    """
     # Create the `photos` table
     cur.execute(
     '''
@@ -53,7 +54,7 @@ with sqlite3.connect(DB_FILE) as conn:
     FOREIGN KEY(post_id) REFERENCES posts(id))
     '''
     )
-
+    """
     # Create the comments table
     cur.execute(
     '''
@@ -101,38 +102,38 @@ with sqlite3.connect(DB_FILE) as conn:
     cur.execute(
     '''
     INSERT INTO posts VALUES
-    (NULL, 0, 'Where can I find this watch from? It looks sick and I really want it :)', 'What watch is this?', '01/01/2017'),
-    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017'),
-    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017'),
-    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 2, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 2, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 8, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017'),
-    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017')
+    (NULL, 0, 'Where can I find this watch from? It looks sick and I really want it :)', 'What watch is this?', '01/01/2017', 'cats.jpg'),
+    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017', 'cats.jpg'),
+    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017', 'cats.jpg'),
+    (NULL, 0, 'Yeah, they kinda cool ^_^', 'What is this pair of shoes?', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 1, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 2, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 2, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 4, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 7, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 8, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 10, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg'),
+    (NULL, 12, 'Some generic description O_O', 'Generic title', '01/01/2017', 'cats.jpg')
     '''
     )
-
+    """
     # Create dummy photos
     cur.execute(
     '''
@@ -153,6 +154,7 @@ with sqlite3.connect(DB_FILE) as conn:
     (NULL, 'cats.jpg', 22, '01/01/2017')
     '''
     )
+    """
 
     # Create dummy comments
     cur.execute(
