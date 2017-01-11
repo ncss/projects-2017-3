@@ -1,9 +1,10 @@
 from auth import requires_login
 from backend.common import *
 from template_engine import render
+from os import path
 from db import db_api as db
-from requests import get
 from auth import requires_login, authenticate_cookie
+import re
 
 @requires_login
 def ask_handler(request):
@@ -13,27 +14,22 @@ def ask_handler(request):
 @requires_login
 def ask_handler_post(request):
     photo_files = request.get_file("fileupload")
+    filename, content_type, data = photo_files
     title = request.get_field("question")
     description = request.get_field("description")
-    url = request.get_field("url")
     if photo_files != (None, None, None):
-        if photo_files[1].startswith('image/'):
+        if content_type.startswith('image/'):
             user_id = request.get_secure_cookie("current_user")
-            '''photo_files from database needs to be discussed regarding single/multiple photo uploads'''
-            db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
+            photo_file_ext_regex = re.search(r'\.[a-zA-Z]+$', filename)
+            photo_file_ext = photo_file_ext_regex.group(0)
+            photo_dir = path.join('uploads', 'questions', db.Post.get_next_post_id() + photo_file_ext)
+            post = db.Post.create(user_id, description, title, photo_dir)
+            with open(path.join('static', photo_dir), 'wb') as f:
+                f.write(data)
             request.write("Your image was uploaded! name=%s"%(photo_files[0]))
-            request.redirect('/')
             request.redirect('/view/' + str(post.id))
         else:
             request.write("uploaded file type not supported")
 
     else:
-        user_id = request.get_secure_cookie("current_user")
-        '''photo_files from database needs to be discussed regarding single/multiple photo uploads'''
-        db.Post.create(user_id, description, title, get_current_time(), [photo_files[2]])
-        request.redirect('/')
-
-        # TODO Actually handle any errors of any kind???
-
-        # TODO Put some handling of the edge case where neither photo nor URL is entered
-        # request.write('We couldn\'t find an uploaded file.')
+        request.write('We couldn\'t find an uploaded file.')
