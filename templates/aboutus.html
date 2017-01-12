@@ -19,16 +19,49 @@
          <div class='each_box'><div class='bold'>Our purpose:</div><div class = "about_box"> Our team has accquired the mission to errect a dynamic, social intended
          website over the course of the past 7 days. I would tell you a UDP joke, but you might not get it.</div></div>
 
-         <div class='each_box'><div class='bold'>Our team:</div><div class = "about_box"> We are compiled of Terrific Tracey, Magical Matilda, Jumpy Jack, Lukewarm luke,<br> Cuddly Courtney, Rad Rachel, Smiley Sarah, Joyful Jack, Destructive Dylan</div></div>
+         <div class='each_box'><div class='bold'>Our team:</div><div class = "about_box"> We are compiled of Terrific Tracey, Magical Matilda, Jumpy Jack, Lukewarm Luke,<br> Cuddly Courtney, Rad Rachel, Smiley Sarah, Joyful Jack, Destructive Dylan</div></div>
 
-         <div class='each_box'><div class='bold'>Our Future:</div><div class = "about_box"> Our team has accquired the mission to errect a dynamic, social intended
-         website over the course of the past 7 days. I would tell you a UDP joke, but you might not get it.</div></div>
+         <div class='each_box'><div class='bold'>Our Future:</div><div class = "about_box"> In the future we intend to reinstate our place in the world as legendary legends. Knock knock. Who's there? very long pause...<br> Java.</div></div>
         </article>
 
 
         <aside>
+          <div class="slideshow-container">
+            <div class="mySlides fade">
+              <div class="numbertext">1 / 3</div>
           <img src="static/images/About1.jpg" width = "600" class = 'image_about'/>
+        </div>
+          <div class="mySlides fade">
+          <img src="static/images/About5.jpg" width = "600" class = 'image_about'/>
+        </div>
+        <div class="mySlides fade">
+          <img src="static/images/About6.jpg" width = "600" class = 'image_about'/>
+        </div>
+        <br>
+
+        <div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+      </div>
+    </div>
         </aside>
+
+        <script>  var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex> slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+        </script>
     </main>
   </body>
 </html>
