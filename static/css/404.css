@@ -132,3 +132,11 @@ aside {
 .slideshow-container {
   text-align: center;
 }
+
+strong {
+  color: #26C6DA;
+  font-size: 20px;
+  text-align: center;
+  padding:10px;
+  font-weight: 900;
+}
