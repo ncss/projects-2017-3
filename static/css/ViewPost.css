@@ -11,3 +11,17 @@ body {
   background-color: #E0F7FA;
   font-family: "Open Sans", sans-serif;
 }
+
+.comment img {
+  width: 75px;
+  height: 75px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.comment  h3, p{
+  display: inline-block;
+}
+
+.comment h3 {
+  font-weight: bold;
+}

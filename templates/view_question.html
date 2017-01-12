@@ -16,17 +16,23 @@
           <h3>{{ description }}</h3>
           <p>
             <label for="addComment">Do you have an answer?</label>
-            <textarea type="text" name="addComment"></textarea>
+            <textarea type="text" name="addComment" id="addComment"></textarea>
           </p>
           <p>
             <input type="submit" value="Submit">
           </p>
         </fieldset>
       </form>
+      <h2>Comments</h2>
       {% for comment in comments %}
-        <p>
-          {{ user_ids[comment.user_id-1].username }}: {{ comment.text }}
+      <fieldset class="comment">
+        {% if comment.image  %}
+        <img src="/static/{{ comment.image }}"/>
+        {% end if %}
+        <h3>
+          {{ user_ids[comment.user_id-1].username }}:</h3><p> {{ comment.text }}
         </p>
+      </fieldset>
       {% end for %}
     </main>
   </body>
