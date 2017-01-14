@@ -20,7 +20,10 @@ with sqlite3.connect('db.db') as conn:
         pass
 
     class User:
-
+        """
+        User Object that represents a User, with attributes
+        id, username (unique), hashed(password), nickname, email(unique), gender, dobm, short bio, picture(path), and creation_date
+        """
         def __init__(self, id, username, password,  nickname, email, gender = None, dob = None, bio = None, picture = None, creation_date = None):
             self.id = id
             self.username = username
@@ -243,7 +246,10 @@ with sqlite3.connect('db.db') as conn:
             return Comment.find(comment_id)
 
     class Comment:
-
+        """
+        Comment Object contains attribs:
+        id, user, post(id), parent(id) (for multiple/nested comments), text, date(sent), location(latitude), location(longitude), score
+        """
         def __init__(self, id, user, post, parent = None, text = None, date = None, loc_latitude = None, loc_longitude = None, score = None):
             self.id = id
             self.user = user
@@ -277,8 +283,8 @@ with sqlite3.connect('db.db') as conn:
 
             if row is None:
                 return None
-
-            return Comment(row[0], User.find(row[1]), Post.find(row[2]), Comment.find(row[3]) if row[3] is not None else row[3], row[4], row[5], row[6], row[7], row[8])
+            # id | (user obj) | post, parent, text, date, loc_lat, loc_long, score
+            return Comment(row[0], User.find(row[1]), *row[2:])
 
         @staticmethod
         def find_comments_for_post(post):
