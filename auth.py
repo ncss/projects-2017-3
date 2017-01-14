@@ -37,13 +37,16 @@ def requires_login(func: Callable):
 def require_specific_user(func):
     """Decorator that requires the user to = to the cookie set in request"""
     def ret(request, username, *args, **kwargs):
-        cookie_user = request.get_secure_cookie(USER_COOKIE).decode("UTF-8")
-        print(username, cookie_user)
-        if cookie_user is not None and username == cookie_user:
-            return func(request, username, *args, **kwargs)
+        if authenticate_correct_username(request, username):
+            return func(request,username, *args, **kwargs)
         else:
-            request.write("you cannot edit someone elses profile you hacker!")
+            request.write("you cannot edit someone else's profile you hacker!")
     return ret
+
+def authenticate_correct_username(request, username):
+    cookie_user = request.get_secure_cookie(USER_COOKIE).decode("UTF-8")
+    return cookie_user is not None and username == cookie_user
+
 
 
 

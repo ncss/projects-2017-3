@@ -39,3 +39,8 @@ def view_handler_post(request, username):
     request.redirect('/profile/'+username)
 
 
+def edit_handler_post(request, username):
+    ...
+
+def edit_handler(request, username):
+    ...

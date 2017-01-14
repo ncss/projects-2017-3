@@ -187,17 +187,19 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find_all(user = None):
-            if not user:
+            if user is None:
                 cur = conn.execute(
                 '''
                 SELECT *
-                FROM posts; '''
+                FROM posts
+                ORDER BY post_date DESC; '''
                 )
             else:
                 cur = conn.execute('''
                 SELECT *
                 FROM posts
-                WHERE user_id = ? ''', (user.id,)
+                WHERE user_id = ?
+                ORDER BY post_date DESC; ''', (user.id,)
                 )
             all_posts = cur.fetchall()
             if all_posts:
