@@ -104,7 +104,9 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def update(id, password, nickname, email, gender, dob, bio, picture):
-            """Updates the user given all the values required. see update_one to update one value"""
+            """
+            Updates the user given all the values required. see update_some to update one/some value. Kinda deprecated
+            """
             cur.execute(
             '''
             UPDATE users
@@ -122,13 +124,14 @@ with sqlite3.connect('db.db') as conn:
             return User.find(id)
 
         @staticmethod
-        def update_one(**kwargs):
+        def update_some(**kwargs):
+            """Updates one value. Use update_one(nickname='newnick',...)"""
             if all((i in User.mutable_columns for i in kwargs.keys())):
                 # all the keys are legit
                 for key in kwargs:
                     cur.execute(
                         """UPDATE users
-                        SET %s = ?""" % key, kwargs[key]
+                        SET %s = ?""" % key, (kwargs[key],)
                     )
                     # yes i know string formatting is bad with sql. Its a necessary evil :(
             else:
