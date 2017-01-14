@@ -1,7 +1,7 @@
 import time
 from os import rename
 from auth import requires_login
-from backend.common import *
+from back_end.common import *
 from template_engine import render
 from os import path
 from db import db_api as db

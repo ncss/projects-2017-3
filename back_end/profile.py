@@ -1,10 +1,8 @@
-
 from template_engine.parser import render
-from backend.common import *
-from auth import authenticate_cookie, requires_login, require_specific_user
+from back_end.common import *
+from auth import authenticate_cookie, requires_login, require_specific_user, authenticate_correct_username
 
 def get_picture(userObj):
-    print(userObj)
     return userObj.picture if userObj is not None and userObj != "" else "nouser.png"
 
 
@@ -16,9 +14,10 @@ def view_handler(request, username):
     if user is None:
         request.write("username is not in db")
     else:
-        request.write(render('profile.html', {'username':user.username, 'nickname': user.nickname,
-                                        'email': user.email, 'picture': get_picture(user.picture)
-                                        , 'signed_in':authenticate_cookie(request)}))
+        request.write(render('profile.html', {'user':user, 'picture': get_picture(user.picture)
+                                        , 'signed_in':authenticate_cookie(request), 'same_user':authenticate_correct_username(request, user.username),
+                                              'username': user.username
+        })) # username required for pages that do not build a user object
 
 @requires_login
 @require_specific_user
