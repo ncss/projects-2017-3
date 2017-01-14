@@ -166,10 +166,10 @@ def identify_token(token):
     # If the token is an expression ({{ ... }})
     elif token.startswith('{{') and token.endswith('}}'):
         # We remove the first and last 2 characters since they are the expression identifiers
-        return create_token(token[2:-2].strip(), 'expression')
+        return create_token('expression', token[2:-2].strip())
     # Otherwise it's HTML
     else:
-        return create_token(token, 'html')
+        return create_token('html', token)
 
 def render(fname, context):
     """
