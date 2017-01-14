@@ -91,7 +91,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def sign_up(username, password, nickname, email):
-            """signs up a user"""
+            """signs up a user, given the bare minimum"""
             creation_date = datetime.now().isoformat()
             cur.execute(
             '''
@@ -104,6 +104,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def update(id, password, nickname, email, gender, dob, bio, picture):
+            """Updates the user given all the values required. see update_one to update one value"""
             cur.execute(
             '''
             UPDATE users
@@ -136,6 +137,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def login(username, password):
+            """logs the user in given username and password hash. returns User obj with username or none if login failed"""
             cur.execute('''
             SELECT id
             FROM users
@@ -146,6 +148,7 @@ with sqlite3.connect('db.db') as conn:
             return user_id
 
         def delete(self):
+            """Deletes a user from the database"""
             cur.execute('''
             DELETE FROM users WHERE username = ?
             ''' , (self.username,))

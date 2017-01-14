@@ -1,7 +1,7 @@
 from typing import Callable
 from template_engine.parser import render
 from db import db_api as db
-from backend.common import get_username
+from back_end.common import get_username
 
 USER_COOKIE = "current_user"
 
@@ -44,12 +44,10 @@ def require_specific_user(func):
     return ret
 
 def authenticate_correct_username(request, username):
-    cookie_user = request.get_secure_cookie(USER_COOKIE).decode("UTF-8")
-    return cookie_user is not None and username == cookie_user
+    user_cookie = request.get_secure_cookie(USER_COOKIE)
+    if user_cookie:
+        user_cookie = user_cookie.decode("UTF-8")
+        return user_cookie == username
+    else:
+        return False
 
-
-
-
-@requires_login
-def foo(request, *args, **kwargs):
-    print(request)

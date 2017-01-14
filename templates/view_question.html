@@ -28,6 +28,8 @@
       <fieldset class="comment">
         {% if comment.image  %}
         <img src="/static/{{ comment.image }}"/>
+        {% else %}
+        <img src="/static/uploads/user_image/nouser.png">
         {% end if %}
         <h3>
           {{ comment.user.username }}:</h3><p> {{ comment.text }}

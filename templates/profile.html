@@ -8,9 +8,15 @@
     {% include _nav_bar.html %}
     <main>
       <div class='user_info'>
-        <p class="username_profile"> Username: <span class="profile_info">{{ username }}</span> </p>
-        <p> Nickname: <span class="profile_info">{{ nickname }}</span> </p>
-        <p> Email: <span class="profile_info">{{ email }}</span> </p>
+        <p class="username_profile"> Username: <span class="profile_info">{{ user.username }}</span> </p>
+        <p> Nickname: <span class="profile_info">{{ user.nickname }}</span> </p>
+        <p> Gender: <span class="profile_info"> {{user.gender }}</span></p>
+        {% if same_user %}
+        <p> Email: <span class="profile_info">{{ user.email }}</span> </p>
+        <p> Date of birth <span class="profile_info"> {{ user.dob }}</span></p>
+        {% end if %}
+        <p> Bio </p>
+        <article class="profile_bio">{{ user.bio }}</article>
       <!-- The user geneder is not data we are relating to the website -->
       <!-- We are not collecting the user date of brith -->
         <p class="image"> Picture: <img src= "/static/uploads/user_image/{{ picture }}">

@@ -1,10 +1,10 @@
 from tornado.ncss import Server, ncssbook_log
 import os
 from template_engine.parser import render
-from backend import ask, user, profile, view
+from back_end import ask, user, profile, view
 from db import db_api as db
 from auth import requires_login, authenticate_cookie
-from backend.common import *
+from back_end.common import *
 
 TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
