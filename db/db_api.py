@@ -1,6 +1,13 @@
 from datetime import datetime
-#from ..backend.common import *
 import sqlite3
+import os
+
+class MissingDatabaseException(Exception): pass
+
+# Because connecting to a db will create the file if it doesn't exist, we need to throw an error so we can have a db with dummy data
+if not os.path.isfile("db.db"):
+    raise MissingDatabaseException("You're missing the database file! Run `python db/db_create.py` and then run this again!")
+
 with sqlite3.connect('db.db') as conn:
     cur = conn.cursor()
     class CommentNotFoundException(Exception):
