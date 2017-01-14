@@ -3,23 +3,26 @@ from template_engine.parser import render
 from backend.common import *
 from auth import authenticate_cookie, requires_login, require_specific_user
 
+def get_picture(userObj):
+    print(userObj)
+    return userObj.picture if userObj is not None and userObj != "" else "nouser.png"
 
-@requires_login
-@require_specific_user
+
+def view_handler_post(request, username):
+    ...
+
 def view_handler(request, username):
     user = db.User.find_by_username(username)
     if user is None:
         request.write("username is not in db")
     else:
         request.write(render('profile.html', {'username':user.username, 'nickname': user.nickname,
-                                        'email': user.email, 'picture':user.picture if user.picture is not None and user.picture != "" else "nouser.png"
+                                        'email': user.email, 'picture': get_picture(user.picture)
                                         , 'signed_in':authenticate_cookie(request)}))
-
-
 
 @requires_login
 @require_specific_user
-def view_handler_post(request, username):
+def edit_handler_post(request, username):
     usr = db.User.find_by_username(username)
     nickname = request.get_field('nickname', default=usr.nickname)
     #TODO check front end for confirmation password req old pass
@@ -39,8 +42,7 @@ def view_handler_post(request, username):
     request.redirect('/profile/'+username)
 
 
-def edit_handler_post(request, username):
-    ...
-
+@requires_login
+@require_specific_user
 def edit_handler(request, username):
     ...

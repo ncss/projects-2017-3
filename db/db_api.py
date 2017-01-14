@@ -24,6 +24,11 @@ with sqlite3.connect('db.db') as conn:
         User Object that represents a User, with attributes
         id, username (unique), hashed(password), nickname, email(unique), gender, dobm, short bio, picture(path), and creation_date
         """
+        columns = 'id', 'username',  'password', 'nickname', 'gender', 'dob', 'picture', 'creation_date'
+        # all possible columns
+        mutable_columns = 'password', 'nickname', 'email', 'gender', 'dob', 'picture', 'creation_date'
+        # all columns allowed to be changed after acc creation
+
         def __init__(self, id, username, password,  nickname, email, gender = None, dob = None, bio = None, picture = None, creation_date = None):
             self.id = id
             self.username = username
@@ -38,6 +43,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find(id):
+            """Finds the user with id of id"""
             cur.execute(
             '''
             SELECT *
@@ -53,6 +59,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find_by_username(username):
+            """Finds the user with the username of username"""
             cur.execute(
             '''
             SELECT *
@@ -68,6 +75,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find_all():
+            """Returns all users! (not sure what this is for :?"""
             cur.execute(
             '''
             SELECT *
@@ -83,6 +91,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def sign_up(username, password, nickname, email):
+            """signs up a user"""
             creation_date = datetime.now().isoformat()
             cur.execute(
             '''
@@ -110,6 +119,20 @@ with sqlite3.connect('db.db') as conn:
             )
             conn.commit()
             return User.find(id)
+
+        @staticmethod
+        def update_one(**kwargs):
+            if all((i in User.mutable_columns for i in kwargs.keys())):
+                # all the keys are legit
+                for key in kwargs:
+                    cur.execute(
+                        """UPDATE users
+                        SET %s = ?""" % key, kwargs[key]
+                    )
+                    # yes i know string formatting is bad with sql. Its a necessary evil :(
+            else:
+                print("one of the keys were invalid!", kwargs)
+
 
         @staticmethod
         def login(username, password):
