@@ -8,6 +8,9 @@ class Node:
         pass
 
     def render(self, context):
+        """
+        Renders self so we can get valid HTML code.
+        """
         raise NotImplementedError()
 
 class ExpressionNode(Node):
@@ -21,6 +24,7 @@ class ExpressionNode(Node):
         return "<ExpressionNode: '" + head(self._expression, 20) + "'>"
 
     def render(self, context):
+        # Escape so we don't get any weird output on our html, and just evaluate the expression
         return html.escape(str(eval(self._expression, {}, context)))
 
 class ForNode(Node):
@@ -39,13 +43,17 @@ class ForNode(Node):
         return "<ForNode: '" + self._iterator + '; ' + self._child + "'>"
 
     def render(self, context):
+        # Evaluate the iterable so we know what to iterate over
         iterable = eval(self._iterable, {}, context)
         rendered_children = []
         for i in iterable:
+            # Create a new context to include our variable
             new_context = dict(context)
             new_context[self._iterator] = i
+            # Render the child with our special context
             rendered = self._child.render(new_context)
             if rendered.strip():
+                # If the rendered thing ain't empty, append it
                 rendered_children.append(rendered)
         return ''.join(rendered_children)
 
