@@ -1,12 +1,12 @@
 $(document).ready(function(){
 
   $('.submit').click(function(evt){
-     //return validateSignupForm();
+     return validateSignupForm();
   });
 
-       //return validateForm();
+       return validateForm();
   $('.post_submit').click(function(evt){
-  //  return validatePost();
+    return validatePost();
   });
 
   function isPresent($input) {
@@ -75,7 +75,7 @@ $(document).ready(function(){
 
     if (validQuestion) {
       return true;
-    }else {
+    } else {
       return false;
     }
   }
