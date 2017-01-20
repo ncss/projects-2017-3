@@ -9,12 +9,14 @@
   <body>
     {% include _nav_bar.html %}
     <main>
+
       <div class="signup_form">
         <h2>Sign Up</h2>
+        <p>Fields marked with * need to be filled in to continue.</p>
         <form class="sign-in" action="/signup" method="post" enctype = "multipart/form-data">
           <fieldset>
             <div>
-              <label for="username">Username</label>
+              <label for="username">Username *</label>
               <input class="username" type="text" name="username">
               <p class='error'></p>
             </div>
@@ -24,7 +26,7 @@
               <p class='error'> </p>
             </div>
             <div>
-              <label for="password">Password</label>
+              <label for="password">Password *</label>
               <input class="password" type="password" name="password">
               <p class ='error'> </p>
             </div>

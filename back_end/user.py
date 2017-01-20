@@ -30,10 +30,13 @@ def signup_handler_post(request):
         request.write("username already exists!")
         return
     new_user = db.User.sign_up(username, password, nickname, email)
+
+    # Validation for uploaded image
     if profile_pic != (None, None, None):
         filename, content_type, data = profile_pic
         if content_type.startswith('image/'):
-            with open(os.path.join('static', 'uploads', 'user_image', str(new_user.id) +'.jpg'), 'wb') as f:
+            file_path_profile_pic = os.path.join('static', 'uploads', 'user_image', str(new_user.id) +'.jpg')
+            with open(file_path_profile_pic, 'wb') as f:
                 f.write(data)
                 db.User.update_some(picture=str(new_user.id)+'.jpg')
 
