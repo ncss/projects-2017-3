@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+  // Event for validate sign up form
   $('.submit').click(function(evt){
      return validateSignupForm();
   });
@@ -7,6 +8,11 @@ $(document).ready(function(){
        return validateForm();
   $('.post_submit').click(function(evt){
     return validatePost();
+  });
+
+  $('.username').blur(function(evt){
+    alert(2);
+    return validateUsername();
   });
 
   function isPresent($input) {
@@ -44,6 +50,16 @@ $(document).ready(function(){
     }
   }
 
+  function validateUsername() {
+
+    var $form = $('form.sign-in');
+    $('.error').html("");
+
+    var $username = $form.find('.username');
+    var validUsername = isPresent($username) && isValidName($username);
+    return validUsername
+
+  }
 
   function validateSignupForm() {
     var $form = $('form.sign-in');
@@ -55,6 +71,7 @@ $(document).ready(function(){
     var $email = $form.find('.email');
 
     var validUsername = isPresent($username) && isValidName($username);
+    //var validUsername = validateUsername()
     var validNickname = isPresent($nickname) && isValidName($nickname);
     var validPassword = isPresent($password);
     var validEmail = isPresent($email) && isValidEmail($email);
