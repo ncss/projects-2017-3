@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-
   $("#username").blur(function(){
 
     var $form = $('form.sign-in');
@@ -10,9 +9,9 @@ $(document).ready(function(){
     var isValidUsername = validateName($username);
 
     if (isValidUsername) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
   });
 
@@ -25,9 +24,9 @@ $(document).ready(function(){
     var isValidNickname = validateName($nickname);
 
     if (isValidNickname) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
 
   });
@@ -41,11 +40,9 @@ $(document).ready(function(){
     var validPassword = isValidPassword($password);
 
     if (validPassword) {
-      return true
+      return true;
     } else {
-      return false
-    }
-
+      return false;
   });
 
   $('#email').blur(function(){
@@ -57,15 +54,15 @@ $(document).ready(function(){
     var isValidEmail = isPresent($email) && isValidEmail($email);
 
     if (isValidEmail) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
 
   });
 
   $('.sign_up_submit').click(function(evt){
-     return validateSignupForm();
+    return validateSignupForm();
   });
 
        return validateForm();
@@ -121,18 +118,7 @@ $(document).ready(function(){
   }
 
   function isValidPassword($input){
- +  if ($input.val().length < 8) {
- +      $input.parent()
- +        .find('.error')
- +        .text('At least eight characters are required in this field')
- +      return false;
- +    } else {
- +      return true;
- +    }
- +  }
-=======
-  function isValidPassword($input){
-  if ($input.val().length < 8) {
+    if ($input.val().length < 8) {
       $input.parent()
         .find('.error')
         .text('At least eight characters are required in this field')
@@ -141,9 +127,6 @@ $(document).ready(function(){
       return true;
     }
   }
-
-
-
 
   function validateSignupForm() {
     var $form = $('form.sign-in');
