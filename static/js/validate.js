@@ -37,9 +37,9 @@ $(document).ready(function(){
     $('.error').html("");
 
     var $password = $form.find('.password');
-    var isValidPassword = isValidPassword($password);
+    var validPassword = isValidPassword($password);
 
-    if (isValidPassword) {
+    if (validPassword) {
       return true;
     } else {
       return false;
@@ -53,9 +53,9 @@ $(document).ready(function(){
     $('.error').html("");
 
     var $email = $form.find('.email');
-    var isValidEmail = isPresent($email) && isValidEmail($email);
+    var validEmail = isPresent($email) && isValidEmail($email);
 
-    if (isValidEmail) {
+    if (validEmail) {
       return true;
     } else {
       return false;
