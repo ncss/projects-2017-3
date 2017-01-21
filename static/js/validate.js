@@ -1,13 +1,11 @@
 $(document).ready(function(){
 
   $("#username").blur(function(){
-
     var $form = $('form.sign-in');
     $('.error').html("");
 
-    var $username = $form.find('.username');
-    var isValidUsername = validateName($username);
-
+    var $username = $form.find('#username');
+    var isValidUsername = isPresent($username) && isValidName($username);
     if (isValidUsername) {
       return true;
     } else {
@@ -20,8 +18,8 @@ $(document).ready(function(){
     var $form = $('form.sign-in');
     $('.error').html("");
 
-    var $nickname = $form.find('.nickname');
-    var isValidNickname = validateName($nickname);
+    var $nickname = $form.find('#nickname');
+    var isValidNickname =  isPresent($nickname) && isValidName($nickname);
 
     if (isValidNickname) {
       return true;
@@ -36,7 +34,7 @@ $(document).ready(function(){
     var $form = $('form.sign-in');
     $('.error').html("");
 
-    var $password = $form.find('.password');
+    var $password = $form.find('#password');
     var validPassword = isValidPassword($password);
 
     if (validPassword) {
@@ -52,7 +50,7 @@ $(document).ready(function(){
     var $form = $('form.sign-in');
     $('.error').html("");
 
-    var $email = $form.find('.email');
+    var $email = $form.find('#email');
     var validEmail = isPresent($email) && isValidEmail($email);
 
     if (validEmail) {
@@ -123,10 +121,10 @@ $(document).ready(function(){
     var $form = $('form.sign-in');
     $('.error').html("");
 
-    var $username = $form.find('.username');
-    var $nickname = $form.find('.nickname');
-    var $password = $form.find('.password');
-    var $email = $form.find('.email');
+    var $username = $form.find('#username');
+    var $nickname = $form.find('#nickname');
+    var $password = $form.find('#password');
+    var $email = $form.find('#email');
 
     var validUsername = isPresent($username) && isValidName($username);
     var validNickname = isPresent($nickname) && isValidName($nickname);
