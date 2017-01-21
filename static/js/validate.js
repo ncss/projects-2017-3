@@ -1,8 +1,8 @@
 $(document).ready(function(){
 
+  // The blur event is for when a selector has lost focus
   $("#username").blur(function(){
     var $form = $('form.sign-in');
-    $('.error').html("");
 
     var $username = $form.find('#username');
     var isValidUsername = isPresent($username) && isValidName($username);
@@ -16,7 +16,6 @@ $(document).ready(function(){
   $("#nickname").blur(function(){
 
     var $form = $('form.sign-in');
-    $('.error').html("");
 
     var $nickname = $form.find('#nickname');
     var isValidNickname =  isPresent($nickname) && isValidName($nickname);
@@ -32,7 +31,6 @@ $(document).ready(function(){
   $("#password").blur(function(){
 
     var $form = $('form.sign-in');
-    $('.error').html("");
 
     var $password = $form.find('#password');
     var validPassword = isValidPassword($password);
@@ -41,12 +39,13 @@ $(document).ready(function(){
       return true;
     } else {
       return false;
+    }
+
   });
 
   $('#email').blur(function(){
 
     var $form = $('form.sign-in');
-    $('.error').html("");
 
     var $email = $form.find('#email');
     var validEmail = isPresent($email) && isValidEmail($email);
@@ -63,22 +62,20 @@ $(document).ready(function(){
     return validateSignupForm();
   });
 
-       return validateForm();
-
-
   $('.post_submit').click(function(evt){
     return validatePost();
   });
-
-
 
   function isPresent($input) {
     if ($input.val().length < 4) {
       $input.parent()
         .find('.error')
-        .text('At least four characters are required in this field.')
+        .text('At least four characters are required in this field')
       return false;
     } else {
+      $input.parent()
+        .find('.error')
+        .text('')
       return true;
     }
   }
@@ -88,9 +85,12 @@ $(document).ready(function(){
     if (!emailReg.test($input.val())) {
       $input.parent()
         .find('.error')
-        .text('This is not a valid email address.')
+        .text('This is not a valid email address format')
       return false;
     } else {
+      $input.parent()
+        .find('.error')
+        .text('')
       return true;
     }
   }
@@ -103,28 +103,28 @@ $(document).ready(function(){
         .text('Usernames and nicknames can only contain letters and numbers.')
       return false;
     } else {
+      $input.parent()
+        .find('.error')
+        .text('')
       return true;
     }
-  }
-
-
-  function validateName($name) {
-
-    var validName = isPresent($name) && isValidName($name);
-    return validName;
-
   }
 
   function isValidPassword($input){
-    if ($input.val().length < 8) {
+  if ($input.val().length < 8) {
       $input.parent()
         .find('.error')
-        .text('At least eight characters are required in this field')
+        .text('At least eight characters are required in this field.')
       return false;
     } else {
+      $input.parent()
+        .find('.error')
+        .text('')
       return true;
     }
   }
+
+
 
   function validateSignupForm() {
     var $form = $('form.sign-in');
@@ -156,7 +156,7 @@ $(document).ready(function(){
 
     if (validQuestion) {
       return true;
-    } else {
+    }else {
       return false;
     }
   }
