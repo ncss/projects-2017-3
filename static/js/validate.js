@@ -47,6 +47,22 @@ $(document).ready(function(){
 
   });
 
+  $('.email').blur(function(){
+
+    var $form = $('form.sign-in');
+    $('.error').html("");
+
+    var $email = $form.find('.email');
+    var isValidEmail = isPresent($email) && isValidEmail($email);
+
+    if (isValidEmail) {
+      return true
+    } else {
+      return false
+    }
+
+  });
+
   $('.submit').click(function(evt){
      return validateSignupForm();
   });
@@ -96,7 +112,7 @@ $(document).ready(function(){
   function validateName($name) {
 
     var validName = isPresent($name) && isValidName($name);
-    return validName
+    return validName;
 
   }
 
