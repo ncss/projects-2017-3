@@ -1,6 +1,67 @@
 $(document).ready(function(){
 
-  //$()
+  $("#username").blur(function(){
+
+    var $form = $('form.sign-in');
+    $('.error').html("");
+
+    var $username = $form.find('.username');
+    var isValidUsername = validateName($username);
+
+    if (isValidUsername) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  $("#nickname").blur(function(){
+
+    var $form = $('form.sign-in');
+    $('.error').html("");
+
+    var $nickname = $form.find('.nickname');
+    var isValidNickname = validateName($nickname);
+
+    if (isValidNickname) {
+      return true;
+    } else {
+      return false;
+    }
+
+  });
+
+  $("#password").blur(function(){
+
+    var $form = $('form.sign-in');
+    $('.error').html("");
+
+    var $password = $form.find('.password');
+    var isValidPassword = isValidPassword($password);
+
+    if (isValidPassword) {
+      return true;
+    } else {
+      return false;
+    }
+
+  });
+
+  $('#email').blur(function(){
+
+    var $form = $('form.sign-in');
+    $('.error').html("");
+
+    var $email = $form.find('.email');
+    var isValidEmail = isPresent($email) && isValidEmail($email);
+
+    if (isValidEmail) {
+      return true;
+    } else {
+      return false;
+    }
+
+  });
 
   $('.sign_up_submit').click(function(evt){
     return validateSignupForm();
@@ -49,7 +110,7 @@ $(document).ready(function(){
   if ($input.val().length < 8) {
       $input.parent()
         .find('.error')
-        .text('At least eight characters are required in this field')
+        .text('At least eight characters are required in this field.')
       return false;
     } else {
       return true;
