@@ -30,7 +30,7 @@ $(document).ready(function(){
     }
 
   });
-
+  /*
   $(".password").blur(function({
 
     var $form = $('form.sign-in');
@@ -46,7 +46,7 @@ $(document).ready(function(){
     }
 
   }));
-
+  */
   $('.submit').click(function(evt){
      return validateSignupForm();
   });
