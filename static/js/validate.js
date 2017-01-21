@@ -6,8 +6,28 @@ $(document).ready(function(){
     $('.error').html("");
 
     var $username = $form.find('.username');
-    validateName($username)
+    var validUsername = validateName($username);
 
+    if (validUsername) {
+      return true
+    } else {
+      return false
+    }
+  });
+
+  $(".nickname").blur(function(){
+
+    var $form = $('form.sign-in');
+    $('.error').html("");
+
+    var $nickname = $form.find('.nickname');
+    var validNickname = validateName($nickname);
+
+    if (validNickname) {
+      return true
+    } else {
+      return false
+    }
   });
 
   $('.submit').click(function(evt){
@@ -73,7 +93,6 @@ $(document).ready(function(){
     var $email = $form.find('.email');
 
     var validUsername = isPresent($username) && isValidName($username);
-    //var validUsername = validateUsername()
     var validNickname = isPresent($nickname) && isValidName($nickname);
     var validPassword = isPresent($password);
     var validEmail = isPresent($email) && isValidEmail($email);
