@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-  // Event for validate sign up form
   $('.submit').click(function(evt){
      return validateSignupForm();
   });
@@ -10,9 +9,9 @@ $(document).ready(function(){
     return validatePost();
   });
 
-  $('.username').blur(function(evt){
-    alert(2);
-    return validateUsername();
+  $('.username').blur(function(){
+    alert(2); // this doesn't get triggered
+    //return validateUsername();
   });
 
   function isPresent($input) {
