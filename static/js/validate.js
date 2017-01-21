@@ -1,5 +1,10 @@
 $(document).ready(function(){
 
+  $(".username").blur(function(){
+    alert("Username field has lost focus"); // this doesn't get triggered
+    //return validateUsername();
+  });
+
   $('.submit').click(function(evt){
      return validateSignupForm();
   });
@@ -9,16 +14,13 @@ $(document).ready(function(){
     return validatePost();
   });
 
-  $('.username').blur(function(){
-    alert(2); // this doesn't get triggered
-    //return validateUsername();
-  });
+
 
   function isPresent($input) {
     if ($input.val().length < 4) {
       $input.parent()
         .find('.error')
-        .text('At least four characters are required in this field')
+        .text('At least four characters are required in this field.')
       return false;
     } else {
       return true;
@@ -30,7 +32,7 @@ $(document).ready(function(){
     if (!emailReg.test($input.val())) {
       $input.parent()
         .find('.error')
-        .text('This is not a valid email address')
+        .text('This is not a valid email address.')
       return false;
     } else {
       return true;
