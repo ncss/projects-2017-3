@@ -41,8 +41,6 @@ $(document).ready(function(){
       return true;
     } else {
       return false;
-    }
-
   });
 
   $('#email').blur(function(){
@@ -65,15 +63,20 @@ $(document).ready(function(){
     return validateSignupForm();
   });
 
+       return validateForm();
+
+
   $('.post_submit').click(function(evt){
     return validatePost();
   });
+
+
 
   function isPresent($input) {
     if ($input.val().length < 4) {
       $input.parent()
         .find('.error')
-        .text('At least four characters are required in this field')
+        .text('At least four characters are required in this field.')
       return false;
     } else {
       return true;
@@ -85,7 +88,7 @@ $(document).ready(function(){
     if (!emailReg.test($input.val())) {
       $input.parent()
         .find('.error')
-        .text('This is not a valid email address')
+        .text('This is not a valid email address.')
       return false;
     } else {
       return true;
@@ -104,18 +107,24 @@ $(document).ready(function(){
     }
   }
 
+
+  function validateName($name) {
+
+    var validName = isPresent($name) && isValidName($name);
+    return validName;
+
+  }
+
   function isValidPassword($input){
-  if ($input.val().length < 8) {
+    if ($input.val().length < 8) {
       $input.parent()
         .find('.error')
-        .text('At least eight characters are required in this field.')
+        .text('At least eight characters are required in this field')
       return false;
     } else {
       return true;
     }
   }
-
-
 
   function validateSignupForm() {
     var $form = $('form.sign-in');
@@ -147,7 +156,7 @@ $(document).ready(function(){
 
     if (validQuestion) {
       return true;
-    }else {
+    } else {
       return false;
     }
   }

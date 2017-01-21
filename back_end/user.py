@@ -41,7 +41,7 @@ def signup_handler_post(request):
                 db.User.update_some(picture=str(new_user.id)+'.jpg')
 
         else:
-            request.write("uploaded file type not supported")
+            request.write("Uploaded file type not supported.")
     else:
         request.write('We couldn\'t find an uploaded file.')
 
@@ -66,9 +66,9 @@ def signin_handler_post(request):
             user = db.User.find_by_username(username)
             request.redirect('/')
         else:
-            request.write("bad login details")
+            request.write("The username and password do not match.")
     else:
-        request.write("Usrname cannot be found")
+        request.write("Username cannot be found.")
         return(None)
 
 @requires_login
