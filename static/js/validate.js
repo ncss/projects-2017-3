@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  $(".username").blur(function(){
+  $("#username").blur(function(){
 
     var $form = $('form.sign-in');
     $('.error').html("");
@@ -15,7 +15,7 @@ $(document).ready(function(){
     }
   });
 
-  $(".nickname").blur(function(){
+  $("#nickname").blur(function(){
 
     var $form = $('form.sign-in');
     $('.error').html("");
@@ -31,15 +31,15 @@ $(document).ready(function(){
 
   });
 
-  $(".password").blur(function(){
+  $("#password").blur(function(){
 
     var $form = $('form.sign-in');
     $('.error').html("");
 
     var $password = $form.find('.password');
-    var isValidPassword = isPresent($password);
+    var validPassword = isValidPassword($password);
 
-    if (isValidPassword) {
+    if (validPassword) {
       return true
     } else {
       return false
@@ -47,7 +47,7 @@ $(document).ready(function(){
 
   });
 
-  $('.email').blur(function(){
+  $('#email').blur(function(){
 
     var $form = $('form.sign-in');
     $('.error').html("");
@@ -63,7 +63,7 @@ $(document).ready(function(){
 
   });
 
-  $('.submit').click(function(evt){
+  $('.sign_up_submit').click(function(evt){
      return validateSignupForm();
   });
 
@@ -116,6 +116,17 @@ $(document).ready(function(){
 
   }
 
+  function isValidPassword($input){
+ +  if ($input.val().length < 8) {
+ +      $input.parent()
+ +        .find('.error')
+ +        .text('At least eight characters are required in this field')
+ +      return false;
+ +    } else {
+ +      return true;
+ +    }
+ +  }
+
   function validateSignupForm() {
     var $form = $('form.sign-in');
     $('.error').html("");
@@ -127,7 +138,7 @@ $(document).ready(function(){
 
     var validUsername = isPresent($username) && isValidName($username);
     var validNickname = isPresent($nickname) && isValidName($nickname);
-    var validPassword = isPresent($password);
+    var validPassword = isValidPassword($password);
     var validEmail = isPresent($email) && isValidEmail($email);
 
     if (validUsername && validNickname && validPassword && validEmail) {
