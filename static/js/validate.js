@@ -30,8 +30,8 @@ $(document).ready(function(){
     }
 
   });
-  /*
-  $(".password").blur(function({
+
+  $(".password").blur(function(){
 
     var $form = $('form.sign-in');
     $('.error').html("");
@@ -45,8 +45,8 @@ $(document).ready(function(){
       return false
     }
 
-  }));
-  */
+  });
+
   $('.submit').click(function(evt){
      return validateSignupForm();
   });
