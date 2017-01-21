@@ -1,8 +1,13 @@
 $(document).ready(function(){
 
   $(".username").blur(function(){
-    alert("Username field has lost focus"); // this doesn't get triggered
-    //return validateUsername();
+
+    var $form = $('form.sign-in');
+    $('.error').html("");
+
+    var $username = $form.find('.username');
+    validateName($username)
+
   });
 
   $('.submit').click(function(evt){
@@ -51,14 +56,10 @@ $(document).ready(function(){
     }
   }
 
-  function validateUsername() {
+  function validateName($name) {
 
-    var $form = $('form.sign-in');
-    $('.error').html("");
-
-    var $username = $form.find('.username');
-    var validUsername = isPresent($username) && isValidName($username);
-    return validUsername
+    var validName = isPresent($name) && isValidName($name);
+    return validName
 
   }
 
