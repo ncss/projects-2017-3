@@ -1,11 +1,13 @@
 $(document).ready(function(){
 
+  //$()
+
   $('.sign_up_submit').click(function(evt){
-     return validateSignupForm();
+    return validateSignupForm();
   });
 
   $('.post_submit').click(function(evt){
-  //  return validatePost();
+    return validatePost();
   });
 
   function isPresent($input) {
