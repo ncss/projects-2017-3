@@ -5,7 +5,7 @@ $(document).ready(function(){
     var $form = $('form.sign-in');
 
     var $username = $form.find('#username');
-    var isValidUsername = isPresent($username) && isValidName($username);
+    var isValidUsername = checkIfPresent($username) && validateName($username);
     if (isValidUsername) {
       return true;
     } else {
@@ -18,7 +18,7 @@ $(document).ready(function(){
     var $form = $('form.sign-in');
 
     var $nickname = $form.find('#nickname');
-    var isValidNickname =  isPresent($nickname) && isValidName($nickname);
+    var isValidNickname =  checkIfPresent($nickname) && validateName($nickname);
 
     if (isValidNickname) {
       return true;
@@ -33,9 +33,9 @@ $(document).ready(function(){
     var $form = $('form.sign-in');
 
     var $password = $form.find('#password');
-    var validPassword = isValidPassword($password);
+    var isValidPassword = validatePassword($password);
 
-    if (validPassword) {
+    if (isValidPassword) {
       return true;
     } else {
       return false;
@@ -48,9 +48,9 @@ $(document).ready(function(){
     var $form = $('form.sign-in');
 
     var $email = $form.find('#email');
-    var validEmail = isPresent($email) && isValidEmail($email);
+    var isValidEmail = checkIfPresent($email) && validateEmail($email);
 
-    if (validEmail) {
+    if (isValidEmail) {
       return true;
     } else {
       return false;
@@ -66,7 +66,7 @@ $(document).ready(function(){
     return validatePost();
   });
 
-  function isPresent($input) {
+  function checkIfPresent($input) {
     if ($input.val().length < 4) {
       $input.parent()
         .find('.error')
@@ -80,7 +80,7 @@ $(document).ready(function(){
     }
   }
 
-  function isValidEmail($input) {
+  function validateEmail($input) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test($input.val())) {
       $input.parent()
@@ -95,7 +95,7 @@ $(document).ready(function(){
     }
   }
 
-  function isValidName($input) {
+  function validateName($input) {
     var nameReg = /^[A-Za-z0-9]+$/;
     if (!nameReg.test($input.val())) {
       $input.parent()
@@ -110,7 +110,7 @@ $(document).ready(function(){
     }
   }
 
-  function isValidPassword($input){
+  function validatePassword($input){
   if ($input.val().length < 8) {
       $input.parent()
         .find('.error')
@@ -135,10 +135,10 @@ $(document).ready(function(){
     var $password = $form.find('#password');
     var $email = $form.find('#email');
 
-    var validUsername = isPresent($username) && isValidName($username);
-    var validNickname = isPresent($nickname) && isValidName($nickname);
-    var validPassword = isValidPassword($password);
-    var validEmail = isPresent($email) && isValidEmail($email);
+    var validUsername = checkIfPresent($username) && validateName($username);
+    var validNickname = checkIfPresent($nickname) && validateName($nickname);
+    var validPassword = validatePassword($password);
+    var validEmail = checkIfPresent($email) && validateEmail($email);
 
     if (validUsername && validNickname && validPassword && validEmail) {
       return true;
@@ -152,7 +152,7 @@ $(document).ready(function(){
 
     var $question = $('.ask_question')
 
-    var validQuestion = isPresent($question);
+    var validQuestion = checkIfPresent($question);
 
     if (validQuestion) {
       return true;
