@@ -26,18 +26,15 @@ Here is a version of how to run the project with screenshots.
 
 ## How to run *Find It!* with screenshots
 
-This is quickly for [GitHub Desktop](https://desktop.github.com).
+This how-to is made quickly for [GitHub Desktop](https://desktop.github.com). If you'd like to use that, download it from the link and set it up.
 
-- After setting up GitHub desktop, click the + button in the top left corner. Log into GitHub account if you haven't already.
-![Clicking plus button in top left corner of GitHub desktop](https://cloud.githubusercontent.com/assets/22441348/22178631/6f38af18-e090-11e6-95fb-c44eaa25219e.png)
+- Visit the link for our project: [GitHub projects 2017 group 3 link](https://github.com/ncss/projects-2017-3) and click on 'Clone or download' and then click 'Open in Desktop' to open it in GitHub Desktop.
+![Screenshot of 'Clone or download' NCSS group 3 project on GitHub](https://cloud.githubusercontent.com/assets/22441348/22179660/b2671018-e0ae-11e6-8df9-b70c499bd306.png)
+You'll be prompted to choose a location to save the repository on your computer, and then the project will start cloning.
 
-- After clicking the + button, from options of [Add | Create | Clone], choose Clone to clone the repository *only if first time*
-![Clone repo](https://cloud.githubusercontent.com/assets/22441348/22178635/8515458a-e090-11e6-8305-54f653ecf278.png)
-(If the group project 3 doesn't show here as an option for cloning, you would have to go to [GitHub projects 2017 group 3 link](https://github.com/ncss/projects-2017-3) I think??)
-
-- Once the project has finished cloning, it will appear in the left panel under GitHub. Open in Terminal/Git Shell by right-clicking on project name:
+- Once the project has finished cloning, it will appear in the left panel under the heading 'GitHub' on GitHub Desktop. Then, Open in Terminal/Git Shell by right-clicking on the project name:
 ![Right click on project name with mouse hovering over 'Open in Terminal'](https://cloud.githubusercontent.com/assets/22441348/22178733/aafd91dc-e093-11e6-9b03-4091818ce586.png)
-(The name of the option 'Open in Terminal/Git Shell' is just dependent on whichever Operating System you are using. I am using a Mac here.)
+(The name of the option 'Open in Terminal/Git Shell' is just dependent on whichever Operating System you are using. These screenshots here are for Mac OS.)
 
 
 In shell, if you want to run a Python file named `file.py` for example, you can type in `python db_create.py`once you're in the directory of the file.
