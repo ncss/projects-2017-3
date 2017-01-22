@@ -13,7 +13,7 @@ python db_create.py
 ```
 
 - Only clone the repository and create the database when running for first time.
----
+
 Start the server:
 ```bash
 python server.py
