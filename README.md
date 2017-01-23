@@ -26,9 +26,11 @@ Here is a version of how to run the project with screenshots.
 
 ## How to run *Find It!*, with screenshots
 
-This how-to is made quickly for [GitHub Desktop](https://desktop.github.com). If you'd like to use that, download it from the link and set it up.
+This how-to is made quickly for GitHub Desktop. 
 
-- Visit the link for our project: [GitHub projects 2017 group 3 link](https://github.com/ncss/projects-2017-3) and click on 'Clone or download'. Then click 'Open in Desktop' to open it in GitHub Desktop.
+- If you'd like to use [GitHub Desktop](https://desktop.github.com), click on the link to go download it and set it up.
+
+- Then visit the link for our project: [GitHub projects 2017 group 3 link](https://github.com/ncss/projects-2017-3) and click on 'Clone or download'. Then click 'Open in Desktop' to open it in GitHub Desktop.
 ![Screenshot of 'Clone or download' NCSS group 3 project on GitHub](https://cloud.githubusercontent.com/assets/22441348/22179660/b2671018-e0ae-11e6-8df9-b70c499bd306.png)
 You'll be prompted to choose a location to save the repository on your computer, and then the project will start cloning.
 
