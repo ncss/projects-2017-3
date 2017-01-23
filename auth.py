@@ -1,7 +1,7 @@
 from typing import Callable
 from template_engine.parser import render
 from db import db_api as db
-from backend.common import get_username
+from back_end.common import get_username
 
 USER_COOKIE = "current_user"
 
@@ -37,16 +37,17 @@ def requires_login(func: Callable):
 def require_specific_user(func):
     """Decorator that requires the user to = to the cookie set in request"""
     def ret(request, username, *args, **kwargs):
-        cookie_user = request.get_secure_cookie(USER_COOKIE).decode("UTF-8")
-        print(username, cookie_user)
-        if cookie_user is not None and username == cookie_user:
-            return func(request, username, *args, **kwargs)
+        if authenticate_correct_username(request, username):
+            return func(request,username, *args, **kwargs)
         else:
-            request.write("you cannot edit someone elses profile you hacker!")
+            request.write("you cannot edit someone else's profile you hacker!")
     return ret
 
+def authenticate_correct_username(request, username):
+    user_cookie = request.get_secure_cookie(USER_COOKIE)
+    if user_cookie:
+        user_cookie = user_cookie.decode("UTF-8")
+        return user_cookie == username
+    else:
+        return False
 
-
-@requires_login
-def foo(request, *args, **kwargs):
-    print(request)

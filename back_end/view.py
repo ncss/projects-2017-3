@@ -1,5 +1,5 @@
 from auth import requires_login
-from backend.common import *
+from back_end.common import *
 from template_engine import render
 from os import path
 from db import db_api as db
@@ -10,7 +10,7 @@ def view_question_handler(request, question_id):
     # try:
     post = db.Post.find(question_id)
     post_info = {
-        'user': post.user_id,
+        'user': post.user,
         'description': post.description,
         'question': post.title,
         'date': post.date,
@@ -18,12 +18,11 @@ def view_question_handler(request, question_id):
         'signed_in': authenticate_cookie(request),
         'username': get_username(request),
         'comments': post.all_comments(),
-        'user_ids': db.User.find_multiple(),
+        'user_ids': db.User.find_all(),
         'photo_id': post.id,
     }
     for i in post_info['comments']:
-        curid = i.user_id
-        curuser = db.User.find(curid)
+        curuser = i.user
         print(curuser.picture)
         i.image = path.join("uploads", "user_image", curuser.picture) if curuser.picture else ""
 
@@ -45,7 +44,4 @@ def comment_handler_post(request, photo_id):
             request.redirect("/view/" + str(photo_id))
     else:
 
-        request.write("your not logged in")
-
-
-
+        request.write("You're not logged in.")

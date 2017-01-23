@@ -1,7 +1,7 @@
 import time
 from os import rename
 from auth import requires_login
-from backend.common import *
+from back_end.common import *
 from template_engine import render
 from os import path
 from db import db_api as db
@@ -22,11 +22,13 @@ def ask_handler_post(request):
     description = request.get_field("description")
     if photo_files != (None, None, None):
         if content_type.startswith('image/'):
-            user_id = request.get_secure_cookie("current_user")
+            if request.get_secure_cookie("current_user") is None:
+                raise Exception("Not logged in")
+            user_id = request.get_secure_cookie("current_user").decode()
             photo_file_ext_regex = re.search(r'\.[a-zA-Z]+$', filename)
             photo_file_ext = photo_file_ext_regex.group(0)
             photo_dir = path.join('uploads', 'questions', str(db.Post.get_next_post_id()) + photo_file_ext)
-            post = db.Post.create(user_id, description, title, photo_dir)
+            post = db.Post.create(db.User.find_by_username(user_id), description, title, photo_dir)
             with open(path.join('static', photo_dir), 'wb') as f:
                 f.write(data)
             request.write("Your image was uploaded! name=%s"%(photo_files[0]))

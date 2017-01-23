@@ -89,3 +89,6 @@ ENV/
 .ropeproject
 db/db.db
 db.db
+
+# PyCharm
+.idea/

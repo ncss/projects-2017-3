@@ -1,6 +1,13 @@
 from datetime import datetime
-#from ..backend.common import *
 import sqlite3
+import os
+
+class MissingDatabaseException(Exception): pass
+
+# Because connecting to a db will create the file if it doesn't exist, we need to throw an error so we can have a db with dummy data
+if not os.path.isfile("db.db"):
+    raise MissingDatabaseException("You're missing the database file! Run `python db/db_create.py` and then run this again!")
+
 with sqlite3.connect('db.db') as conn:
     cur = conn.cursor()
     class CommentNotFoundException(Exception):
@@ -13,6 +20,14 @@ with sqlite3.connect('db.db') as conn:
         pass
 
     class User:
+        """
+        User Object that represents a User, with attributes
+        id, username (unique), hashed(password), nickname, email(unique), gender, dobm, short bio, picture(path), and creation_date
+        """
+        columns = 'id', 'username',  'password', 'nickname', 'gender', 'dob', 'picture', 'creation_date'
+        # all possible columns
+        mutable_columns = 'password', 'nickname', 'email', 'gender', 'dob', 'picture', 'creation_date'
+        # all columns allowed to be changed after acc creation
 
         def __init__(self, id, username, password,  nickname, email, gender = None, dob = None, bio = None, picture = None, creation_date = None):
             self.id = id
@@ -25,19 +40,16 @@ with sqlite3.connect('db.db') as conn:
             self.bio = bio
             self.picture = picture
             self.creation_date = creation_date
-            #list of questions
-            #make date time more meaningful
-
-        #method to ask question
-
 
         @staticmethod
         def find(id):
+            """Finds the user with id of id"""
             cur.execute(
             '''
             SELECT *
             FROM users
-            WHERE id = ? ''', (id,)
+            WHERE id = ?
+            ''', (id,)
             )
             row = cur.fetchone()
 
@@ -47,26 +59,29 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def find_by_username(username):
+            """Finds the user with the username of username"""
             cur.execute(
             '''
             SELECT *
             FROM users
-            WHERE username = ? ''', (username,)
+            WHERE username = ?
+            ''', (username,)
             )
             row = cur.fetchone()
 
             if row is None:
                 return None
-            return  User.find(row[0])
+            return User.find(row[0])
 
         @staticmethod
-        def find_multiple():
+        def find_all():
+            """Returns all users! (not sure what this is for :?"""
             cur.execute(
             '''
             SELECT *
             FROM users
             ORDER BY id ASC
-                ''')
+            ''')
             all_users = cur.fetchall()
             if all_users:
                 rows = [User.find(row[0]) for row in all_users]
@@ -76,7 +91,7 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def sign_up(username, password, nickname, email):
-            #creation_date = get_current_time()
+            """signs up a user, given the bare minimum"""
             creation_date = datetime.now().isoformat()
             cur.execute(
             '''
@@ -89,6 +104,9 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def update(id, password, nickname, email, gender, dob, bio, picture):
+            """
+            Updates the user given all the values required. see update_some to update one/some value. Kinda deprecated
+            """
             cur.execute(
             '''
             UPDATE users
@@ -106,14 +124,23 @@ with sqlite3.connect('db.db') as conn:
             return User.find(id)
 
         @staticmethod
-        def delete(username):
-            cur.execute('''
-            DELETE FROM users WHERE username = ?
-            ''' , (username,))
-            conn.commit()
+        def update_some(**kwargs):
+            """Updates one value. Use update_one(nickname='newnick',...)"""
+            if all((i in User.mutable_columns for i in kwargs.keys())):
+                # all the keys are legit
+                for key in kwargs:
+                    cur.execute(
+                        """UPDATE users
+                        SET %s = ?""" % key, (kwargs[key],)
+                    )
+                    # yes i know string formatting is bad with sql. Its a necessary evil :(
+            else:
+                print("one of the keys were invalid!", kwargs)
+
 
         @staticmethod
         def login(username, password):
+            """logs the user in given username and password hash. returns User obj with username or none if login failed"""
             cur.execute('''
             SELECT id
             FROM users
@@ -123,17 +150,24 @@ with sqlite3.connect('db.db') as conn:
             user_id = None if row is None else row[0]
             return user_id
 
+        def delete(self):
+            """Deletes a user from the database"""
+            cur.execute('''
+            DELETE FROM users WHERE username = ?
+            ''' , (self.username,))
+            conn.commit()
+
         def create_post(self, description, title, date, photo_files):
-            return Post.create(self.id, description, title, date, photo_files)
+            return Post.create(self, description, title, date, photo_files)
 
         def all_posts(self):
-            return Post.find_all(self.id)
+            return Post.find_all(self)
 
         def find_post(self, post_id):
             return Post.find(post_id)
 
-        def create_comment(self, Post, text, parent_id):
-            return Comment.create(self.id, Post.return_id(), text, datetime.now(), parent_id)
+        def create_comment(self, post, text, parent):
+            return Comment.create(self, post, text, datetime.now(), parent)
 
         def edit(self, password, nickname, email, gender, dob, bio, picture):
             return User.update(self.id, password, nickname, email, gender, dob, bio, picture)
@@ -144,18 +178,15 @@ with sqlite3.connect('db.db') as conn:
             return self.__repr__()
 
         def __repr__(self):
-            return "<Post: ID: {}, title: \'{}\', User ID: {}>".format(self.id, self.title, self.user_id)
+            return "<Post: ID: {}, title: \'{}\', User ID: {}>".format(self.id, self.title, self.user.id)
 
-        def __init__(self, id, user_id, description, title, date, file):
+        def __init__(self, id, user, description, title, date, file):
             self.id = id
-            self.user_id = user_id
+            self.user = user
             self.description = description
             self.title = title
             self.date = date
             self.file = file
-
-        def return_id(self):
-            return self.id
 
         @staticmethod
         def find(id):
@@ -169,7 +200,7 @@ with sqlite3.connect('db.db') as conn:
 
             if row1 is None:
                 return None
-            return Post(row1[0], row1[1], row1[2], row1[3], row1[4], row1[5])
+            return Post(row1[0], User.find(row1[1]), row1[2], row1[3], row1[4], row1[5])
 
         @staticmethod
         def get_next_post_id():
@@ -184,18 +215,20 @@ with sqlite3.connect('db.db') as conn:
             return row1
 
         @staticmethod
-        def find_all(user_id = None):
-            if not user_id:
+        def find_all(user = None):
+            if user is None:
                 cur = conn.execute(
                 '''
                 SELECT *
-                FROM posts; '''
+                FROM posts
+                ORDER BY post_date DESC; '''
                 )
             else:
                 cur = conn.execute('''
                 SELECT *
                 FROM posts
-                WHERE user_id = ? ''', (user_id,)
+                WHERE user_id = ?
+                ORDER BY post_date DESC; ''', (user.id,)
                 )
             all_posts = cur.fetchall()
             if all_posts:
@@ -205,25 +238,16 @@ with sqlite3.connect('db.db') as conn:
                 return None
 
         @staticmethod
-        def create(user_id, description, title, photo_file):
+        def create(user, description, title, photo_file):
             date = datetime.now().isoformat()
             cur = conn.execute(
             '''
             INSERT INTO posts (user_id, description, title, post_date, file)
-            VALUES (?, ?, ?, ?, ?); ''', (user_id, description, title, date, photo_file)
+            VALUES (?, ?, ?, ?, ?); ''', (user.id, description, title, date, photo_file)
             )
             id = cur.lastrowid
             conn.commit()
             return Post.find(id)
-
-        @staticmethod
-        def delete(id):
-            cur = conn.execute(
-            '''
-            DELETE FROM posts
-            WHERE id = ? ''' , (id,)
-            )
-            conn.commit()
 
         @staticmethod
         def update(id, description, title):
@@ -238,31 +262,42 @@ with sqlite3.connect('db.db') as conn:
             conn.commit()
             return Post.find(id)
 
+        def delete(self):
+            cur = conn.execute(
+            '''
+            DELETE FROM posts
+            WHERE id = ? ''' , (self.id,)
+            )
+            conn.commit()
+
         def all_comments(self):
-            return Comment.find_comments_for_post_id(self.id)
+            return Comment.find_comments_for_post(self)
 
         def find_comment(self, comment_id):
             return Comment.find(comment_id)
 
     class Comment:
-
-        def __init__(self, id, user_id, post_id, parent_id = None, text = None, date = None, loc_latitude = None, loc_longitude = None, score = None):
+        """
+        Comment Object contains attribs:
+        id, user, post(id), parent(id) (for multiple/nested comments), text, date(sent), location(latitude), location(longitude), score
+        """
+        def __init__(self, id, user, post, parent = None, text = None, date = None, loc_latitude = None, loc_longitude = None, score = None):
             self.id = id
-            self.user_id = user_id
-            self.post_id = post_id
+            self.user = user
+            self.post = post
             self.text = text
             self.date = date
-            self.parent_id = parent_id
+            self.parent = parent
             self.score = score
             self.loc_latitude = loc_latitude
             self.loc_longitude = loc_longitude
 
         @staticmethod
-        def create(user_id, post_id, text, date, parent_id = None, loc_latitude = None, loc_longitude = None, score = None):
+        def create(user, post, text, date, parent = None, loc_latitude = None, loc_longitude = None, score = None):
             cur = conn.execute(
             '''
             INSERT INTO comments (user_id, post_id, parent_id, text, date, loc_latitude, loc_longitude, score)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?); ''', (user_id, post_id, parent_id, text, date, loc_latitude, loc_longitude, score))
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?); ''', (user.id, post.id, parent.id if parent is not None else parent, text, date, loc_latitude, loc_longitude, score))
 
             conn.commit()
             return Comment.find(cur.lastrowid)
@@ -279,40 +314,41 @@ with sqlite3.connect('db.db') as conn:
 
             if row is None:
                 return None
-            return Comment(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
+            # id | (user obj) | post, parent, text, date, loc_lat, loc_long, score
+            return Comment(row[0], User.find(row[1]), *row[2:])
 
         @staticmethod
-        def find_comments_for_post_id(post_id):
+        def find_comments_for_post(post):
             cur = conn.execute(
             '''
             SELECT *
             FROM comments
             WHERE post_id = ?
-            ORDER BY date''', (post_id,)
+            ORDER BY date''', (post.id,)
             )
             rows = [Comment.find(row[0]) for row in cur.fetchall()]
             return rows
 
         @staticmethod
-        def find_comments_for_user(user_id):
+        def find_comments_for_user(user):
             cur = conn.execute(
             '''
             SELECT *
             FROM comments
             WHERE user_id = ?
-            ORDER BY date''', (post_id,)
+            ORDER BY date''', (user.id,)
             )
             rows = [Comment.find(row[0]) for row in cur.fetchall()]
             return rows
 
         @staticmethod
-        def find_children_for_comment(parent_id):
+        def find_children_for_comment(parent):
             cur = conn.execute(
             '''
             SELECT *
             FROM comments
             WHERE parent_id = ?
-            ORDER BY date''', (parent_id,))
+            ORDER BY date''', (parent.id,))
 
             rows = [Comment.find(row[0]) for row in cur.fetchall()]
             return rows
@@ -325,7 +361,7 @@ with sqlite3.connect('db.db') as conn:
             UPDATE comments
             SET text = ?
             WHERE id = ?''', (new_text, comment_id)
-            )            
+            )
             conn.commit()
             return Comment.find(comment_id)
 
@@ -348,7 +384,7 @@ with sqlite3.connect('db.db') as conn:
             #details = User.find('kay')
         #except UserNotFound:
             #pass
-        #multidetails = User.find_multiple()
+        #multidetails = User.find_all()
 
         #my_user = User.sign_up('amazing-user', 'secure-password', '¯\_(ツ)_/¯', 'some@email.com', '1/10/2017')
 
