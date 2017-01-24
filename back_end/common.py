@@ -21,7 +21,7 @@ def get_image_path(filename):
 def get_current_time():
     return datetime.now().isoformat()
 
-def get_username(request):
+def get_secure_username(request):
     user_cookie = request.get_secure_cookie(USER_COOKIE)
     if user_cookie:
         user_cookie = user_cookie.decode("utf-8")
@@ -33,3 +33,4 @@ def get_username(request):
 def fetch_file(url, filename):
     response = urllib.request.urlretrieve(url, filename)
     return response
+

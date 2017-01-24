@@ -16,7 +16,7 @@ def view_question_handler(request, question_id):
         'date': post.date,
         'file': post.file,
         'signed_in': authenticate_cookie(request),
-        'username': get_username(request),
+        'username': get_secure_username(request),
         'comments': post.all_comments(),
         'user_ids': db.User.find_all(),
         'photo_id': post.id,
