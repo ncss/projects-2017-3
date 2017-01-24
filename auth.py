@@ -6,6 +6,8 @@ from back_end.common import get_secure_username
 USER_COOKIE = "current_user"
 
 ALL_USER = {} # username : USER (object)
+ADMINS = [db.User.find(id=x).username for x in range(1,12)] # sets the first 10 people to be site? admins
+# temporary
 
 def authenticate_cookie(request):
     """Returns True if cookies can be authenicated"""
@@ -50,3 +52,15 @@ def authenticate_correct_username(request, username):
         return user_cookie == username
     else:
         return False
+
+def requires_admin(func):
+    def ret(request, *args, **kwargs):
+        if authenticate_admin(request):
+            return func(request, *args, **kwargs)
+        else:
+            request.write("You cannot access this unless your an admin. (try log in, else delete the decorator in server.py")
+    return ret
+
+def authenticate_admin(request):
+    username = request.get_secure_cookie(USER_COOKIE)
+    return username is not None and username.decode("UTF-8") in ADMINS

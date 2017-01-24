@@ -3,7 +3,7 @@ import os
 from template_engine.parser import render
 from back_end import ask, user, profile, view, ajax
 from db import db_api as db
-from auth import requires_login, authenticate_cookie
+from auth import requires_login, authenticate_cookie, requires_admin
 from back_end.common import *
 
 TEMPLATE_DIR = 'templates'
@@ -25,17 +25,17 @@ def index_handler(request):
 
 
 def aboutus_handler(request):
+    request.write(render('aboutus.html', {'users': db.User.find(all=True), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
-    request.write(render('aboutus.html', {'users': db.User.find(all=True), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
-
+@requires_admin
 def handle_list_users(request):
-    request.write(render('list_users.html', {'users': db.User.find(all=True), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
+    request.write(render('list_users.html', {'users': db.User.find(all=True), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
 def not_found_handler(request):
-    request.write(render('404.html', {'users': db.User.find(all=True), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
+    request.write(render('404.html', {'users': db.User.find(all=True), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
 def monkey_handler(request):
-    request.write(render('monkey.html', {'users': db.User.find_all(), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
+    request.write(render('monkey.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
 
 
