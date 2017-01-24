@@ -58,18 +58,17 @@ def signin_handler(request):
     request.write(render('signin.html', signin))
 
 def signin_handler_post(request):
-    username = request.get_field('username')
+    username = request.get_field('username').lower()
     password = hash_string(request.get_field('password'))
-    if db.User.find_by_username(username):
-        if db.User.find_by_username(username).password == password:
+    user_obj = db.User.find_by_username(username)
+    if user_obj:
+        if user_obj.password == password:
             request.set_secure_cookie("current_user", username)
-            user = db.User.find_by_username(username)
             request.redirect('/')
         else:
             request.write("The username and password do not match.")
     else:
         request.write("Username cannot be found.")
-        return(None)
 
 @requires_login
 def signout_handler(request):

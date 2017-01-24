@@ -3,9 +3,19 @@ $(document).ready(function(){
   // The blur event is for when a selector has lost focus
   $("#username").blur(function(){
     var $form = $('form.sign-in');
-
     var $username = $form.find('#username');
     var isValidUsername = checkIfPresent($username) && validateName($username);
+
+    $.ajax("/ajax/user_validate", {datatype: "json", type: "post", data: {username: $username.val()},
+        success: function(data){
+            alert(data.user_valid)
+            if(!data.user_valid){
+                 $username.parent()
+                    .find('.error')
+                    .text('This username is already taken!')
+            }
+        }
+        });
     if (isValidUsername) {
       return true;
     } else {

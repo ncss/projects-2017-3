@@ -1,7 +1,7 @@
 from tornado.ncss import Server, ncssbook_log
 import os
 from template_engine.parser import render
-from back_end import ask, user, profile, view
+from back_end import ask, user, profile, view, ajax
 from db import db_api as db
 from auth import requires_login, authenticate_cookie
 from back_end.common import *
@@ -45,5 +45,6 @@ server.register(r'/list_users'  , handle_list_users)
 server.register(r'/profile/(.+)', profile.view_handler, post=profile.view_handler_post)
 server.register(r'/profile/edit/(.+)', profile.edit_handler, post=profile.edit_handler_post)
 server.register(r'/aboutus'     , aboutus_handler)
+server.register(r'/ajax/user_validate', lambda x: None, post=ajax.username_handler)
 server.register(r'/.*'          , not_found_handler)
 server.run()
