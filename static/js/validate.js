@@ -8,7 +8,7 @@ function clearError($input){
 function validateEmail($input) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test($input.val())) {
-      writeError($input, 'This is not a valid email address format')
+      writeError($input, 'Please enter a valid email address format.')
       return false;
     } else {
       clearError($input)
