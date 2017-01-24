@@ -10,7 +10,7 @@ def view_handler_post(request, username):
     ...
 
 def view_handler(request, username):
-    user = db.User.find_by_username(username)
+    user = db.User.find(username=username)
     if user is None:
         request.write("username is not in db")
     else:
@@ -22,7 +22,7 @@ def view_handler(request, username):
 @requires_login
 @require_specific_user
 def edit_handler_post(request, username):
-    usr = db.User.find_by_username(username)
+    usr = db.User.find(username=username)
     nickname = request.get_field('nickname', default=usr.nickname)
     #TODO check front end for confirmation password req old pass
     pwd = request.get_field('password')

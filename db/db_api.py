@@ -42,52 +42,48 @@ with sqlite3.connect('db.db') as conn:
             self.creation_date = creation_date
 
         @staticmethod
-        def find(id):
-            """Finds the user with id of id"""
-            cur.execute(
-            '''
-            SELECT *
-            FROM users
-            WHERE id = ?
-            ''', (id,)
-            )
-            row = cur.fetchone()
+        def find(id=None, username=None, all=False):
+            if id is not None:
+                cur.execute(
+                '''
+                SELECT *
+                FROM users
+                WHERE id = ?
+                ''', (id,)
+                )
+                row = cur.fetchone()
 
-            if row is None:
-                return None
-            return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+                if row is None:
+                    return None
+                return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+            elif username is not None:
+                cur.execute(
+                '''
+                SELECT *
+                FROM users
+                WHERE username = ?
+                ''', (username,)
+                )
+                row = cur.fetchone()
 
-        @staticmethod
-        def find_by_username(username):
-            """Finds the user with the username of username"""
-            cur.execute(
-            '''
-            SELECT *
-            FROM users
-            WHERE username = ?
-            ''', (username,)
-            )
-            row = cur.fetchone()
-
-            if row is None:
-                return None
-            return User.find(row[0])
-
-        @staticmethod
-        def find_all():
-            """Returns all users! (not sure what this is for :?"""
-            cur.execute(
-            '''
-            SELECT *
-            FROM users
-            ORDER BY id ASC
-            ''')
-            all_users = cur.fetchall()
-            if all_users:
-                rows = [User.find(row[0]) for row in all_users]
-                return rows
+                if row is None:
+                    return None
+                return User.find(row[0])
+            elif all:
+                cur.execute(
+                '''
+                SELECT *
+                FROM users
+                ORDER BY id ASC
+                ''')
+                all_users = cur.fetchall()
+                if all_users:
+                    rows = [User.find(row[0]) for row in all_users]
+                    return rows
+                else:
+                    return None
             else:
-                return None
+                raise TypeError('find() requires 1 argument to be set: either \'id\', \'username\' or \'all\'')
 
         @staticmethod
         def sign_up(username, password, nickname, email):

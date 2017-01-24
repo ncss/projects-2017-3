@@ -26,7 +26,7 @@ def signup_handler_post(request):
     dob = request.get_field('dob')
     profile_pic = request.get_file('profile_picture')
     print(username)
-    if db.User.find_by_username(username) is not None:
+    if db.User.find(username=username) is not None:
         request.write("username already exists!")
         return
     new_user = db.User.sign_up(username, password, nickname, email)
@@ -60,10 +60,10 @@ def signin_handler(request):
 def signin_handler_post(request):
     username = request.get_field('username')
     password = hash_string(request.get_field('password'))
-    if db.User.find_by_username(username):
-        if db.User.find_by_username(username).password == password:
+    if db.User.find(username=username):
+        if db.User.find(username=username).password == password:
             request.set_secure_cookie("current_user", username)
-            user = db.User.find_by_username(username)
+            user = db.User.find(username=username)
             request.redirect('/')
         else:
             request.write("The username and password do not match.")
