@@ -4,6 +4,7 @@ from template_engine import render
 from os import path
 from db import db_api as db
 from auth import requires_login, authenticate_cookie
+from back_end.profile import get_picture
 
 
 def view_question_handler(request, question_id):
@@ -11,6 +12,7 @@ def view_question_handler(request, question_id):
     post = db.Post.find(question_id)
     post_info = {
         'user': post.user,
+        'user_picture': get_picture(post.user),
         'description': post.description,
         'question': post.title,
         'date': post.date,

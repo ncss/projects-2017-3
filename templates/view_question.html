@@ -12,11 +12,9 @@
         <fieldset>
           <input type=text hidden="hidden" name='{{ photo_id }}'/>
           <h2>{{ question }}</h2>
-
-          <p>
-            {{ username }}:
-          </p>
-          <br />
+          <fieldset class="comment"> <img src= "/static/uploads/user_image/{{ user_picture }}" class="comment"> <h3 class="comment">
+            {{ username }}:</h3>
+          </fieldset>
           <img src="/static/{{ file }}" alt="{{ description }}">
           <h3>{{ description }}</h3>
           <p>
