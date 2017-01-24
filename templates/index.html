@@ -1,5 +1,4 @@
 <!doctype html>
-<!--url: file:///C:/Users/sh8151/Desktop/projects-2017-3/site/index.html -->
 <html>
   <head>
     {% include _shared_head.html %}
@@ -9,16 +8,16 @@
     {% include _nav_bar.html %}
     <div class = 'post_list'>
       {% for post in posts %}
-      <a href="view/{{post['id'] }}">
-      <fieldset class="image_fieldset">
-
-          <img class='post_image' src= "static/{{ post['image'] }}" alt= "{{ post['question'] }}">
-          <div class = 'post_text'>
-              <figcaption>
-                {{ post['question'] }}
-              </figcaption>
-          </div>
-      </fieldset></a>
+      <a href="/view/{{post['id'] }}">
+        <fieldset class="image_fieldset">
+          <figure>
+            <img class='post_image' src= "/static/{{ post['image'] }}" alt= "{{ post['question'] }}">
+            <figcaption class="post_text">
+              {{ post['question'] }}
+            </figcaption>
+          </figure>
+        </fieldset>
+      </a>
       {% end for %}
    </div>
 </body>

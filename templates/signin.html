@@ -2,7 +2,7 @@
 <html>
   <head>
     {% include _shared_head.html %}
-    <link rel="stylesheet" type="text/css" href="static/css/signin.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/signin.css">
   </head>
   <body>
     {% include _nav_bar.html %}
@@ -13,11 +13,11 @@
           <fieldset class="signin_form">
             <div>
               <label for="username">Username</label>
-              <input type="text" name="username">
+              <input type="text" name="username" id="username">
             </div>
             <div>
               <label for="password">Password</label>
-              <input type="password" name="password">
+              <input type="password" name="password" id="password">
             </div>
             <p>
               <input class="login_button" type="submit" value="Login">

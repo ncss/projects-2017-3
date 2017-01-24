@@ -6,6 +6,7 @@
 
   <body>
     <p>Hello there</p>
-    <p>{{ fname }} {{ lname }} {{ food }}</p>
+    {% for i, z in enumerate(test) %}
+         <p>{{ i }} : {{ z }} :  works! </p>
   </body>
 </html>

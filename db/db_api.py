@@ -83,8 +83,24 @@ with sqlite3.connect('db.db') as conn:
                 else:
                     return None
             else:
-                raise TypeError('find() requires 1 argument to be set: either \'id\', \'username\' or \'all\'')
 
+                raise TypeError('find() requires 1 argument to be set: either \'id\', \'username\' or \'all\'')
+                return None
+              
+        @staticmethod
+        def find_by_email(email):
+            cur.execute(
+                '''
+                SELECT *
+                FROM users
+                WHERE email = ?
+                ''', (email,)
+            )
+            row = cur.fetchone()
+
+            if row is None:
+                return None
+            return User(*row)
         @staticmethod
         def sign_up(username, password, nickname, email):
             """signs up a user, given the bare minimum"""
