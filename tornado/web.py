@@ -1747,7 +1747,7 @@ class Application(httputil.HTTPServerConnectionDelegate):
     You can serve static files by sending the ``static_path`` setting
     as a keyword argument. We will serve those files from the
     ``/static/`` URI (this is configurable with the
-    ``static_url_prefix`` setting), and we will serve ``/favicon.ico``
+    ``static_url_prefix`` setting), and we will serve ``/favicon.png``
     and ``/robots.txt`` from the same directory.  A custom subclass of
     `StaticFileHandler` can be specified with the
     ``static_handler_class`` setting.
