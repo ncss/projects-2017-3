@@ -74,7 +74,7 @@ function validatePost(){
 
 $(document).ready(function(){
   // The blur event is for when a selector has lost focus
-  $("#username").on("change paste keyup", function(){
+  $("#username").on("change keyup", function(){
     var $form = $('form.sign-in');
 
     var $username = $form.find('#username');
@@ -96,7 +96,7 @@ $(document).ready(function(){
   });
 
 
-  $("#nickname").on("change paste keyup", function(){
+  $("#nickname").on("change keyup", function(){
     var $form = $('form.sign-in');
     var $nickname = $form.find('#nickname');
     var isValidNickname =  checkIfPresent($nickname) && validateName($nickname);
@@ -104,7 +104,7 @@ $(document).ready(function(){
   });
 
 
-  $("#password").on("change paste keyup", function(){
+  $("#password").on("change keyup", function(){
     var $form = $('form.sign-in');
 
     var $password = $form.find('#password');
@@ -114,7 +114,7 @@ $(document).ready(function(){
   });
 
 
-  $('#email').on("change paste keyup", function(){
+  $('#email').on("change keyup", function(){
     var $form = $('form.sign-in');
 
     var $email = $form.find('#email');
