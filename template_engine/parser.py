@@ -151,7 +151,6 @@ def identify_token(token):
         elif ' '.join(term_list) == 'end if':
             return create_token('end_if', None)
         elif keyword == 'for':
-            print(term_list)
             # The contents is a dictionary which contains the iterator and the iterable
             in_loc = term_list.index('in')
             # get the location of the in to split the query into iterator and iterable

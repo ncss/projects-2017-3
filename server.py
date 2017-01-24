@@ -28,13 +28,14 @@ def aboutus_handler(request):
     request.write(render('aboutus.html', {'users': db.User.find_all(), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
 def monkey_handler(request):
-    request.write(render('monkey.html', {'users': db.User.find_all(), 'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
+    request.write(render('monkey.html', {'users': db.User.find_all(), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
 def handle_list_users(request):
     request.write(render('list_users.html', {'users': db.User.find_all(), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
 def not_found_handler(request):
-    request.write(render('404.html', {'users': db.User.find_all(), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
+    request.write(render('404.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
+
 
 server = Server()
 server.register(r'/', index_handler)
@@ -48,7 +49,7 @@ server.register(r'/list_users'  , handle_list_users)
 server.register(r'/profile/(.+)', profile.view_handler, post=profile.view_handler_post)
 server.register(r'/profile/edit/(.+)', profile.edit_handler, post=profile.edit_handler_post)
 server.register(r'/aboutus'     , aboutus_handler)
-server.register(r'/ajax/user_validate', lambda x: None, post=ajax.username_handler)
+server.register(r'/ajax/user_validate', not_found_handler, post=ajax.username_handler)
 server.register(r'/monkey'      , monkey_handler)
 server.register(r'/.*'          , not_found_handler)
 server.run()
