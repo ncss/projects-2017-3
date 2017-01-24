@@ -18,7 +18,7 @@ def view_question_handler(request, question_id):
         'signed_in': authenticate_cookie(request),
         'username': get_secure_username(request),
         'comments': post.all_comments(),
-        'user_ids': db.User.find_all(),
+        'user_ids': db.User.find(all=True),
         'photo_id': post.id,
     }
     for i in post_info['comments']:
@@ -37,9 +37,9 @@ def comment_handler_post(request, photo_id):
     user_cookie = request.get_secure_cookie(USER_COOKIE)
     if user_cookie is not None:
         user_cookie = user_cookie.decode()
-        if db.User.find_by_username(user_cookie):
+        if db.User.find(username=user_cookie):
             print(user_cookie)
-            user = db.User.find_by_username(user_cookie)
+            user = db.User.find(username=user_cookie)
             user.create_comment(db.Post.find(photo_id), text, None)
             request.redirect("/view/" + str(photo_id))
     else:

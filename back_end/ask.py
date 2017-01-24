@@ -28,7 +28,7 @@ def ask_handler_post(request):
             photo_file_ext_regex = re.search(r'\.[a-zA-Z]+$', filename)
             photo_file_ext = photo_file_ext_regex.group(0)
             photo_dir = path.join('uploads', 'questions', str(db.Post.get_next_post_id()) + photo_file_ext)
-            post = db.Post.create(db.User.find_by_username(user_id), description, title, photo_dir)
+            post = db.Post.create(db.User.find(username=user_id), description, title, photo_dir)
             with open(path.join('static', photo_dir), 'wb') as f:
                 f.write(data)
             request.write("Your image was uploaded! name=%s"%(photo_files[0]))

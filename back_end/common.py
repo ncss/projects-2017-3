@@ -25,7 +25,7 @@ def get_secure_username(request):
     user_cookie = request.get_secure_cookie(USER_COOKIE)
     if user_cookie:
         user_cookie = user_cookie.decode("utf-8")
-        user =  db.User.find_by_username(user_cookie)
+        user = db.User.find(username=user_cookie)
         if user is not None:
             return user.username
     return None
