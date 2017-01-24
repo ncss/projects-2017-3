@@ -5,7 +5,6 @@ function clearError($input){
     $input.parent().find(".error").text('')
 }
 
-
 function validateEmail($input) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test($input.val())) {
@@ -76,7 +75,7 @@ function validatePost(){
 
 $(document).ready(function(){
   // The blur event is for when a selector has lost focus
-  $("#username").blur(function(){
+  $("#username").on("change paste keyup", function(){
     var $form = $('form.sign-in');
 
     var $username = $form.find('#username');
@@ -98,7 +97,7 @@ $(document).ready(function(){
   });
 
 
-  $("#nickname").blur(function(){
+  $("#nickname").on("change paste keyup", function(){
     var $form = $('form.sign-in');
     var $nickname = $form.find('#nickname');
     var isValidNickname =  checkIfPresent($nickname) && validateName($nickname);
@@ -106,7 +105,7 @@ $(document).ready(function(){
   });
 
 
-  $("#password").blur(function(){
+  $("#password").on("change paste keyup", function(){
     var $form = $('form.sign-in');
 
     var $password = $form.find('#password');
@@ -116,7 +115,7 @@ $(document).ready(function(){
   });
 
 
-  $('#email').blur(function(){
+  $('#email').on("change paste keyup", function(){
     var $form = $('form.sign-in');
 
     var $email = $form.find('#email');
