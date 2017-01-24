@@ -151,8 +151,11 @@ def identify_token(token):
         elif ' '.join(term_list) == 'end if':
             return create_token('end_if', None)
         elif keyword == 'for':
+            print(term_list)
             # The contents is a dictionary which contains the iterator and the iterable
-            return create_token('for', {'iterator': term_list[1], 'iterable': ' '.join(term_list[3:])})
+            in_loc = term_list.index('in')
+            # get the location of the in to split the query into iterator and iterable
+            return create_token('for', {'iterator': "".join(term_list[1:in_loc]), 'iterable': ' '.join(term_list[in_loc+1:])})
         elif ' '.join(term_list) == 'end for':
             return create_token('end_for', None)
         elif keyword == 'comment':
