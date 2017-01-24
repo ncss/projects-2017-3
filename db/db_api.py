@@ -88,6 +88,21 @@ with sqlite3.connect('db.db') as conn:
                 return rows
             else:
                 return None
+        @staticmethod
+        def find_by_email(email):
+            cur.execute(
+                '''
+                SELECT *
+                FROM users
+                WHERE email = ?
+                ''', (email,)
+            )
+            row = cur.fetchone()
+
+            if row is None:
+                return None
+            return User(*row)
+
 
         @staticmethod
         def sign_up(username, password, nickname, email):

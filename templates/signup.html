@@ -15,30 +15,32 @@
         <p>Fields marked with * need to be filled in to continue.</p>
         <form class="sign-in" action="/signup" method="post" enctype = "multipart/form-data">
           <fieldset>
-            <div>
-              <label for="username">Username *</label>
+            <div class="signup_div">
+              <label for="username" class="signup_text">Username *</label>
               <input id="username" type="text" name="username" placeholder="Enter a username" autofocus required>
               <p class='error'></p>
             </div>
-            <div>
-              <label for="nickname">Nickname *</label>
-              <input id="nickname" type="text" name="nickname" placeholder="Enter a nickname" required>
+            <div class="signup_div">
+              <label for="nickname" class="signup_text">Nickname *</label>
+              <input  id="nickname" type="text" name="nickname" placeholder="Enter a nickname" required>
               <p class='error'></p>
             </div>
-            <div>
+            <div class="signup_div">
               <label for="password">Password *</label>
               <input id="password" type="password" name="password" placeholder="Enter a password" required>
               <p class ='error'> </p>
             </div>
-            <div>
-              <label for="email">Email *</label>
+            <div class="signup_div">
+              <label for="email" class="signup_text">Email *</label>
               <input id="email" type='email' name="email" placeholder="Enter an email" required>
-              <p class ='error'> </p>
+                <p class ='error'></p>
             </div>
-
-            <p>
-              <label>Profile Image</label>
-              <input type="file" id="profile_picture" name="profile_picture">
+            <div class="signup_div">
+                <p>
+                  <label for="profile_picture" class="signup_text">Profile Image</label>
+                  <input type="file" id="profile_picture" name="profile_picture">
+                </p>
+            </div>
 
               <!-- Experimental live profile pic + Matilda, Tracey, Steph and Sam -->
             <div class='photobox'>

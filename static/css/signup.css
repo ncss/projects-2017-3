@@ -34,7 +34,7 @@ input[type="email"] {
 
 .error {
   color: red;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .photobox {
@@ -54,4 +54,17 @@ input[type="email"] {
   transform: rotateY(180deg);
   -webkit-transform:rotateY(180deg);
   -moz-transform:rotateY(180deg);
+}
+
+.signup_div{
+  margin:0 auto;
+  text-align:center;
+}
+
+.signup_text{
+    text-align: center;
+}
+
+.signup_div input{
+
 }

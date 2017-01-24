@@ -28,7 +28,6 @@ function checkIfPresent($input) {
 
 function validateSignupForm() {
     var $form = $('form.sign-in');
-    $('.error').html("");
 
     var $username = $form.find('#username');
     var $nickname = $form.find('#nickname');
@@ -121,6 +120,16 @@ $(document).ready(function(){
     var $email = $form.find('#email');
     var isValidEmail = checkIfPresent($email) && validateEmail($email);
 
+     $.ajax("/ajax/email_validate", {datatype: "json", type: "post", data: {email: $email.val()},
+       success: function(data){
+         if(!data.email_valid){
+           $email.parent().find(".error").html("This email is already registered. Click here to <a href=\"/signin\">login</a> or <a>here</a> to reset password (WIP)");
+           isValidEmail = false;
+         }},
+         failure: function(){
+           alert("failed to ajax. This can be caused by network issues");
+         }
+        });
     return Boolean(isValidEmail);
   });
 
