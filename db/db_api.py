@@ -24,10 +24,6 @@ with sqlite3.connect('db.db') as conn:
         User Object that represents a User, with attributes
         id, username (unique), hashed(password), nickname, email(unique), gender, dobm, short bio, picture(path), and creation_date
         """
-        columns = 'id', 'username',  'password', 'nickname', 'gender', 'dob', 'picture', 'creation_date'
-        # all possible columns
-        mutable_columns = 'password', 'nickname', 'email', 'gender', 'dob', 'picture', 'creation_date'
-        # all columns allowed to be changed after acc creation
 
         def __init__(self, id, username, password,  nickname, email, gender = None, dob = None, bio = None, picture = None, creation_date = None):
             self._id = id
@@ -42,9 +38,12 @@ with sqlite3.connect('db.db') as conn:
             self._creation_date = creation_date
 
         # Readonly properties
-        @property def id(self): return self._id
-        @property def username(self): return self.username
-        @property def creation_date(self): return self._creation_date
+        @property
+        def id(self): return self._id
+        @property
+        def username(self): return self.username
+        @property
+        def creation_date(self): return self._creation_date
 
         # Set property helper method fror writing to the DB
         def _set_value_in_db(key, value):
@@ -56,26 +55,40 @@ with sqlite3.connect('db.db') as conn:
             )
 
         # Other properties
-        @property def password(self): return self._password
-        @property.setter def password(self, value): self._password = value; self._set_value_in_db("password", value)
+        @property
+        def password(self): return self._password
+        @property.setter
+        def password(self, value): self._password = value; self._set_value_in_db("password", value)
 
-        @property def nickname(self): return self._nickname
-        @property.setter def nickname(self, value): self._nickname = value; self._set_value_in_db("nickname", value)
+        @property
+        def nickname(self): return self._nickname
+        @property.setter
+        def nickname(self, value): self._nickname = value; self._set_value_in_db("nickname", value)
 
-        @property def email(self): return self._email
-        @property.setter def email(self, value): self._email = value; self._set_value_in_db("email", value)
+        @property
+        def email(self): return self._email
+        @property.setter
+        def email(self, value): self._email = value; self._set_value_in_db("email", value)
 
-        @property def gender(self): return self._gender
-        @property.setter def gender(self, value): self._gender = value; self._set_value_in_db("gender", value)
+        @property
+        def gender(self): return self._gender
+        @property.setter
+        def gender(self, value): self._gender = value; self._set_value_in_db("gender", value)
 
-        @property def dob(self): return self._dob
-        @property.setter def dob(self, value): self._dob = value; self._set_value_in_db("dob", value)
+        @property
+        def dob(self): return self._dob
+        @property.setter
+        def dob(self, value): self._dob = value; self._set_value_in_db("dob", value)
 
-        @property def bio(self): return self._bio
-        @property.setter def bio(self, value): self._bio = value; self._set_value_in_db("bio", value)
+        @property
+        def bio(self): return self._bio
+        @property.setter
+        def bio(self, value): self._bio = value; self._set_value_in_db("bio", value)
 
-        @property def picture(self): return self._picture
-        @property.setter def picture(self, value): self._picture = value; self._set_value_in_db("picture", value)
+        @property
+        def picture(self): return self._picture
+        @property.setter
+        def picture(self, value): self._picture = value; self._set_value_in_db("picture", value)
 
         # Methods
         @staticmethod
@@ -136,42 +149,6 @@ with sqlite3.connect('db.db') as conn:
             return User.find(id)
 
         @staticmethod
-        def update(id, password, nickname, email, gender, dob, bio, picture):
-            """
-            Updates the user given all the values required. see update_some to update one/some value. Kinda deprecated
-            """
-            cur.execute(
-            '''
-            UPDATE users
-            SET password = ?,
-            nickname = ?,
-            email = ?,
-            gender = ?,
-            dob = ?,
-            bio = ?,
-            picture = ?
-            WHERE id = ?
-            ''', (password, nickname, email, gender, dob, bio, picture, id)
-            )
-            conn.commit()
-            return User.find(id)
-
-        @staticmethod
-        def update_some(**kwargs):
-            """Updates one value. Use update_one(nickname='newnick',...)"""
-            if all((i in User.mutable_columns for i in kwargs.keys())):
-                # all the keys are legit
-                for key in kwargs:
-                    cur.execute(
-                        """UPDATE users
-                        SET %s = ?""" % key, (kwargs[key],)
-                    )
-                    # yes i know string formatting is bad with sql. Its a necessary evil :(
-            else:
-                print("one of the keys were invalid!", kwargs)
-
-
-        @staticmethod
         def login(username, password):
             """logs the user in given username and password hash. returns User obj with username or none if login failed"""
             cur.execute('''
@@ -200,9 +177,6 @@ with sqlite3.connect('db.db') as conn:
 
         def create_comment(self, post, text, parent):
             return Comment.create(self, post, text, datetime.now(), parent)
-
-        def edit(self, password, nickname, email, gender, dob, bio, picture):
-            return User.update(self.id, password, nickname, email, gender, dob, bio, picture)
 
     class Post:
 
