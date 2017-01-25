@@ -65,17 +65,18 @@ user.create_comment(post<Post>, 'text', 'date', 1)
 Returns a `Post` object
 
 ### Edit a User
-To edit a `User`s details:
+To edit a `User`'s details:
 ```python
 user.edit('password', 'nickname', 'email', 'gender', 'dob', 'bio', 'filename.jpg')
 ```
-Returns a `Post` object
+~~Returns a `Post` object~~
 
 ### Properties
 The `User` object has some properties:
 ```python
 id, username, password, nickname, email, gender, dob, bio, picture, creation_date
 ```
+`picture` is path of the `User`'s profile pic. Example of what it should have: `os.path.join('static', 'uploads', 'user_image', User.id +'.jpg')`
 
 ---
 
