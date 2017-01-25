@@ -30,17 +30,54 @@ with sqlite3.connect('db.db') as conn:
         # all columns allowed to be changed after acc creation
 
         def __init__(self, id, username, password,  nickname, email, gender = None, dob = None, bio = None, picture = None, creation_date = None):
-            self.id = id
-            self.username = username
-            self.password = password
-            self.nickname = nickname
-            self.email = email
-            self.gender = gender
-            self.dob = dob
-            self.bio = bio
-            self.picture = picture
-            self.creation_date = creation_date
+            self._id = id
+            self._username = username
+            self._password = password
+            self._nickname = nickname
+            self._email = email
+            self._gender = gender
+            self._dob = dob
+            self._bio = bio
+            self._picture = picture
+            self._creation_date = creation_date
 
+        # Readonly properties
+        @property def id(self): return self._id
+        @property def username(self): return self.username
+        @property def creation_date(self): return self._creation_date
+
+        # Set property helper method fror writing to the DB
+        def _set_value_in_db(key, value):
+            cur.execute(
+                """
+                UPDATE users
+                SET %s = ?
+                """ % key, (value,)
+            )
+
+        # Other properties
+        @property def password(self): return self._password
+        @property.setter def password(self, value): self._password = value; self._set_value_in_db("password", value)
+
+        @property def nickname(self): return self._nickname
+        @property.setter def nickname(self, value): self._nickname = value; self._set_value_in_db("nickname", value)
+
+        @property def email(self): return self._email
+        @property.setter def email(self, value): self._email = value; self._set_value_in_db("email", value)
+
+        @property def gender(self): return self._gender
+        @property.setter def gender(self, value): self._gender = value; self._set_value_in_db("gender", value)
+
+        @property def dob(self): return self._dob
+        @property.setter def dob(self, value): self._dob = value; self._set_value_in_db("dob", value)
+
+        @property def bio(self): return self._bio
+        @property.setter def bio(self, value): self._bio = value; self._set_value_in_db("bio", value)
+
+        @property def picture(self): return self._picture
+        @property.setter def picture(self, value): self._picture = value; self._set_value_in_db("picture", value)
+
+        # Methods
         @staticmethod
         def find(id=None, username=None, all=False):
             if id is not None:
