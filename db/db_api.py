@@ -57,37 +57,37 @@ with sqlite3.connect('db.db') as conn:
         # Other properties
         @property
         def password(self): return self._password
-        @property.setter
+        @password.setter
         def password(self, value): self._password = value; self._set_value_in_db("password", value)
 
         @property
         def nickname(self): return self._nickname
-        @property.setter
+        @nickname.setter
         def nickname(self, value): self._nickname = value; self._set_value_in_db("nickname", value)
 
         @property
         def email(self): return self._email
-        @property.setter
+        @email.setter
         def email(self, value): self._email = value; self._set_value_in_db("email", value)
 
         @property
         def gender(self): return self._gender
-        @property.setter
+        @gender.setter
         def gender(self, value): self._gender = value; self._set_value_in_db("gender", value)
 
         @property
         def dob(self): return self._dob
-        @property.setter
+        @dob.setter
         def dob(self, value): self._dob = value; self._set_value_in_db("dob", value)
 
         @property
         def bio(self): return self._bio
-        @property.setter
+        @bio.setter
         def bio(self, value): self._bio = value; self._set_value_in_db("bio", value)
 
         @property
         def picture(self): return self._picture
-        @property.setter
+        @picture.setter
         def picture(self, value): self._picture = value; self._set_value_in_db("picture", value)
 
         # Methods
