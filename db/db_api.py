@@ -143,8 +143,7 @@ with sqlite3.connect('db.db') as conn:
             WHERE username = ? AND password = ? ''',
             (username, password))
             row = cur.fetchone()
-            user_id = None if row is None else row[0]
-            return user_id
+            return None if row is None else User.find(id=row[0])
 
         def delete(self):
             """Deletes a user from the database"""
