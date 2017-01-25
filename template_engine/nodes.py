@@ -1,4 +1,8 @@
 import html
+class TemplateRuntimeException(Exception):
+    pass
+
+
 
 def head(string, n):
     return string[:n] if len(string) >= n else string
@@ -29,7 +33,7 @@ class ExpressionNode(Node):
 
 class ForNode(Node):
     def __init__(self, iterator, iterable):
-        self._iterator = iterator
+        self._iterators = iterator.split(',') # a list of the iterators
         self._iterable = iterable
         self._child = None
 
@@ -40,16 +44,29 @@ class ForNode(Node):
         self._child = child
 
     def __repr__(self):
-        return "<ForNode: '" + self._iterator + '; ' + self._child + "'>"
+        return "<ForNode: '" + self._iterators + '; ' + self._child + "'>"
 
     def render(self, context):
         # Evaluate the iterable so we know what to iterate over
         iterable = eval(self._iterable, {}, context)
         rendered_children = []
         for i in iterable:
-            # Create a new context to include our variable
-            new_context = dict(context)
-            new_context[self._iterator] = i
+            # i may be a unzipped tuple:
+            if len(self._iterators) > 1:
+                if not (len(self._iterators) == len(i)):
+                    raise ValueError("not enough values to unpack (expected %d, got %d)" % (len(self._iterators), len(i)))
+                # check that the unpacked item's length is equal to the number of iterators suppled
+
+                # Create a new context to include our variable(s)
+                new_context = dict(context)
+                for upto, variable in enumerate(self._iterators):
+                    new_context[variable] = i[upto]
+            else:
+                # there is only one iterator, set it to i
+                new_context = dict(context)
+                new_context[self._iterators[0]] = i
+
+
             # Render the child with our special context
             rendered = self._child.render(new_context)
             if rendered.strip():

@@ -1,7 +1,7 @@
 from typing import Callable
 from template_engine.parser import render
 from db import db_api as db
-from back_end.common import get_username
+from back_end.common import get_secure_username
 
 USER_COOKIE = "current_user"
 
@@ -20,7 +20,7 @@ def authenticate_cookie(request):
     return False
 
 def render_no_login(request):
-    request.write(render('notsignedin.html', {'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
+    request.write(render('notsignedin.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
 def requires_login(func: Callable):
     """

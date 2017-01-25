@@ -4,7 +4,7 @@ from back_end.common import *
 from db import db_api as db
 
 def signup_handler(request):
-    request.write(render('signup.html', {'signed_in':authenticate_cookie(request), 'username': get_username(request)}))
+    request.write(render('signup.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
     ident = request.get_field('id')
     username = request.get_field('username')
     email = request.get_field('email')
@@ -51,25 +51,26 @@ def signup_handler_post(request):
 
     request.redirect('/')
 
+
 def signin_handler(request):
-    username = request.get_field('username')
-    password = request.get_field('password')
-    signin = {'username': username, 'password': password, 'signed_in':authenticate_cookie(request), 'username': get_username(request)}
+    if get_secure_username(request):
+        # the user is already logged in!
+        request.redirect('/')
+    signin = {'signed_in':False}
     request.write(render('signin.html', signin))
 
 def signin_handler_post(request):
-    username = request.get_field('username')
+    username = request.get_field('username').lower()
     password = hash_string(request.get_field('password'))
-    if db.User.find(username=username):
-        if db.User.find(username=username).password == password:
+    userObj = db.User.find(username=username)
+    if userObj:
+        if userObj.password == password:
             request.set_secure_cookie("current_user", username)
-            user = db.User.find(username=username)
             request.redirect('/')
         else:
             request.write("The username and password do not match.")
     else:
         request.write("Username cannot be found.")
-        return(None)
 
 @requires_login
 def signout_handler(request):
