@@ -86,7 +86,7 @@ with sqlite3.connect('db.db') as conn:
 
                 raise TypeError('find() requires 1 argument to be set: either \'id\', \'username\' or \'all\'')
                 return None
-              
+
         @staticmethod
         def find_by_email(email):
             cur.execute(
@@ -169,8 +169,8 @@ with sqlite3.connect('db.db') as conn:
             ''' , (self.username,))
             conn.commit()
 
-        def create_post(self, description, title, date, photo_files):
-            return Post.create(self, description, title, date, photo_files)
+        def create_post(self, username, description, title, photo_files):
+            return Post.create(self, username, description, title, photo_files)
 
         def all_posts(self):
             return Post.find_all(self)
@@ -293,6 +293,13 @@ with sqlite3.connect('db.db') as conn:
         Comment Object contains attribs:
         id, user, post(id), parent(id) (for multiple/nested comments), text, date(sent), location(latitude), location(longitude), score
         """
+
+        #def __str__(self):
+        #    return self.__repr__()
+
+        #def __repr__(self):
+        #    return "<Comment: ID: {}, title: \'{}\', User ID: {}>".format(self.id, self.text, self.user.id)
+
         def __init__(self, id, user, post, parent = None, text = None, date = None, loc_latitude = None, loc_longitude = None, score = None):
             self.id = id
             self.user = user

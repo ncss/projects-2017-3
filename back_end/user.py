@@ -35,10 +35,12 @@ def signup_handler_post(request):
     if profile_pic != (None, None, None):
         filename, content_type, data = profile_pic
         if content_type.startswith('image/'):
-            file_path_profile_pic = os.path.join('static', 'uploads', 'user_image', str(new_user.id) +'.jpg')
-            with open(file_path_profile_pic, 'wb') as f:
+            file_path_profile_pic = os.path.join('uploads', 'user_image', str(new_user.id) +'.jpg')
+
+            with open(os.path.join('static', file_path_profile_pic), 'wb') as f:
                 f.write(data)
-                db.User.update_some(picture=str(new_user.id)+'.jpg')
+                db.User.update(new_user.id, new_user.password, new_user.nickname, new_user.email, new_user.gender, new_user.dob, new_user.bio, file_path_profile_pic)
+                print(new_user.picture)
 
         else:
             request.write("Uploaded file type not supported.")

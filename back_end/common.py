@@ -34,3 +34,6 @@ def fetch_file(url, filename):
     response = urllib.request.urlretrieve(url, filename)
     return response
 
+#TODO: maybe move this to db_api instead?
+def get_user_picture(userObj):
+    return userObj.picture if userObj.picture is not None and userObj.picture != "" else "nouser.png"

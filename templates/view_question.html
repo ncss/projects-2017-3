@@ -12,7 +12,7 @@
         <fieldset>
           <input type=text hidden="hidden" name='{{ photo_id }}'/>
           <h2>{{ question }}</h2>
-          <fieldset class="comment"> <img src= "/static/uploads/user_image/{{ user_picture }}" class="comment"> <h3 class="comment">
+          <fieldset class="comment"> <img src= "/static/{{ user_picture }}" class="comment"> <h3 class="comment">
             {{ user.username }}:</h3>
           </fieldset>
           <img src="/static/{{ file }}" alt="{{ description }}">
@@ -29,11 +29,7 @@
       <h2>Comments</h2>
       {% for comment in comments %}
       <fieldset class="comment">
-        {% if comment.image  %}
         <img src="/static/{{ comment.image }}"/>
-        {% else %}
-        <img src="/static/uploads/user_image/nouser.png">
-        {% end if %}
         <h3>
           {{ comment.user.username }}:</h3><p> {{ comment.text }}
         </p>

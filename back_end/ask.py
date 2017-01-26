@@ -28,7 +28,12 @@ def ask_handler_post(request):
             photo_file_ext_regex = re.search(r'\.[a-zA-Z]+$', filename)
             photo_file_ext = photo_file_ext_regex.group(0)
             photo_dir = path.join('uploads', 'questions', str(db.Post.get_next_post_id()) + photo_file_ext)
-            post = db.Post.create(db.User.find(username=user_id), description, title, photo_dir)
+            curuser = db.User.find(username=user_id)
+            post = db.Post.create(curuser, description, title, photo_dir)
+            print("LOG: New post created. Comments: ", post.all_comments())
+            if post.all_comments():
+                for comment in post.all_comments():
+                    print("Comment: ", comment)
             with open(path.join('static', photo_dir), 'wb') as f:
                 f.write(data)
             request.write("Your image was uploaded! name=%s"%(photo_files[0]))

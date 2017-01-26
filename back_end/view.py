@@ -4,7 +4,6 @@ from template_engine import render
 from os import path
 from db import db_api as db
 from auth import requires_login, authenticate_cookie
-from back_end.profile import get_picture
 
 
 def view_question_handler(request, question_id):
@@ -12,7 +11,7 @@ def view_question_handler(request, question_id):
     post = db.Post.find(question_id)
     post_info = {
         'user': post.user,
-        'user_picture': get_picture(post.user),
+        'user_picture': get_user_picture(post.user),
         'description': post.description,
         'question': post.title,
         'date': post.date,
@@ -23,10 +22,12 @@ def view_question_handler(request, question_id):
         'user_ids': db.User.find(all=True),
         'photo_id': post.id,
     }
-    for i in post_info['comments']:
-        curuser = i.user
-        print(curuser.picture)
-        i.image = path.join("uploads", "user_image", curuser.picture) if curuser.picture else ""
+    print('comments', post_info['comments'])
+    if all(post_info['comments']):
+        for comment in post_info['comments']:
+            if comment.user:
+                comment.image = get_user_picture(comment.user)
+                # print(comment.image)
 
     request.write(render('view_question.html', post_info))
     # except Exception as e:
