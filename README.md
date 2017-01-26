@@ -31,11 +31,15 @@ This how-to is made quickly for GitHub Desktop.
 - If you'd like to use [GitHub Desktop](https://desktop.github.com), click on the link to go download it and set it up.
 
 - Then visit the link for our project: [GitHub projects 2017 group 3 link](https://github.com/ncss/projects-2017-3) and click on 'Clone or download'. Then click 'Open in Desktop' to open it in GitHub Desktop.
-![Screenshot of 'Clone or download' NCSS group 3 project on GitHub](https://cloud.githubusercontent.com/assets/22441348/22179660/b2671018-e0ae-11e6-8df9-b70c499bd306.png)
+<br />
+<img height="400" alt="Screenshot of 'Clone or download' NCSS group 3 project on GitHub" src="https://cloud.githubusercontent.com/assets/22441348/22179660/b2671018-e0ae-11e6-8df9-b70c499bd306.png">
+<br />
 You'll be prompted to choose a location to save the repository on your computer, and then the project will start cloning.
 
 - Once the project has finished cloning, it will appear in the left panel under the heading 'GitHub' on GitHub Desktop. Then, Open in Terminal/Git Shell by right-clicking on the project name:
-![Right click on project name with mouse hovering over 'Open in Terminal'](https://cloud.githubusercontent.com/assets/22441348/22178733/aafd91dc-e093-11e6-9b03-4091818ce586.png)
+<br />
+<img height="400" alt="Right click on project name with mouse hovering over 'Open in Terminal'" src="https://cloud.githubusercontent.com/assets/22441348/22178733/aafd91dc-e093-11e6-9b03-4091818ce586.png">
+<br />
 (The name of the option 'Open in Terminal/Git Shell' is just dependent on whichever Operating System you are using. These screenshots here are for Mac OS.)
 
 
@@ -60,9 +64,13 @@ Messages will keep appearing in the shell as you do things on the site, this is 
 
 - You can view code in Atom by going to Repository>Open in Atom on Mac, I think there's a button on Windows with the Atom icon.
 Screenshot for Mac:
-![Screenshot of GitHub Desktop zoomed in on Repository>Open in Atom](https://cloud.githubusercontent.com/assets/22441348/22178790/1bd5092a-e095-11e6-87d7-0149e8e3d895.png)
+<br/>
+<img height="400" alt="Screenshot of GitHub Desktop zoomed in on Repository>Open in Atom" src="https://cloud.githubusercontent.com/assets/22441348/22178790/1bd5092a-e095-11e6-87d7-0149e8e3d895.png">
+<br/>
 or you can also right-click on the project name and then Open in Atom:
-![Screenshot of GitHub Desktop zoomed in on right-click project name and mouse hover over 'Open in Atom'](https://cloud.githubusercontent.com/assets/22441348/22178779/eca7ffcc-e094-11e6-9062-ba5bab09b1a5.png)
+<br/>
+<img height="400" alt="Screenshot of GitHub Desktop zoomed in on right-click project name and mouse hover over 'Open in Atom'" src="https://cloud.githubusercontent.com/assets/22441348/22178779/eca7ffcc-e094-11e6-9062-ba5bab09b1a5.png">
+<br/>
 
 ---
 If you have any ideas or comments on this tutorial, please feel very free to add.
