@@ -54,7 +54,7 @@ Here is a screenshot (this is for Mac where `python3` is for running python3)
 ![Running python server.py in terminal](https://cloud.githubusercontent.com/assets/22441348/22178746/052e2162-e094-11e6-897d-9f4f8d73b80d.png)
 If it worked and the server's working, you'll see the `Reloading... waiting for requests on http://localhost:8888` message appear.
 
-- After you have the server, open a browser and type in `localhost:8888` to see our awesome site
+- After you have the server, open a browser and type in `localhost:8888` to see our awesome site :P
 ![Screenshot of website with localhost:8888 in the URL bar](https://cloud.githubusercontent.com/assets/22441348/22178763/9648a230-e094-11e6-8211-c199425f8397.png)
 
 Messages will keep appearing in the shell as you do things on the site, this is expected.
