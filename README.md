@@ -65,7 +65,7 @@ Messages will keep appearing in the shell as you do things on the site, this is 
 - You can view code in Atom by going to Repository>Open in Atom on Mac, I think there's a button on Windows with the Atom icon.
 Screenshot for Mac:
 <br/>
-<img height="400" alt="Screenshot of GitHub Desktop zoomed in on Repository, Open in Atom" src="https://cloud.githubusercontent.com/assets/22441348/22178790/1bd5092a-e095-11e6-87d7-0149e8e3d895.png">
+<img alt="Screenshot of GitHub Desktop zoomed in on Repository, Open in Atom" src="https://cloud.githubusercontent.com/assets/22441348/22178790/1bd5092a-e095-11e6-87d7-0149e8e3d895.png">
 <br/>
 or you can also right-click on the project name and then Open in Atom:
 <br/>
