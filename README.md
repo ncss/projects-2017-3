@@ -22,13 +22,11 @@ The server runs by default at localhost:8888. (Type localhost:8888 into a browse
 
 ---
 
-Here is a version of how to run the project with screenshots.
-
 ## How to run *Find It!* with screenshots
 
-This how-to is made quickly for GitHub Desktop.
+Here is a version of how to run the project with screenshots — just to make it a tiny bit more approachable :). This how-to is made quickly for GitHub Desktop.
 
-- If you'd like to use [GitHub Desktop](https://desktop.github.com), click on the link to go download it and set it up.
+- If you'd like to use [GitHub Desktop](https://desktop.github.com), click on the linked name to go download it. And then set it up.
 
 - Then visit the link for our project: [GitHub projects 2017 group 3 link](https://github.com/ncss/projects-2017-3) and click on 'Clone or download'. Then click 'Open in Desktop' to open it in GitHub Desktop.
 <br />
@@ -56,11 +54,11 @@ If it worked and the server's working, you'll see the `Reloading... waiting for 
 
 - After you have the server, open a browser and type in `localhost:8888` to see our awesome site :P
 ![Screenshot of website with localhost:8888 in the URL bar](https://cloud.githubusercontent.com/assets/22441348/22178763/9648a230-e094-11e6-8211-c199425f8397.png)
-
+<br/>
 Messages will keep appearing in the shell as you do things on the site, this is expected.
 
 ## How to open the project (in Atom), with screenshots
-[Atom](https://atom.io) is a customisable text editor. You can use it to view and edit the files.
+[Atom](https://atom.io) is a customisable text editor. You can use it to view and edit the files in our project.
 
 - You can view code in Atom by going to Repository>Open in Atom on Mac, I think there's a button on Windows with the Atom icon.
 Screenshot for Mac:
