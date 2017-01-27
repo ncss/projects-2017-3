@@ -30,10 +30,8 @@ def ask_handler_post(request):
             photo_dir = path.join('uploads', 'questions', str(db.Post.get_next_post_id()) + photo_file_ext)
             curuser = db.User.find(username=user_id)
             post = db.Post.create(curuser, description, title, photo_dir)
-            print("LOG: New post created. Comments: ", post.all_comments())
-            if post.all_comments():
-                for comment in post.all_comments():
-                    print("Comment: ", comment)
+            print("LOG: New post created: ", post)
+            print("LOG: Comments in post: ", post.all_comments())
             with open(path.join('static', photo_dir), 'wb') as f:
                 f.write(data)
             request.write("Your image was uploaded! name=%s"%(photo_files[0]))
