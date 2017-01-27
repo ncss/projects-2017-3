@@ -72,3 +72,5 @@ or you can also right-click on the project name and then Open in Atom:
 
 ---
 If you have any ideas or comments on this tutorial, please feel very free to add.
+
+And if you're having trouble with anything, please tell us! :DD
