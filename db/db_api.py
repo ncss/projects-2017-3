@@ -300,12 +300,13 @@ with sqlite3.connect('db.db') as conn:
         #def __repr__(self):
         #    return "<Comment: ID: {}, title: \'{}\', User ID: {}>".format(self.id, self.text, self.user.id)
 
-        def __init__(self, id, user, post, parent = None, text = None, date = None, loc_latitude = None, loc_longitude = None, score = None):
+        def __init__(self, id, user, post, profile_pic = None, parent = None, text = None, date = None, loc_latitude = None, loc_longitude = None, score = None):
             self.id = id
             self.user = user
             self.post = post
             self.text = text
             self.date = date
+            self.profile_pic = profile_pic
             self.parent = parent
             self.score = score
             self.loc_latitude = loc_latitude
@@ -316,7 +317,7 @@ with sqlite3.connect('db.db') as conn:
             cur = conn.execute(
             '''
             INSERT INTO comments (user_id, post_id, parent_id, text, date, loc_latitude, loc_longitude, score)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?); ''', (user.id, post.id, parent.id if parent is not None else parent, text, date, loc_latitude, loc_longitude, score))
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?); ''', (user.id, post.id, parent.id if parent is not None else None, text, date, loc_latitude, loc_longitude, score))
 
             conn.commit()
             return Comment.find(cur.lastrowid)

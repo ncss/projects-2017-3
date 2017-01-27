@@ -29,7 +29,7 @@
       <h2>Comments</h2>
       {% for comment in comments %}
       <fieldset class="comment">
-        <img src="/static/{{ comment.image }}"/>
+        <img src="/static/{{ comment.profile_pic }}"/>
         <h3>
           {{ comment.user.username }}:</h3><p> {{ comment.text }}
         </p>
