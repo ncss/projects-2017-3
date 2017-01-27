@@ -26,17 +26,28 @@ function checkIfPresent($input) {
   }
 }
 
+function validatePasswordRepeat($pass1, $pass2){
+    if ($pass1.val() != $pass2.val()){
+        writeError($pass1, 'These two passwords do not match!');
+        writeError($pass2, 'These two passwords do not match!');
+    } else {
+        clearError($pass1);
+        clearError($pass2);
+    }
+}
+
 function validateSignupForm() {
     var $form = $('form.sign-in');
 
     var $username = $form.find('#username');
     var $nickname = $form.find('#nickname');
     var $password = $form.find('#password');
+    var $password_again = $form.find('#password-check')
     var $email = $form.find('#email');
 
     var validUsername = checkIfPresent($username) && validateName($username);
     var validNickname = checkIfPresent($nickname) && validateName($nickname);
-    var validPassword = validatePassword($password);
+    var validPassword = validatePassword($password) && validatePasswordRepeat($password, $password_again);
     var validEmail = checkIfPresent($email) && validateEmail($email);
 
     return Boolean(validUsername && validNickname && validPassword && validEmail);
@@ -108,8 +119,28 @@ $(document).ready(function(){
     var $form = $('form.sign-in');
 
     var $password = $form.find('#password');
-    var isValidPassword = validatePassword($password);
+    var $password_repeat = $form.find('#password-check');
+    var isValidPassword;
+    if($password_repeat.val() != ''){
+      isValidPassword = validatePassword($password) && validatePasswordRepeat($password, $password_repeat);
+    } else{
+      isValidPassword = validatePassword($password);
+    }
 
+    return Boolean(isValidPassword);
+  });
+
+  $("#password-check").on("change keyup", function(){
+    var $form = $('form.sign-in');
+
+    var $password = $form.find('#password');
+    var $password_repeat = $form.find('#password-check');
+    var isValidPassword;
+    if($password_repeat.val() != ''){
+      isValidPassword = validatePassword($password) && validatePasswordRepeat($password, $password_repeat);
+    } else{
+      isValidPassword = validatePassword($password);
+    }
     return Boolean(isValidPassword);
   });
 
