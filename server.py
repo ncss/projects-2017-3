@@ -10,7 +10,6 @@ TEMPLATE_DIR = 'templates'
 UPLOADS_DIR = os.path.join('static', 'uploads')
 IMAGE_DIR = os.path.join('static', 'images')
 
-UP_IMAGES = []
 
 def index_handler(request):
     posts = db.Post.find_all()
@@ -25,22 +24,31 @@ def index_handler(request):
 
 
 def aboutus_handler(request):
-    request.write(render('aboutus.html', {'users': db.User.find(all=True), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
+    request.write(render('aboutus.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
 @requires_admin
 def handle_list_users(request):
     request.write(render('list_users.html', {'users': db.User.find(all=True), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
+    # users:db.User.find(all=True) is only required for list_users page, cuz we really dont want to be listing users on the other websites :D
 
 def not_found_handler(request):
-    request.write(render('404.html', {'users': db.User.find(all=True), 'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
+    request.write(render('404.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
 def monkey_handler(request):
     request.write(render('monkey.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
+def exception_handler(request, httpcode, *args, **kwargs):
+    """This handler should be called when an exception happens during code :(. So it doesnt leak the stacktrace"""
+    try:
+        request.write(render("internal_error.html", {"code":httpcode, 'signed_in': authenticate_cookie(request), 'username': get_secure_username(request)}))
+        print("An exception has occured! code=%s" % httpcode, args, kwargs, sep="\n")
+    except:
+        # another exception?
+        pass
 
 
 server = Server()
-server.register(r'/', index_handler)
+server.register(r'/', index_handler, write_error=exception_handler)
 server.register(r'/view/(\d+)/?', view.view_question_handler)
 server.register(r'/signup'      , user.signup_handler  , post=user.signup_handler_post)
 server.register(r'/ask'         , ask.ask_handler      , post=ask.ask_handler_post)

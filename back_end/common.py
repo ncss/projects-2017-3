@@ -37,3 +37,8 @@ def fetch_file(url, filename):
 #TODO: maybe move this to db_api instead?
 def get_user_picture(userObj):
     return userObj.picture if userObj.picture is not None and userObj.picture != "" else "nouser.png"
+
+def reply_malformed(request, header_text="The request was malformed", text="Sorry!\n It looks like your client has sent a invalid request.\n Please reload the page or contact us."):
+    """Sets the header of request to 400 (bad request) and writes the text supplied"""
+    request.set_status(400, header_text)
+    request.write(text)
