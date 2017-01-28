@@ -31,7 +31,7 @@ The server runs by default at localhost:8888. (Type localhost:8888 into a browse
 
 ## How to run *Find It!* with screenshots
 
-Here is a version of how to run the project with screenshots — just to make it a tiny bit more approachable :). This how-to is made quickly for GitHub Desktop.
+Here is a version of how to run the project with screenshots — just to make it a tiny bit more approachable :). This how-to is made quickly for GitHub Desktop. (But of course you can go with whatever you like, this is just if you don't really have preferences, yet :))
 
 - If you'd like to use [GitHub Desktop](https://desktop.github.com), click on the linked name to go download it. And then set it up.
 
@@ -65,7 +65,7 @@ If it worked and the server's working, you'll see the `Reloading... waiting for 
 Messages will keep appearing in the shell as you do things on the site, this is expected.
 
 ## How to open the project (in Atom), with screenshots
-[Atom](https://atom.io) is a customisable text editor. You can use it to view and edit the files in our project.
+[Atom](https://atom.io) is a customisable text editor. You can use it to view and edit the files in our project. And of course you can use whatever else you like too if you have any preferences :)
 
 - You can view code in Atom by going to Repository>Open in Atom on Mac, I think there's a button on Windows with the Atom icon.
 Screenshot for Mac:

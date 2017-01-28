@@ -54,8 +54,8 @@ with sqlite3.connect(DB_FILE) as conn:
     text TEXT NOT NULL,
     date TEXT NOT NULL,
     profile_pic TEXT,
-	loc_latitude REAL,
-	loc_longitude REAL,
+    loc_latitude REAL,
+    loc_longitude REAL,
     score INTEGER,
     FOREIGN KEY(parent_id) REFERENCES comments(id),
     FOREIGN KEY(user_id) REFERENCES users(id),
@@ -83,7 +83,7 @@ with sqlite3.connect(DB_FILE) as conn:
     (NULL, 'lucy',   '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', ''        , 'some@9email.com' , 'Female' , '01/01/1990', 'Atlassian.', 'nouser.png', '08/01/2016'),
     (NULL, 'julia',  '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', ''        , 'some@10email.com', 'Female' , '01/01/1990', ':)', 'nouser.png', '08/01/2016'),
     (NULL, 'jack',   '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', ''        , 'some@11email.com', 'Male'   , '01/01/2014', 'didnt make it to first db create :(', 'nouser.png', '08/01/2016'),
-    (NULL, 'trace',  '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', ''        , 'some@email.com'  , 'Female' , '01/01/2014', 'GOTTA GO FAST', 'nouser.png', '08/01/2016'),
+    (NULL, 'trace',  '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', ''        , 'some@email.com'  , 'Female' , '01/01/2014', ':))', 'nouser.png', '08/01/2016'),
     (NULL, 'robot',  '15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'Mr Robot', 'some1@e2mail.com', ' '      , '01/01/1999', 'Lorem ipsum dolor sit amet,', 'nouser.png', '01/01/1970'),
     (NULL, 'generic','15a6aea1009a94bfb97901572724cf3e6c77c5bb22e6835d61fdd865cfcdfc1773e287f9df6e6e061244dffa475cfd0ce8033cf386039993a063249a25d2482a', 'Generico', 'some14@email.com', ' '      , '01/01/2017', 'Your Generic User Bio', 'nouser.png', '11/01/2017')
     '''
