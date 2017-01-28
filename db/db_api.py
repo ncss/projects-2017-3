@@ -178,8 +178,8 @@ with sqlite3.connect('db.db') as conn:
         def find_post(self, post_id):
             return Post.find(post_id)
 
-        def create_comment(self, post, text, parent):
-            return Comment.create(self, post, text, datetime.now(), parent)
+        def create_comment(self, post, text, parent, profile_pic=None):
+            return Comment.create(self, post, text, datetime.now(), parent=parent, profile_pic=profile_pic)
 
         def edit(self, password, nickname, email, gender, dob, bio, picture):
             return User.update(self.id, password, nickname, email, gender, dob, bio, picture)
@@ -291,7 +291,7 @@ with sqlite3.connect('db.db') as conn:
     class Comment:
         """
         Comment Object contains attribs:
-        id, user, post(id), parent(id) (for multiple/nested comments), text, date(sent), location(latitude), location(longitude), score
+        id, user, post(id), parent(id) (for multiple/nested comments), text, date(sent), profile_pic (path of user profile avatar), location(latitude), location(longitude), score
         """
 
         #def __str__(self):
@@ -300,7 +300,7 @@ with sqlite3.connect('db.db') as conn:
         #def __repr__(self):
         #    return "<Comment: ID: {}, title: \'{}\', User ID: {}>".format(self.id, self.text, self.user.id)
 
-        def __init__(self, id, user, post, profile_pic = None, parent = None, text = None, date = None, loc_latitude = None, loc_longitude = None, score = None):
+        def __init__(self, id, user, post, parent = None, text = None, date = None, profile_pic = None, loc_latitude = None, loc_longitude = None, score = None):
             self.id = id
             self.user = user
             self.post = post
@@ -313,13 +313,19 @@ with sqlite3.connect('db.db') as conn:
             self.loc_longitude = loc_longitude
 
         @staticmethod
-        def create(user, post, text, date, parent = None, loc_latitude = None, loc_longitude = None, score = None):
+        def create(user, post, text, date, parent = None, profile_pic = None, loc_latitude = None, loc_longitude = None, score = None):
             cur = conn.execute(
             '''
-            INSERT INTO comments (user_id, post_id, parent_id, text, date, loc_latitude, loc_longitude, score)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?); ''', (user.id, post.id, parent.id if parent is not None else None, text, date, loc_latitude, loc_longitude, score))
+            INSERT INTO comments (user_id, post_id, parent_id, text, date, profile_pic, loc_latitude, loc_longitude, score)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?); ''', (user.id, post.id, parent.id if parent is not None else parent, text, date, profile_pic, loc_latitude, loc_longitude, score))
 
             conn.commit()
+            print('Comment.create')
+            print('text', text)
+            print('cur.lastrowid', cur.lastrowid)
+            comment_ret = Comment.find(cur.lastrowid)
+            print('comment_ret.user', comment_ret.user)
+            print('comment_ret.text', comment_ret.text)
             return Comment.find(cur.lastrowid)
 
         @staticmethod
@@ -334,7 +340,10 @@ with sqlite3.connect('db.db') as conn:
 
             if row is None:
                 return None
-            # id | (user obj) | post, parent, text, date, loc_lat, loc_long, score
+            print('')
+            for idx, column in enumerate(row):
+                print(idx, column)
+            # id | (user obj) | post_id, parent_id, text, date, profile_pic, loc_lat, loc_long, score
             return Comment(row[0], User.find(row[1]), *row[2:])
 
         @staticmethod
