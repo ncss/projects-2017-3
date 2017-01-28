@@ -24,6 +24,7 @@ def email_handler(request):
         reply_malformed(request)
 
 def user_logged_in_handler(request):
+    print('user_logged_in_handler')
     user_cookie = request.get_secure_cookie(USER_COOKIE)
     if user_cookie is not None:
         print('user:', user_cookie.decode())

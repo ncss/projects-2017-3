@@ -340,9 +340,6 @@ with sqlite3.connect('db.db') as conn:
 
             if row is None:
                 return None
-            print('')
-            for idx, column in enumerate(row):
-                print(idx, column)
             # id | (user obj) | post_id, parent_id, text, date, profile_pic, loc_lat, loc_long, score
             return Comment(row[0], User.find(row[1]), *row[2:])
 
