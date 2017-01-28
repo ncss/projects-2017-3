@@ -44,6 +44,13 @@ def check_valid_question_id_handler(request, question_id):
     else:
         not_found_handler(request)
 
+def check_valid_profile_handler(request, username):
+    user = db.User.find(username=username)
+    if user is not None:
+        profile.view_handler(request, username)
+    else:
+        not_found_handler(request)
+
 def exception_handler(request, httpcode, *args, **kwargs):
     """This handler should be called when an exception happens during code :(. So it doesnt leak the stacktrace"""
     try:
@@ -63,7 +70,7 @@ server.register(r'/signin'      , user.signin_handler  , post=user.signin_handle
 server.register(r'/post_comment/(\d+)/?', view.comment_handler_post, post=view.comment_handler_post)
 server.register(r'/logout'      , user.signout_handler)
 server.register(r'/list_users'  , handle_list_users)
-server.register(r'/profile/(.+)', profile.view_handler, post=profile.view_handler_post)
+server.register(r'/profile/(.+)', check_valid_profile_handler, post=profile.view_handler_post)
 server.register(r'/profile/edit/(.+)', profile.edit_handler, post=profile.edit_handler_post)
 server.register(r'/aboutus'     , aboutus_handler)
 server.register(r'/ajax/user_validate', not_found_handler, post=ajax.username_handler)
