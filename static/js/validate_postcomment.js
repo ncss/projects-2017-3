@@ -17,17 +17,18 @@ $(document).ready(function(){
   $.ajax("/ajax/logged_in_validate", {datatype: "json", type: "post", data: {}, // pass in {empty} or pass in cookie? or is that already done in request
       success: function(data){
         if(!data.is_logged_in){
-          writeError($comment_field, "You will need to <a href=\"/signin\">sign in</a> or <a href=\"/signup\">sign up</a> to be able to post your comment.");
-          $comment_field.disabled = true
-          $submit_button.disabled = true
-          alert('User not logged in')
+          $comment_field.attr('disabled', true);
+          $comment_field.attr('placeholder', "You will need to sign in or sign up to be able to post your comment.")
+          $submit_button.attr('disabled', true);
+          alert('User not logged in');
           isLoggedIn = false;
         } else {
           clearError($comment_field);
-          $comment_field.disabled = false
-          $submit_button.disabled = false
+          $comment_field.attr('disabled', false);
+          $comment_field.attr('placeholder', "Enter your response here.")
+          $submit_button.attr('disabled', false);
           isLoggedIn = true;
-          alert('User is logged in')
+          alert('User is logged in');
         }
       },
       failure: function(){
