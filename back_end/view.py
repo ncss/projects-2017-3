@@ -45,16 +45,7 @@ def comment_handler_post(request, photo_id):
             print(user_cookie)
             user = db.User.find(username=user_cookie)
             post = db.Post.find(photo_id)
-            print('LOG: CREATING COMMENT...')
-            print('LOG: photo_id: ', photo_id)
-            print('LOG: post id: ', post.id)
-            print('LOG: text: ', text)
-            print('LOG: user.username', user.username)
             comment = user.create_comment(post, text, None, get_user_picture(user))
-            print('LOG: Created comment.')
-            print('LOG: comment.text: ', comment.text)
-            print('LOG: comment.post: ', comment.post)
-            print('LOG: comment.user.username: ', comment.user.username)
             request.redirect("/view/" + str(photo_id))
     else:
 
