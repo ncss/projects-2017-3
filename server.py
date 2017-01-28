@@ -37,6 +37,13 @@ def not_found_handler(request):
 def monkey_handler(request):
     request.write(render('monkey.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
 
+def check_valid_question_id_handler(request, question_id):
+    post = db.Post.find(question_id)
+    if post is not None:
+        view.view_question_handler(request, question_id)
+    else:
+        not_found_handler(request)
+
 def exception_handler(request, httpcode, *args, **kwargs):
     """This handler should be called when an exception happens during code :(. So it doesnt leak the stacktrace"""
     try:
@@ -49,7 +56,7 @@ def exception_handler(request, httpcode, *args, **kwargs):
 
 server = Server()
 server.register(r'/', index_handler, write_error=exception_handler)
-server.register(r'/view/(\d+)/?', view.view_question_handler)
+server.register(r'/view/(\d+)/?', check_valid_question_id_handler)
 server.register(r'/signup'      , user.signup_handler  , post=user.signup_handler_post)
 server.register(r'/ask'         , ask.ask_handler      , post=ask.ask_handler_post)
 server.register(r'/signin'      , user.signin_handler  , post=user.signin_handler_post)
