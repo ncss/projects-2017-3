@@ -1,7 +1,7 @@
 # Find It!
 NCSS 2017, Group 3 - _**the best group**_
 
-*Find It!* : "A website that uses crowdsourcing to find out where to purchase products" (line taken from [this article on NCSS 2017](http://sydney.edu.au/engineering/news/2017/coding-for-kids-summer-school.shtml) cos can't think of a better one :P)
+*Find It!* : "A website that uses crowdsourcing to find out where to purchase products" (line taken from [this article on NCSS 2017](http://sydney.edu.au/engineering/news/2017/coding-for-kids-summer-school.shtml) cos it's a pretty neat summary :P)
 
 See more about us and our site in this [video](https://www.youtube.com/watch?v=nrfOD1kIIOM) :)
 
