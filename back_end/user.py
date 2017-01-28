@@ -3,6 +3,8 @@ from template_engine.parser import render
 from back_end.common import *
 from db import db_api as db
 
+NOUSER_PROFILEPIC_FILENAME = 'nouser.png'
+
 def signup_handler(request):
     request.write(render('signup.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
     ident = request.get_field('id')
@@ -45,7 +47,9 @@ def signup_handler_post(request):
         else:
             request.write("Uploaded file type not supported.")
     else:
-        request.write('We couldn\'t find an uploaded file.')
+        file_path_profile_pic = os.path.join('uploads', 'user_image', NOUSER_PROFILEPIC_FILENAME)
+        db.User.update(new_user.id, new_user.password, new_user.nickname, new_user.email, new_user.gender, new_user.dob, new_user.bio, file_path_profile_pic)
+        request.write('We couldn\'t find an uploaded file. So we\'ll assign you a default pic.')
 
     if username is not None:
         request.set_secure_cookie("current_user", username)
