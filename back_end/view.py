@@ -4,15 +4,15 @@ from template_engine import render
 from os import path
 from db import db_api as db
 from auth import requires_login, authenticate_cookie
-from back_end.profile import get_picture
 
 
 def view_question_handler(request, question_id):
     # try:
     post = db.Post.find(question_id)
+
     post_info = {
         'user': post.user,
-        'user_picture': get_picture(post.user),
+        'user_picture': get_user_picture(post.user),
         'description': post.description,
         'question': post.title,
         'date': post.date,
@@ -23,10 +23,12 @@ def view_question_handler(request, question_id):
         'user_ids': db.User.find(all=True),
         'photo_id': post.id,
     }
-    for i in post_info['comments']:
-        curuser = i.user
-        print(curuser.picture)
-        i.image = path.join("uploads", "user_image", curuser.picture) if curuser.picture else ""
+
+    if all(post_info['comments']):
+        for comment in post_info['comments']:
+            if comment.user:
+                comment.profile_pic = get_user_picture(comment.user)
+                print("",comment.profile_pic)
 
     request.write(render('view_question.html', post_info))
     # except Exception as e:
@@ -42,7 +44,8 @@ def comment_handler_post(request, photo_id):
         if db.User.find(username=user_cookie):
             print(user_cookie)
             user = db.User.find(username=user_cookie)
-            user.create_comment(db.Post.find(photo_id), text, None)
+            post = db.Post.find(photo_id)
+            comment = user.create_comment(post, text, None, get_user_picture(user))
             request.redirect("/view/" + str(photo_id))
     else:
 

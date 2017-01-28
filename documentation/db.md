@@ -30,7 +30,7 @@ This will return the ID of a user if the user exists, otherwise `None` is return
 There are multiple ways for finding a `User` in the database:
 ```python
 User.find(1) # Find by an ID in the database
-User.find_by_username("username")
+User.find(username="username") #Use optional username if you have the username instead
 ```
 Both return a `User` object if the user exists, otherwise `None`
 
@@ -69,7 +69,7 @@ To edit a `User`'s details:
 ```python
 user.edit('password', 'nickname', 'email', 'gender', 'dob', 'bio', 'filename.jpg')
 ```
-~~Returns a `Post` object~~
+Returns a `User` object
 
 ### Properties
 The `User` object has some properties:
@@ -123,7 +123,7 @@ Returns a `Comment` object
 ### Properties
 The `Post` object has some properties:
 ```python
-id, user_id, description, title, date, file
+id, user, description, title, date, file
 ```
 
 ---
