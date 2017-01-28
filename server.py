@@ -4,6 +4,7 @@ from template_engine.parser import render
 from back_end import ask, user, profile, view, ajax
 from db import db_api as db
 from auth import requires_login, authenticate_cookie, requires_admin
+import traceback
 from back_end.common import *
 
 TEMPLATE_DIR = 'templates'
@@ -55,26 +56,25 @@ def exception_handler(request, httpcode, *args, **kwargs):
     """This handler should be called when an exception happens during code :(. So it doesnt leak the stacktrace"""
     try:
         request.write(render("internal_error.html", {"code":httpcode, 'signed_in': authenticate_cookie(request), 'username': get_secure_username(request)}))
-        print("An exception has occured! code=%s" % httpcode, args, kwargs, sep="\n")
     except:
-        # another exception?
-        pass
+        print("another exception was raised!", traceback.print_exc())
 
 
-server = Server()
-server.register(r'/', index_handler, write_error=exception_handler)
-server.register(r'/view/(\d+)/?', check_valid_question_id_handler)
-server.register(r'/signup'      , user.signup_handler  , post=user.signup_handler_post)
-server.register(r'/ask'         , ask.ask_handler      , post=ask.ask_handler_post)
-server.register(r'/signin'      , user.signin_handler  , post=user.signin_handler_post)
-server.register(r'/post_comment/(\d+)/?', view.comment_handler_post, post=view.comment_handler_post)
-server.register(r'/logout'      , user.signout_handler)
-server.register(r'/list_users'  , handle_list_users)
-server.register(r'/profile/(.+)', check_valid_profile_handler, post=profile.view_handler_post)
-server.register(r'/profile/edit/(.+)', profile.edit_handler, post=profile.edit_handler_post)
-server.register(r'/aboutus'     , aboutus_handler)
-server.register(r'/ajax/user_validate', not_found_handler, post=ajax.username_handler)
-server.register(r'/ajax/email_validate', not_found_handler, post=ajax.email_handler)
+server = Server(default_write_error=exception_handler) # sets the default exception handler
+#               URL                       GET                              POST
+server.register(r'/'                    , index_handler                                                    )
+server.register(r'/view/(\d+)/?'        , check_valid_question_id_handler                                  )
+server.register(r'/signup'              , user.signup_handler              , post=user.signup_handler_post )
+server.register(r'/ask'                 , ask.ask_handler                  , post=ask.ask_handler_post     )
+server.register(r'/signin'              , user.signin_handler              , post=user.signin_handler_post )
+server.register(r'/post_comment/(\d+)/?', view.comment_handler_post        , post=view.comment_handler_post)
+server.register(r'/logout'              , user.signout_handler                                             )
+server.register(r'/list_users'          , handle_list_users                                                )
+server.register(r'/profile/(.+)'        , check_valid_profile_handler      , post=profile.view_handler_post)
+server.register(r'/profile/edit/(.+)'   , profile.edit_handler             , post=profile.edit_handler_post)
+server.register(r'/aboutus'             , aboutus_handler                                                  )
+server.register(r'/ajax/user_validate'  , not_found_handler                , post=ajax.username_handler    )
+server.register(r'/ajax/email_validate' , not_found_handler                , post=ajax.email_handler       )
 
 server.register(r'/monkey'      , monkey_handler)
 server.register(r'/.*'          , not_found_handler)
