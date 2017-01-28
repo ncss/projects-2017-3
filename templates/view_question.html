@@ -19,9 +19,15 @@
           <h3>{{ description }}</h3>
           <p>
             <label for="addComment">Do you have an answer?</label>
-            <textarea type="text" name="addComment" id="addComment"></textarea>
+            {% if 1 == 2 %}
+              <textarea type="text" name="addComment" id="addComment"></textarea>
+            {% else %}
+              <textarea type="text" name="addComment" id="addComment" disabled>Please log in or sign up to post an answer.</textarea>
+            {% end if %}
+            <!--or do this validation with jQuery and ajax and set disabled to true/false, same with for Submit button. See stackoverflow page -->
           </p>
           <p>
+
             <input type="submit" value="Submit">
           </p>
         </fieldset>
