@@ -24,6 +24,10 @@ def email_handler(request):
         reply_malformed(request)
 
 def user_logged_in_handler(request):
-    user = get_secure_username(request)
-    is_logged_in = True if user is not None else False
-    request.write({"user_is_logged_in": is_logged_in})
+    user_cookie = request.get_secure_cookie(USER_COOKIE)
+    if user_cookie is not None:
+        print('user:', user_cookie.decode())
+        is_logged_in = True
+    else:
+        is_logged_in = False
+    request.write({"is_logged_in": is_logged_in})
