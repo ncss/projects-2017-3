@@ -43,10 +43,12 @@ function validatePasswordRepeat($pass1, $pass2, do_write){
     if (do_write){
       writeError($pass1, 'These two passwords do not match!');
       writeError($pass2, 'These two passwords do not match!');
+      return false;
     }
   } else {
     clearError($pass1);
     clearError($pass2);
+    return true;
   }
 }
 
@@ -68,6 +70,7 @@ function validateSignupForm() {
 }
 
 function validateName($input) {
+  var do_write = isUndefined(do_write) ? true : do_write
   var nameReg = /^[A-Za-z0-9]+$/;
   if (!nameReg.test($input.val())) {
       writeError($input, 'Usernames and nicknames can only contain letters and numbers.')
