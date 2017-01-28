@@ -5,20 +5,31 @@ function clearError($input){
     $input.parent().find(".error").text('')
 }
 
-function validateEmail($input) {
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    if (!emailReg.test($input.val())) {
-      writeError($input, 'Please enter a valid email address format.')
-      return false;
-    } else {
-      clearError($input)
-      return true;
-    }
-  }
+function isUndefined(input){
+  return typeof input === 'undefined';
+}
 
-function checkIfPresent($input) {
+// if do_write is not supplied, it will return false, else true
+function validateEmail($input, do_write) {
+  var do_write = isUndefined(do_write) ? true : do_write
+  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  if (!emailReg.test($input.val())) {
+    if (do_write){
+      writeError($input, 'Please enter a valid email address format.');
+    }
+    return false;
+  } else {
+    clearError($input);
+    return true;
+  }
+}
+
+function checkIfPresent($input, do_write) {
+  var do_write = isUndefined(do_write) ? true : do_write
   if ($input.val().length < 4) {
-    writeError($input, 'At least four characters are required in this field')
+    if (do_write){
+      writeError($input, 'At least four characters are required in this field')
+    }
     return false;
   } else {
     clearError($input)
@@ -26,14 +37,17 @@ function checkIfPresent($input) {
   }
 }
 
-function validatePasswordRepeat($pass1, $pass2){
-    if ($pass1.val() != $pass2.val()){
-        writeError($pass1, 'These two passwords do not match!');
-        writeError($pass2, 'These two passwords do not match!');
-    } else {
-        clearError($pass1);
-        clearError($pass2);
+function validatePasswordRepeat($pass1, $pass2, do_write){
+  var do_write = isUndefined(do_write) ? true : do_write
+  if ($pass1.val() != $pass2.val()){
+    if (do_write){
+      writeError($pass1, 'These two passwords do not match!');
+      writeError($pass2, 'These two passwords do not match!');
     }
+  } else {
+    clearError($pass1);
+    clearError($pass2);
+  }
 }
 
 function validateSignupForm() {

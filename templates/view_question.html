@@ -8,15 +8,14 @@
     {% include _nav_bar.html %}
     <main class="centered">
       <h1>Question</h1>
-      <form action="/post_comment/{{ photo_id }}" method="post" enctype = "multipart/form-data">
+      <form action="{{ join('/post_comment/', str(post.id)) }}" method="post" enctype = "multipart/form-data">
         <fieldset>
-          <input type=text hidden="hidden" name='{{ photo_id }}'/>
-          <h2>{{ question }}</h2>
-          <fieldset class="comment"> <img src= "/static/{{ user_picture }}" class="comment"> <h3 class="comment">
-            {{ user.username }}:</h3>
+          <h2>{{ post.title }}</h2>
+          <fieldset class="comment"> <img src= "{{ join('/static/uploads/user_image', post.user.picture) }}" class="comment"> <h3 class="comment">
+            {{ post.user.username }}:</h3>
           </fieldset>
-          <img src="/static/{{ file }}" alt="{{ description }}">
-          <h3>{{ description }}</h3>
+          <img src="{{ join('/static/uploads/questions', str(post.id) + '.jpg') }}" alt="Photo of item">
+          <h3>{{ post.description }}</h3>
           <p>
             <label for="addComment">Do you have an answer?</label>
             <textarea type="text" name="addComment" id="addComment"></textarea>
@@ -29,7 +28,7 @@
       <h2>Comments</h2>
       {% for comment in comments %}
       <fieldset class="comment">
-        <img src="/static/{{ comment.profile_pic }}"/>
+        <img src="{{ join('/static/uploads/user_image', post.user.picture) }}"/>
         <h3>
           {{ comment.user.username }}:</h3><p> {{ comment.text }}
         </p>

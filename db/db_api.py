@@ -24,9 +24,9 @@ with sqlite3.connect('db.db') as conn:
         User Object that represents a User, with attributes
         id, username (unique), hashed(password), nickname, email(unique), gender, dobm, short bio, picture(path), and creation_date
         """
-        columns = 'id', 'username',  'password', 'nickname', 'gender', 'dob', 'picture', 'creation_date'
+        COLS = 'id', 'username', 'password', 'nickname', 'gender', 'dob', 'picture', 'creation_date'
         # all possible columns
-        mutable_columns = 'password', 'nickname', 'email', 'gender', 'dob', 'picture', 'creation_date'
+        MUTABLE_COLS = 'password', 'nickname', 'email', 'gender', 'dob', 'picture', 'creation_date'
         # all columns allowed to be changed after acc creation
 
         def __init__(self, id, username, password,  nickname, email, gender = None, dob = None, bio = None, picture = None, creation_date = None):
@@ -42,7 +42,12 @@ with sqlite3.connect('db.db') as conn:
             self.creation_date = creation_date
 
         @staticmethod
-        def find(id=None, username=None, all=False):
+        def find(*, id=None, username=None, email=None, all=False):
+            no_args = sum(x is not None and x is not False for x in [id, username, email, all])
+            if no_args > 1:
+                # more than one option supplied!
+                raise ValueError('find() requires 1 argument to be set: either \'id\', \'username\', \'email\' or \'all\''
+                                 + ', ' + str(no_args) + " given")
             if id is not None:
                 cur.execute(
                 '''
@@ -55,7 +60,8 @@ with sqlite3.connect('db.db') as conn:
 
                 if row is None:
                     return None
-                return User(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+                return User(*row)
+
             elif username is not None:
                 cur.execute(
                 '''
@@ -68,7 +74,22 @@ with sqlite3.connect('db.db') as conn:
 
                 if row is None:
                     return None
-                return User.find(row[0])
+                return User(*row)
+
+            elif email is not None:
+                cur.execute(
+                    '''
+                    SELECT *
+                    FROM users
+                    WHERE email = ?
+                    ''', (email,)
+                )
+                row = cur.fetchone()
+
+                if row is None:
+                    return None
+                return User(*row)
+
             elif all:
                 cur.execute(
                 '''
@@ -78,29 +99,15 @@ with sqlite3.connect('db.db') as conn:
                 ''')
                 all_users = cur.fetchall()
                 if all_users:
-                    rows = [User.find(row[0]) for row in all_users]
+                    rows = [User(*row) for row in all_users]
                     return rows
                 else:
                     return None
             else:
+                raise TypeError('find() requires 1 argument to be set: either \'id\', \'username\', \'email\' or \'all\'')
 
-                raise TypeError('find() requires 1 argument to be set: either \'id\', \'username\' or \'all\'')
-                return None
 
-        @staticmethod
-        def find_by_email(email):
-            cur.execute(
-                '''
-                SELECT *
-                FROM users
-                WHERE email = ?
-                ''', (email,)
-            )
-            row = cur.fetchone()
 
-            if row is None:
-                return None
-            return User(*row)
         @staticmethod
         def sign_up(username, password, nickname, email):
             """signs up a user, given the bare minimum"""
@@ -112,7 +119,7 @@ with sqlite3.connect('db.db') as conn:
             )
             id = cur.lastrowid
             conn.commit()
-            return User.find(id)
+            return User.find(id=id)
 
         @staticmethod
         def update(id, password, nickname, email, gender, dob, bio, picture):
@@ -133,38 +140,43 @@ with sqlite3.connect('db.db') as conn:
             ''', (password, nickname, email, gender, dob, bio, picture, id)
             )
             conn.commit()
-            return User.find(id)
+            return User.find(id=id)
 
         @staticmethod
         def update_some(**kwargs):
             """Updates one value. Use update_one(nickname='newnick',...)"""
-            if all((i in User.mutable_columns for i in kwargs.keys())):
-                # all the keys are legit
+            if all((i in User.MUTABLE_COLS for i in kwargs.keys())):
+                # check if the columns are allowed to be altered
                 for key in kwargs:
                     cur.execute(
                         """UPDATE users
                         SET %s = ?""" % key, (kwargs[key],)
                     )
                     # yes i know string formatting is bad with sql. Its a necessary evil :(
+                conn.commit()
             else:
-                print("one of the keys were invalid!", kwargs)
+                raise ValueError("Some of the keys were invalid!", [x for x in kwargs.keys() if x not in User.MUTABLE_COLS])
 
 
         @staticmethod
         def login(username, password):
             """logs the user in given username and password hash. returns User obj with username or none if login failed"""
-            cur.execute('''
+            cur.execute(
+            '''
             SELECT id
             FROM users
-            WHERE username = ? AND password = ? ''',
+            WHERE username = ? AND password = ?
+            ''',
             (username, password))
             row = cur.fetchone()
-            user_id = None if row is None else row[0]
-            return user_id
+            if row is None:
+                return None
+            return User(*row)
 
         def delete(self):
             """Deletes a user from the database"""
-            cur.execute('''
+            cur.execute(
+            '''
             DELETE FROM users WHERE username = ?
             ''' , (self.username,))
             conn.commit()
@@ -194,7 +206,7 @@ with sqlite3.connect('db.db') as conn:
 
         def __init__(self, id, user, description, title, date, file):
             self.id = id
-            self.user = user
+            self.user = user # type: User
             self.description = description
             self.title = title
             self.date = date
@@ -212,7 +224,7 @@ with sqlite3.connect('db.db') as conn:
 
             if row1 is None:
                 return None
-            return Post(row1[0], User.find(row1[1]), row1[2], row1[3], row1[4], row1[5])
+            return Post(row1[0], User.find(id=row1[1]), *row1[2:])
 
         @staticmethod
         def get_next_post_id():
@@ -344,7 +356,7 @@ with sqlite3.connect('db.db') as conn:
             for idx, column in enumerate(row):
                 print(idx, column)
             # id | (user obj) | post_id, parent_id, text, date, profile_pic, loc_lat, loc_long, score
-            return Comment(row[0], User.find(row[1]), *row[2:])
+            return Comment(row[0], User.find(id=row[1]), *row[2:])
 
         @staticmethod
         def find_comments_for_post(post):
