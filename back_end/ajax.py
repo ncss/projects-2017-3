@@ -1,5 +1,7 @@
 from db import db_api
-from back_end.common import reply_malformed
+from back_end.common import reply_malformed, get_secure_username
+
+USER_COOKIE = "current_user"
 
 def username_handler(request):
     user = request.get_field("username")
@@ -20,3 +22,8 @@ def email_handler(request):
         request.write({"email_valid" : valid})
     else:
         reply_malformed(request)
+
+def user_logged_in_handler(request):
+    user = get_secure_username(request)
+    is_logged_in = True if user is not None else False
+    request.write({"user_is_logged_in": is_logged_in})
