@@ -15,11 +15,15 @@ $ git clone https://github.com/ncss/projects-2017-3/
 ```
 Create the database:
 ```bash
-cd db/
-python db_create.py
+python db/db_create.py
 ```
 
 - Only clone the repository and create the database when running for first time.
+
+Install requirements:
+```bash
+pip install -r requirements.txt
+```
 
 Start the server:
 ```bash
