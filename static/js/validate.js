@@ -103,7 +103,10 @@ function validatePost(){
     return Boolean(validQuestion);
 }
 
-
+function showLoading($input){
+  // put code here that shows a loading screen
+  console.log("hey");
+}
 
 $(document).ready(function(){
 
@@ -118,31 +121,35 @@ $(document).ready(function(){
     function checkUser(do_write){
       do_write = isUndefined(do_write) ? true : do_write;
       var isValidUsername = checkIfPresent($username, do_write) && validateName($username, do_write);
+
       if (isValidUsername){ //only ajax if needed
-        $.when($.ajax("/ajax/user_validate", {datatype: "json", type: "post", data: {username: $username.val()},
-            success: function(data){
-              if(!data.user_valid){
-                if (do_write){
-                  $username.parent().find(".error").html("This username is already taken! Click here to <a href=\"/signin\">login</a> or <a>here</a> to reset password (WIP)");
-                }
-                isValidUsername = false;
+        $.ajax("/ajax/user_validate", {
+          async:false,
+          datatype: "json",
+          type: "post",
+          data: {username: $username.val()
+          }, success: function(data){
+            if(!data.user_valid){
+              if (do_write){
+                $username.parent().find(".error").html("This username is already taken! Click here to <a href=\"/signin\">login</a> or <a>here</a> to reset password (WIP)");
               }
-            },
-            failure: function(){
+              isValidUsername = false;
+            }
+
+          }, failure: function(){
               alert("failed to ajax! Check your internet connection");
             }
-          })).done(function(){return isValidUsername}); // only return after the ajax request is finished
+          }); // only return after the ajax request is finished
       }
-      else{
-        return isValidUsername;
-      }
+      return isValidUsername;
+
     }
 
     if (!isUndefined(username_timer)){
       clearTimeout(username_timer);
     }
     if (!checkUser(false) && $username.val() !== ''){
-      setTimeout(function(){checkUser(true);}, ERROR_TIME);
+      username_timer = setTimeout(function(){checkUser(true);}, ERROR_TIME);
     }
 
   });
