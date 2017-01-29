@@ -10,11 +10,11 @@ $(document).ready(function(){
 
   var $form = $('form.post-comment');
   var $comment_field = $('#addComment');
-  var $submit_button = $('#comment_submit')
+  var $submit_button = $('.comment_submit')
 
   var isLoggedIn = false
 
-  $.ajax("/ajax/logged_in_validate", {datatype: "json", type: "post", data: {}, // pass in {empty} or pass in cookie? or is that already done in request
+  $.ajax("/ajax/logged_in_validate", {datatype: "json", type: "post", data: {},
       success: function(data){
         if(!data.is_logged_in){
           $comment_field.attr('disabled', true);
