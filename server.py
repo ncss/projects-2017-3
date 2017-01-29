@@ -59,7 +59,6 @@ def exception_handler(request, httpcode, *args, **kwargs):
     except:
         print("another exception was raised!", traceback.print_exc())
 
-
 server = Server(default_write_error=exception_handler) # sets the default exception handler
 #               URL                       GET                              POST
 server.register(r'/'                    , index_handler                                                    )
@@ -75,6 +74,8 @@ server.register(r'/profile/edit/(.+)'   , profile.edit_handler             , pos
 server.register(r'/aboutus'             , aboutus_handler                                                  )
 server.register(r'/ajax/user_validate'  , not_found_handler                , post=ajax.username_handler    )
 server.register(r'/ajax/email_validate' , not_found_handler                , post=ajax.email_handler       )
+server.register(r'/ajax/login_validate' , not_found_handler                , post=ajax.user_logged_in_handler)
+
 
 server.register(r'/monkey'      , monkey_handler)
 server.register(r'/.*'          , not_found_handler)

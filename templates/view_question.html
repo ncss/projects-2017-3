@@ -3,12 +3,14 @@
   <head>
     {% include _shared_head.html %}
     <link rel="stylesheet" type='text/css' href='/static/css/ViewPost.css'>
+    <script src='/static/js/jquery.js'></script>
+    <script src='/static/js/validate_postcomment.js'></script>
   </head>
   <body>
     {% include _nav_bar.html %}
     <main class="centered">
       <h1>Question</h1>
-      <form action="{{ join('/post_comment/', str(post.id)) }}" method="post" enctype = "multipart/form-data">
+      <form class="post-comment" action="{{ join('/post_comment/', str(post.id)) }}" method="post" enctype = "multipart/form-data">
         <fieldset>
           <h2>{{ post.title }}</h2>
           <fieldset class="comment"> <img src= "{{ join('/static/uploads/user_image', post.user.picture) }}" class="comment"> <h3 class="comment">
@@ -19,9 +21,10 @@
           <p>
             <label for="addComment">Do you have an answer?</label>
             <textarea type="text" name="addComment" id="addComment"></textarea>
+            <p class="error"></p>
           </p>
           <p>
-            <input type="submit" value="Submit">
+            <input class="comment_submit" type="submit" value="Submit">
           </p>
         </fieldset>
       </form>

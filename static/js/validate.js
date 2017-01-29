@@ -111,7 +111,7 @@ $(document).ready(function(){
     $.ajax("/ajax/user_validate", {datatype: "json", type: "post", data: {username: $username.val()},
         success: function(data){
           if(!data.user_valid){
-            writeError($username, "This username is already taken!");
+            writeError($username, "This username is already taken! Click here to <a href=\"/signin\">login</a> or <a>here</a> to reset password (WIP)");
             isValidUsername = false;
           }
         },
