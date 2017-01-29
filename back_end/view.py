@@ -7,33 +7,19 @@ from auth import requires_login, authenticate_cookie
 
 
 def view_question_handler(request, question_id):
-    # try:
     post = db.Post.find(question_id)
 
     post_info = {
-        'user': post.user,
-        'user_picture': get_user_picture(post.user),
-        'description': post.description,
-        'question': post.title,
-        'date': post.date,
-        'file': post.file,
+        'post':post,
         'signed_in': authenticate_cookie(request),
         'username': get_secure_username(request),
         'comments': post.all_comments(),
-        'user_ids': db.User.find(all=True),
         'photo_id': post.id,
+        'join': os.path.join
+        # pass the os.path.join object so i can use it!
     }
 
-    if all(post_info['comments']):
-        for comment in post_info['comments']:
-            if comment.user:
-                comment.profile_pic = get_user_picture(comment.user)
-                print("",comment.profile_pic)
-
     request.write(render('view_question.html', post_info))
-    # except Exception as e:
-        # print(e.with_traceback)
-        # request.write('Invalid Id')
 
 def comment_handler_post(request, photo_id):
     text = request.get_field('addComment')

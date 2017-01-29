@@ -45,9 +45,9 @@ for logger in (tornado.log.access_log, tornado.log.app_log, tornado.log.gen_log,
 
 
 class Server:
-    __slots__ = ('cookie_secret', 'default_handler', 'handlers', 'hostname', 'port', 'static_path')
+    __slots__ = ('cookie_secret', 'default_handler', 'handlers', 'hostname', 'port', 'static_path', "default_write_error")
 
-    def __init__(self, *, hostname='', port=8888, static_path='static'):
+    def __init__(self, *, hostname='', port=8888, static_path='static',default_write_error=None):
         if type(hostname) is not str:
             raise ValueError('hostname must be a string')
         if type(port) is not int or port <= 0:
@@ -61,6 +61,7 @@ class Server:
         self.handlers = []
         self.cookie_secret = None
         self.default_handler = None
+        self.default_write_error = default_write_error
 
     def register(self, url_pattern, handler, *, delete=None, get=None, patch=None, post=None, put=None, url_name=None, write_error=None, **kwargs):
         if type(url_pattern) is not str:
@@ -73,7 +74,7 @@ class Server:
             patch_handler = patch or handler
             post_handler = post or handler
             put_handler = put or handler
-            write_error_handler = write_error
+            write_error_handler = write_error or self.default_write_error
 
             class Handler(tornado.web.RequestHandler):
                 def delete(self, *args, **kwargs):
