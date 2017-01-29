@@ -49,6 +49,7 @@
 
               <!-- Experimental live profile pic + Matilda, Tracey, Steph and Sam -->
             <div class="signup_div photobox">
+              <p class='error' id='webcam-vid-error'></p>
               <video autoplay id="webcam-vid"></video>
               <canvas width='200' height='150' id='webcam-canvas'> </canvas>
               <input id="webcam-input" type="text" name="webcam-input" value="" hidden>
@@ -85,7 +86,8 @@
                 });
               }
               else{
-                alert("Your brower does not support webcam :(")
+                var $error_message = $("#webcam-vid-error");
+                $error_message.text("Your brower does not support webcam for profile pics :(");
               }
 
 
