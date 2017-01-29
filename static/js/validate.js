@@ -54,7 +54,7 @@ function validatePasswordRepeat($pass1, $pass2, do_write){
 }
 
 function validateSignupForm() {
-    var $form = $('form.sign-in');
+    var $form = $('form.sign-up');
 
     var $username = $form.find('#username');
     var $nickname = $form.find('#nickname');
@@ -113,7 +113,7 @@ $(document).ready(function(){
   var username_timer;
   $("#username").on("input propertychange", function(){
     // check if the username is correct
-    var $form = $('form.sign-in');
+    var $form = $('form.sign-up');
     var $username = $form.find('#username');
     clearError($username);
 
@@ -156,7 +156,7 @@ $(document).ready(function(){
 
 
   $("#nickname").on("change keyup", function(){
-    var $form = $('form.sign-in');
+    var $form = $('form.sign-up');
     var $nickname = $form.find('#nickname');
     var isValidNickname =  checkIfPresent($nickname) && validateName($nickname);
     return Boolean(isValidNickname);
@@ -164,7 +164,7 @@ $(document).ready(function(){
 
 
   $("#password").on("change keyup", function(){
-    var $form = $('form.sign-in');
+    var $form = $('form.sign-up');
 
     var $password = $form.find('#password');
     var $password_repeat = $form.find('#password-check');
@@ -179,7 +179,7 @@ $(document).ready(function(){
   });
 
   $("#password-check").on("change keyup", function(){
-    var $form = $('form.sign-in');
+    var $form = $('form.sign-up');
 
     var $password = $form.find('#password');
     var $password_repeat = $form.find('#password-check');
@@ -194,7 +194,7 @@ $(document).ready(function(){
 
 
   $('#email').on("change keyup", function(){
-    var $form = $('form.sign-in');
+    var $form = $('form.sign-up');
 
     var $email = $form.find('#email');
     var isValidEmail = checkIfPresent($email) && validateEmail($email);

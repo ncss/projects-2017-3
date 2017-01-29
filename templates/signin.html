@@ -3,21 +3,28 @@
   <head>
     {% include _shared_head.html %}
     <link rel="stylesheet" type="text/css" href="/static/css/signin.css">
+    <script src='/static/js/jquery.js'></script>
+    <script src='/static/js/signin.js'></script>
   </head>
   <body>
     {% include _nav_bar.html %}
     <main>
       <h1>Sign In</h1>
       <div class="centered">
-        <form action="/signin" method="post" enctype = "multipart/form-data">
+        <p>
+          Don't have an account for <i>Find It!</i> yet? You can <a href="/signup">sign up</a> for one :)
+        </p>
+        <form class="sign-in" action="/signin" method="post" enctype = "multipart/form-data">
           <fieldset class="signin_form">
             <div>
               <label for="username">Username</label>
-              <input autofocus type="text" name="username" id="username">
+              <input autofocus type="text" name="username" id="username" placeholder="Enter your username for this site">
+              <p class="error"></p>
             </div>
             <div>
               <label for="password">Password</label>
-              <input type="password" name="password" id="password">
+              <input type="password" name="password" id="password" placeholder="Enter the password associated with your account">
+              <p class="error"></p>
             </div>
             <p>
               <input class="login_button" type="submit" value="Login">
