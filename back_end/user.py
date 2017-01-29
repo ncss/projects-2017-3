@@ -62,21 +62,22 @@ def signin_handler(request):
     if get_secure_username(request):
         # the user is already logged in!
         request.redirect('/')
-    signin = {'signed_in':False}
+    signin = {'signed_in':False, 'error_message': ''}
     request.write(render('signin.html', signin))
 
 def signin_handler_post(request):
     username = request.get_field('username').lower()
     password = hash_string(request.get_field('password'))
     userObj = db.User.find(username=username)
+    signin_error_message = ""
     if userObj:
         if userObj.password == password:
             request.set_secure_cookie("current_user", username)
             request.redirect('/')
         else:
-            request.write("The username and password do not match.")
+            request.write(render('signin.html', {'signed_in':False, 'error_message': "The username and password do not match."}))
     else:
-        request.write("Username cannot be found.")
+        request.write(render('signin.html', {'signed_in':False, 'error_message': "Username cannot be found in database."}))
 
 @requires_login
 def signout_handler(request):

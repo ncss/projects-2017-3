@@ -75,7 +75,6 @@ server.register(r'/aboutus'             , aboutus_handler                       
 server.register(r'/ajax/user_validate'  , not_found_handler                , post=ajax.username_handler    )
 server.register(r'/ajax/email_validate' , not_found_handler                , post=ajax.email_handler       )
 server.register(r'/ajax/logged_in_validate' , not_found_handler            , post=ajax.user_logged_in_handler)
-server.register(r'/ajax/signin_username', not_found_handler                , post=ajax.username_exists_handler)
 
 server.register(r'/monkey'      , monkey_handler)
 server.register(r'/.*'          , not_found_handler)

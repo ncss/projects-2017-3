@@ -62,34 +62,4 @@ $(document).ready(function(){
     return fieldsAreFilled;
   });
 
-  $('.login_button').click(function(evt){
-
-    var $username = $('#username');
-    var $password = $('#password');
-
-    // Check if username in db
-    $.ajax("/ajax/signin_username", {
-      async:false,
-      datatype: "json",
-      type: "post",
-      data: {username: $username.val()
-      }, success: function(data){
-          if (data.username_exists){
-            isValidUsername = true;
-            clearError($username)
-          } else {
-            isValidUsername = false;
-            writeError($username, "Username cannot be found in database.");
-          }
-      }, failure: function(){
-        alert("Failed to ajax. Check your internet connection.")
-      }
-    });
-
-    //TODO: Check if the password corresponds to hashed password in db
-    // Refer to sign in post handler
-
-    return;
-  });
-
 });

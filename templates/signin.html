@@ -16,15 +16,18 @@
         </p>
         <form class="sign-in" action="/signin" method="post" enctype = "multipart/form-data">
           <fieldset class="signin_form">
+            <p class="error">
+              {% if error_message %}
+                {{ error_message }}
+              {% end if %}
+            </p>
             <div>
               <label for="username">Username</label>
               <input autofocus required type="text" name="username" id="username" placeholder="Enter your username for this site">
-              <p class="error"></p>
             </div>
             <div>
               <label for="password">Password</label>
               <input required type="password" name="password" id="password" placeholder="Enter the password associated with your account">
-              <p class="error"></p>
             </div>
             <p>
               <input class="login_button" type="submit" value="Login">

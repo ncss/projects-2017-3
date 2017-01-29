@@ -31,9 +31,3 @@ def user_logged_in_handler(request):
     else:
         is_logged_in = False
     request.write({"is_logged_in": is_logged_in})
-
-def username_exists_handler(request):
-    username = request.get_field("username")
-    user = db.User.find(username=username)
-    username_exists = True if user is not None else False
-    request.write({"username_exists" : username_exists})
