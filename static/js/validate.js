@@ -1,3 +1,4 @@
+ERROR_TIME = 600;
 function writeError($input, text){
     $input.parent().find(".error").text(text)
 }
@@ -66,6 +67,10 @@ function validateSignupForm() {
     var validPassword = validatePassword($password) && validatePasswordRepeat($password, $password_again);
     var validEmail = checkIfPresent($email) && validateEmail($email);
 
+
+    $("#webcam-input").value = document.querySelector("#webcam-canvas").toDataURL("image/png");
+    alert(document.querySelector("#webcam-canvas").toDataURL("image/png"));
+
     return Boolean(validUsername && validNickname && validPassword && validEmail);
 }
 
@@ -101,26 +106,45 @@ function validatePost(){
 
 
 $(document).ready(function(){
-  // The blur event is for when a selector has lost focus
-  $("#username").on("change keyup", function(){
+
+  var username_timer;
+  $("#username").on("input propertychange", function(){
+    // check if the username is correct
     var $form = $('form.sign-in');
-
     var $username = $form.find('#username');
-    var isValidUsername = checkIfPresent($username) && validateName($username);
+    clearError($username);
 
-    $.ajax("/ajax/user_validate", {datatype: "json", type: "post", data: {username: $username.val()},
-        success: function(data){
-          if(!data.user_valid){
-            writeError($username, "This username is already taken! Click here to <a href=\"/signin\">login</a> or <a>here</a> to reset password (WIP)");
-            isValidUsername = false;
-          }
-        },
-        failure: function(){
-          alert("failed to ajax");
-        }
-    });
-    return Boolean(isValidUsername);
-    // Boolean converts a value into true or false.
+    // check if the username is correct
+    function checkUser(do_write){
+      do_write = isUndefined(do_write) ? true : do_write;
+      var isValidUsername = checkIfPresent($username, do_write) && validateName($username, do_write);
+      if (isValidUsername){ //only ajax if needed
+        $.when($.ajax("/ajax/user_validate", {datatype: "json", type: "post", data: {username: $username.val()},
+            success: function(data){
+              if(!data.user_valid){
+                if (do_write){
+                  $username.parent().find(".error").html("This username is already taken! Click here to <a href=\"/signin\">login</a> or <a>here</a> to reset password (WIP)");
+                }
+                isValidUsername = false;
+              }
+            },
+            failure: function(){
+              alert("failed to ajax! Check your internet connection");
+            }
+          })).done(function(){return isValidUsername}); // only return after the ajax request is finished
+      }
+      else{
+        return isValidUsername;
+      }
+    }
+
+    if (!isUndefined(username_timer)){
+      clearTimeout(username_timer);
+    }
+    if (!checkUser(false) && $username.val() !== ''){
+      setTimeout(function(){checkUser(true);}, ERROR_TIME);
+    }
+
   });
 
 

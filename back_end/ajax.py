@@ -9,8 +9,8 @@ def username_handler(request):
         valid = db_api.User.find(username=user.lower())
         # checks if the user already signed up
         # if there is no user, it is valid
-        print(user, valid)
         valid = True if valid is None else False
+        print(user, valid)
         request.write({"user_valid" : valid})
     else:
         reply_malformed(request)

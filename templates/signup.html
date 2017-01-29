@@ -48,53 +48,50 @@
             </div>
 
               <!-- Experimental live profile pic + Matilda, Tracey, Steph and Sam -->
-            <div class='photobox'>
-              <video autoplay></video>
-              <img src="" hidden class='profile_image'>
-              <canvas hidden width='200' height='150'> </canvas>
-              <label>Click on preview to take snapshot</label>
+            <div class="signup_div photobox">
+              <video autoplay id="webcam-vid"></video>
+              <canvas width='200' height='150' id='webcam-canvas'> </canvas>
+              <input id="webcam-input" type="text" name="webcam-input" value="" hidden>
             </div>
 
               <script>
-              var canvas = document.querySelector('canvas');
-              var profile_image = document.querySelector('.profile_image');
-              var profile_label = document.querySelector('.photobox label');
+              var canvas = $('#webcam-canvas').first()[0];
+              var profile_image = $('#webcam-photo').first()[0];
               var ctx = canvas.getContext('2d');
               var video = document.querySelector('video');
-              var localMediaStream = null;
-              navigator.getUserMedia  = navigator.getUserMedia ||
-                          navigator.webkitGetUserMedia ||
-                          navigator.mozGetUserMedia ||
-                          navigator.msGetUserMedia;
-                var errorCallback = function(e) {
-                  console.log('Reeeejected!', e);
-                };
 
-                function snapshot() {
-                  if (localMediaStream) {
-                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    // "image/webp" works in Chrome.
-                    // Other browsers will fall back to image/png.
-                    profile_image.src = canvas.toDataURL('image/webp');
-                    profile_image.hidden = false;
-                    profile_label.hidden = true;
+              navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+
+              if (navigator.getUserMedia){
+                // set up the video -> canvas
+                navigator.getUserMedia({video: true, audio: false},
+                  // success
+                  function(stream) {
+                    video.srcObject = stream;
+                  },
+                  // failure
+                  function(){
+                    console.log("Media failed. Probably denied webcam")
                   }
-                }
+                );
+                // set up canvas by drawing font on it
+                ctx.font = "15px Calibri"
+                ctx.fillText("Click on preview ", canvas.width/2, canvas.height/2 - 8)
+                ctx.fillText("to take snapshot", canvas.width/2, canvas.height/2  + 8)
+                // listener on the video element
+                video.addEventListener("click", function(){
+                  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                });
+              }
+              else{
+                alert("Your brower does not support webcam :(")
+              }
 
-                video.addEventListener('click', snapshot, false);
 
-                // Not showing vendor prefixes.
-                navigator.getUserMedia({video: true, audio: false}, function(stream) {
-                  video.src = window.URL.createObjectURL(stream);
 
-                  localMediaStream = stream;
 
-                  // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
-                  // See crbug.com/110938.
-                  video.onloadedmetadata = function(e) {
-                    // Ready to go. Do some stuff.
-                  };
-                }, errorCallback);
+
               </script>
             </p>
             <p>
