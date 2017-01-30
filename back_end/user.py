@@ -6,7 +6,7 @@ from db import db_api as db
 NOUSER_PROFILEPIC_FILENAME = 'nouser.png'
 
 def signup_handler(request):
-    request.write(render('signup.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request)}))
+    request.write(render('signup.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request), 'unsupported_file_error_msg': ''}))
     ident = request.get_field('id')
     username = request.get_field('username')
     email = request.get_field('email')
@@ -43,19 +43,20 @@ def signup_handler_post(request):
                 f.write(data)
                 db.User.update(new_user.id, new_user.password, new_user.nickname, new_user.email, new_user.gender, new_user.dob, new_user.bio, file_path_profile_pic)
                 print(new_user.picture)
+                request.redirect('/')
 
         else:
-            request.write("Uploaded file type not supported.")
+            print('Uploaded file type not supported')
+            request.write(render('signup.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request), 'unsupported_file_error_msg': 'Uploaded file type not supported.'}))
     else:
         file_path_profile_pic = os.path.join('uploads', 'user_image', NOUSER_PROFILEPIC_FILENAME)
         db.User.update(new_user.id, new_user.password, new_user.nickname, new_user.email, new_user.gender, new_user.dob, new_user.bio, file_path_profile_pic)
         request.write('We couldn\'t find an uploaded file. So we\'ll assign you a default pic.')
+        request.redirect('/')
 
     if username is not None:
         request.set_secure_cookie("current_user", username)
 
-
-    request.redirect('/')
 
 
 def signin_handler(request):

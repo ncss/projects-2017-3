@@ -69,7 +69,7 @@ function validateSignupForm() {
 
 
     $("#webcam-input").value = document.querySelector("#webcam-canvas").toDataURL("image/png");
-    alert(document.querySelector("#webcam-canvas").toDataURL("image/png"));
+    //alert(document.querySelector("#webcam-canvas").toDataURL("image/png"));
 
     return Boolean(validUsername && validNickname && validPassword && validEmail);
 }

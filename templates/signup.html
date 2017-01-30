@@ -17,7 +17,7 @@
           <fieldset>
             <div class="signup_div">
               <label for="username" class="signup_text">Username *</label>
-              <input id="username" type="text" name="username" placeholder="Enter a username" autofocus required>
+              <input id="username" type="text" name="username" placeholder="Enter a username" val="{{ username }}" autofocus required>
               <p class='error'></p>
             </div>
             <div class="signup_div">
@@ -49,6 +49,11 @@
 
               <!-- Experimental live profile pic + Matilda, Tracey, Steph and Sam -->
             <div class="signup_div photobox">
+              <p class='error' id='unsupported-file-error'>
+                {% if unsupported_file_error_msg %}
+                  {{ unsupported_file_error_msg }}
+                {% end if %}
+              </p>
               <p class='error' id='webcam-vid-error'></p>
               <video autoplay id="webcam-vid"></video>
               <canvas width='200' height='150' id='webcam-canvas'> </canvas>
