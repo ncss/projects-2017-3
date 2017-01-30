@@ -69,3 +69,73 @@ input[type="email"] {
 .signup_div input{
 
 }
+
+ul.tab-header {
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    text-align: center;
+    width: 75%;
+    margin: 0 auto;
+}
+
+
+/* Float the list items side by side */
+ul.tab-header li {
+  display: inline;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Style the links inside the list items */
+ul.tab-header li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+ul.tab-header li a:hover {background-color: #ddd;}
+
+/* Create an active/current tablink class */
+ul.tab-header li a:focus, .active {background-color: #ccc;}
+
+/* Style the tab content */
+.profile_tab {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    width: 75%;
+    margin: 0 auto;
+    height:200px;
+}
+
+
+
+#webcam-vid, #webcam-canvas{
+  width: 200px;
+  height:150px;
+  margin:0;
+  padding:0;
+}
+
+
+#profile_img_box{
+  /*background-color: lightgrey;*/
+
+}
+
+.left-tab{
+  border-left: none !important;
+}
+
+.right-tab{
+  border-right: none !important;
+}

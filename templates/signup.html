@@ -2,9 +2,11 @@
 <html>
   <head>
     {% include _shared_head.html %}
-    <link rel="stylesheet" type="text/css" href="static/css/signup.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/signup.css">
     <script src='/static/js/jquery.js'></script>
     <script src='/static/js/validate.js'></script>
+    <script src='/static/js/signup.js'></script>
+    <script src='/static/js/signup_webcam.js'></script>
   </head>
   <body>
     {% include _nav_bar.html %}
@@ -40,70 +42,57 @@
               <input id="email" type='email' name="email" placeholder="Enter an email" required>
                 <p class ='error'></p>
             </div>
-            <div class="signup_div">
-                <p>
-                  <label for="profile_picture" class="signup_text">Profile Image</label>
-                  <input type="file" id="profile_picture" name="profile_picture">
-                </p>
-            </div>
 
-              <!-- Experimental live profile pic + Matilda, Tracey, Steph and Sam -->
-            <div class="signup_div photobox">
+            <ul class="tab-header">
+              <li>
+                <a href="javascript:void(0)" class="tablinks" onclick="openDiv(event, 'profile_img_upload')" id="profile-upload-image">
+                  Upload
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" class="tablinks" onclick="openDiv(event, 'profile_img_webcam')">
+                  Webcam
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" class="tablinks" onclick="openDiv(event, 'profile_img_link')">
+                  Link
+                </a>
+              </li>
+            </ul>
+
+
+
+            <!-- The tabs -->
+            <div class="profile_tab" id="profile_img_upload">
+              <label for="profile_picture" class="signup_text">Profile Image</label>
+              <input type="file" id="profile_picture" name="profile_picture">
               <p class='error' id='unsupported-file-error'>
                 {% if unsupported_file_error_msg %}
                   {{ unsupported_file_error_msg }}
                 {% end if %}
               </p>
-              <p class='error' id='webcam-vid-error'></p>
-              <video autoplay id="webcam-vid"></video>
-              <canvas width='200' height='150' id='webcam-canvas'> </canvas>
-              <input id="webcam-input" type="text" name="webcam-input" value="" hidden>
             </div>
 
-              <script>
-              var canvas = $('#webcam-canvas').first()[0];
-              var profile_image = $('#webcam-photo').first()[0];
-              var ctx = canvas.getContext('2d');
-              var video = document.querySelector('video');
 
-              navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+            <div class="profile_tab" id="profile_img_webcam">
+                <video autoplay id="webcam-vid"></video>
+                <canvas id='webcam-canvas'>
+                  Your Browser does not support the canvas element
+                </canvas>
+                <input id="webcam-input" type="text" name="webcam-input" value="" hidden>
+                <p class='error' id='webcam-vid-error'></p>
+            </div>
 
+            <div class="profile_tab" id="profile_img_link">
+                <p>TODO add a link picture downloader</p>
+            </div>
 
-              if (navigator.getUserMedia){
-                // set up the video -> canvas
-                navigator.getUserMedia({video: true, audio: false},
-                  // success
-                  function(stream) {
-                    video.srcObject = stream;
-                  },
-                  // failure
-                  function(){
-                    console.log("Media failed. Probably denied webcam")
-                  }
-                );
-                // set up canvas by drawing font on it
-                ctx.font = "15px Calibri"
-                ctx.fillText("Click on preview ", canvas.width/2, canvas.height/2 - 8)
-                ctx.fillText("to take snapshot", canvas.width/2, canvas.height/2  + 8)
-                // listener on the video element
-                video.addEventListener("click", function(){
-                  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                });
-              }
-              else{
-                var $error_message = $("#webcam-vid-error");
-                $error_message.text("Your brower does not support webcam for profile pics :(");
-              }
-
-
-
-
-
-              </script>
-            </p>
-            <p>
-              <input class="sign_up_submit" type="submit" value="Submit">
-            </p>
+            <div class="signup_div">
+              <p>
+                <input class="sign_up_submit" type="submit" value="Submit">
+              </p>
+            </div>
           </fieldset>
         </form>
       </div>
