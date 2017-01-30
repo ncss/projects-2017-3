@@ -74,7 +74,18 @@
               </p>
             </div>
 
-
+            <!-- Experimental live profile pic + Matilda, Tracey, Steph and Sam -->
+            <!-- IT WORKS!!! Sends a base64 encoded string representation of the image -->
+            <!--
+            it can be accessed using:
+            ```
+            document.querySelector("#webcam-canvas").toDataURL("image/png");
+            ```
+            on form submission, $("#webcam-input").value  is set to (document.querySelector("#webcam-canvas").toDataURL("image/png"));
+            and is posted to the server
+            which can be accessed via request.get_field("webcam-input")
+            (hopefully :D, its 12am)
+            -->
             <div class="profile_tab" id="profile_img_webcam">
                 <video autoplay id="webcam-vid"></video>
                 <canvas id='webcam-canvas'>

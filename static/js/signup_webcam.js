@@ -31,7 +31,6 @@ $(document).ready(function(){
     });
   }
   else{
-    var $error_message = $("#webcam-vid-error");
-    $error_message.text("Your brower does not support webcam for profile pics :(");
+    $("#webcam-vid-error").html("Your brower does not support webcam for profile pics :(");
   }
 });
