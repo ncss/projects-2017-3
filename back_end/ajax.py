@@ -32,5 +32,3 @@ def user_logged_in_handler(request):
     else:
         is_logged_in = False
     request.write({"is_logged_in": is_logged_in})
-
-def username_exists_handler(*args):...
