@@ -17,6 +17,8 @@ $(document).ready(function(){
       // failure
       function(){
         console.log("Media failed. Probably denied webcam")
+        $("#webcam-canvas").hide();
+        $("#webcam-vid-error").html("Could not access your webcam")
       }
     );
     // set up canvas by drawing font on it
