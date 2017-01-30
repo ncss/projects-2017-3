@@ -16,7 +16,7 @@
           <fieldset class="comment"> <img src= "{{ join('/static/uploads/user_image', post.user.picture) }}" class="comment"> <h3 class="comment">
             {{ post.user.username }}:</h3>
           </fieldset>
-          <img src="{{ join('/static/uploads/questions', str(post.id) + '.jpg') }}" alt="Photo of item">
+          <img src="{{ join('/static/', post.file) }}" alt="Photo of item">
           <h3>{{ post.description }}</h3>
           <p>
             <label for="addComment">Do you have an answer?</label>

@@ -12,7 +12,7 @@ from mimetypes import guess_extension
 @requires_login
 def ask_handler(request):
     name = request.get_field("name")
-    request.write(render("ask.html", {'signed_in': authenticate_cookie(request), 'username': get_secure_username(request)}))
+    request.write(render("ask.html", {'signed_in': authenticate_cookie(request), 'username': get_secure_username(request), 'file_error_msg': ''}))
 
 @requires_login
 def ask_handler_post(request):
@@ -37,9 +37,9 @@ def ask_handler_post(request):
             request.write("Your image was uploaded! name=%s"%(photo_files[0]))
             request.redirect('/view/' + str(post.id))
         else:
-            request.write("uploaded file type not supported")
+            request.write(render("ask.html", {'signed_in': authenticate_cookie(request), 'username': get_secure_username(request), 'file_error_msg': 'Uploaded file type not supported.'}))
     else:
-        request.write('We couldn\'t find an uploaded file.')
+        request.write(render("ask.html", {'signed_in': authenticate_cookie(request), 'username': get_secure_username(request), 'file_error_msg': 'We couldn\'t find an uploaded file.'}))
         # user_id = request.get_secure_cookie("current_user")
         # tempfile_name = str(int(time.time()))
         # filename, response = fetch_file(url, tempfile_name)

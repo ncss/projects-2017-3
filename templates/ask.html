@@ -21,6 +21,11 @@
             <p class="question">
               <label for="fileupload">Upload an image of the product you want to find!</label>
               <input type="file" name="fileupload" id="fileupload">
+              <p class='error' id='unsupported-file-error'>
+                {% if file_error_msg %}
+                  {{ file_error_msg }}
+                {% end if %}
+              </p>
             </p>
             <p class="centered_or">Or</p>
             <p class="question">
