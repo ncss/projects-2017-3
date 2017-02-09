@@ -15,7 +15,7 @@ IMAGE_DIR = os.path.join('static', 'images')
 
 def index_handler(request):
     posts = db.Post.find_all()
-    if not posts: posts=[]
+    if not posts: posts = []
     posts = [{'image':i.file if i.file != [] else 'notfound.jpg',
                   'question':i.title, 'id': i.id} for i in posts]
     request.write(render('index.html',
@@ -91,10 +91,13 @@ class CustomStaticFileHandler(web.StaticFileHandler):
             render_error(self, e.status_code)
             return None
 
+def handle_favicon(request):
+    request.redirect('/static/images/favicon.png')
 
 # we need to handle both errors on the default RequestHandlers (server.register(blah)) and
 # also from the static RequestHandler (/static/blah)
-server = Server( default_write_error=exception_handler, static_handler_class=CustomStaticFileHandler) # sets the default exception handler
+
+server = Server(default_write_error=exception_handler, static_handler_class=CustomStaticFileHandler) # sets the default exception handler
 #               URL                       GET                              POST
 server.register(r'/'                        , index_handler                                                      )
 server.register(r'/view/(\d+)/?'            , check_valid_question_id_handler                                    )
@@ -110,7 +113,9 @@ server.register(r'/aboutus'                 , aboutus_handler                   
 server.register(r'/ajax/user_validate'      , _405_handler                     , post=ajax.username_handler      )
 server.register(r'/ajax/email_validate'     , _405_handler                     , post=ajax.email_handler         )
 server.register(r'/ajax/logged_in_validate' , _405_handler                     , post=ajax.user_logged_in_handler)
+server.register(r'/monkey'      , monkey_handler)
+server.register(r'/favicon.ico', handle_favicon)
+
 server.register(r'/.+', _404_handler)
 
-server.register(r'/monkey'      , monkey_handler)
 server.run()

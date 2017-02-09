@@ -34,5 +34,4 @@ def comment_handler_post(request, photo_id):
             comment = user.create_comment(post, text, None, get_user_picture(user))
             request.redirect("/view/" + str(photo_id))
     else:
-
         request.write("You're not logged in!")

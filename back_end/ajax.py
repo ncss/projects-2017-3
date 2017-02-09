@@ -5,7 +5,7 @@ USER_COOKIE = "current_user"
 
 def username_handler(request):
     user = request.get_field("username")
-    if isinstance(user, str):
+    if user is not None:
         valid = db_api.User.find(username=user.lower())
         # checks if the user already signed up
         # if there is no user, it is valid
@@ -17,7 +17,7 @@ def username_handler(request):
 
 def email_handler(request):
     email = request.get_field("email")
-    if isinstance(email, str):
+    if email is not None:
         valid = db_api.User.find(email=email.lower())
         valid = True if valid is None else False
         request.write({"email_valid" : valid})

@@ -10,6 +10,7 @@ function isUndefined(input){
   return typeof input === 'undefined';
 }
 
+
 // if do_write is not supplied, it will return false, else true
 function validateEmail($input, do_write) {
   var do_write = isUndefined(do_write) ? true : do_write
@@ -44,11 +45,9 @@ function validatePasswordRepeat($pass1, $pass2, do_write){
     if (do_write){
       writeError($pass1, 'These two passwords do not match!');
       writeError($pass2, 'These two passwords do not match!');
-      return false;
     }
+    return false;
   } else {
-    clearError($pass1);
-    clearError($pass2);
     return true;
   }
 }
@@ -68,31 +67,36 @@ function validateSignupForm() {
     var validEmail = checkIfPresent($email) && validateEmail($email);
 
 
-    $("#webcam-input").value = document.querySelector("#webcam-canvas").toDataURL("image/png");
-    //alert(document.querySelector("#webcam-canvas").toDataURL("image/png"));
-
+    document.getElementById("webcam-input").value = document.querySelector("#webcam-canvas").toDataURL("image/png");
+    
     return Boolean(validUsername && validNickname && validPassword && validEmail);
 }
 
-function validateName($input) {
-  var do_write = isUndefined(do_write) ? true : do_write
+
+function validateName($input, do_write) {
+  var do_write = isUndefined(do_write) ? true : do_write;
   var nameReg = /^[A-Za-z0-9]+$/;
   if (!nameReg.test($input.val())) {
-      writeError($input, 'Usernames and nicknames can only contain letters and numbers.')
-      return false;
+    if(do_write){
+      writeError($input, 'Usernames and nicknames can only contain letters and numbers.');
+    }
+    return false;
   } else {
-      clearError($input)
+    clearError($input);
     return true;
   }
 }
 
-function validatePassword($input){
+function validatePassword($input, do_write){
+  var do_write = isUndefined(do_write) ? true : do_write
   if ($input.val().length < 8) {
+    if (do_write){
       writeError($input, 'At least eight characters are required in this field.')
       return false;
-    } else {
-      clearError($input)
-      return true;
+    }
+  } else {
+    clearError($input)
+    return true;
   }
 }
 
@@ -108,109 +112,233 @@ function showLoading($input){
   console.log("hey");
 }
 
+function checkEmpty($input){
+  return $input.val() !== '';
+}
+
+
+
 $(document).ready(function(){
 
+  var username_valid;
   var username_timer;
   $("#username").on("input propertychange", function(){
     // check if the username is correct
     var $form = $('form.sign-up');
     var $username = $form.find('#username');
+    
     clearError($username);
 
-    // check if the username is correct
-    function checkUser(do_write){
-      do_write = isUndefined(do_write) ? true : do_write;
-      var isValidUsername = checkIfPresent($username, do_write) && validateName($username, do_write);
-
-      if (isValidUsername){ //only ajax if needed
-        $.ajax("/ajax/user_validate", {
-          async:false,
-          datatype: "json",
-          type: "post",
-          data: {username: $username.val()
-          }, success: function(data){
-            if(!data.user_valid){
-              if (do_write){
-                $username.parent().find(".error").html("This username is already taken! Click here to <a href=\"/signin\">login</a> or <a>here</a> to reset password (WIP)");
-              }
-              isValidUsername = false;
-            }
-
-          }, failure: function(){
-              alert("failed to ajax! Check your internet connection");
-            }
-          }); // only return after the ajax request is finished
-      }
-      return isValidUsername;
-
-    }
 
     if (!isUndefined(username_timer)){
       clearTimeout(username_timer);
     }
-    if (!checkUser(false) && $username.val() !== ''){
-      username_timer = setTimeout(function(){checkUser(true);}, ERROR_TIME);
+
+
+    // check if the username is correct
+    // clear the stuff
+    username_valid = checkEmpty($username, false)
+
+    if (username_valid){
+      if(!validateName($username, false)){
+        username_timer = setTimeout(function(){validateName($username, true)}, ERROR_TIME);
+        username_valid = false;
+      }
     }
 
+
+    if (username_valid){
+      if(!checkIfPresent($username, false)){
+        username_timer = setTimeout(function(){checkIfPresent($username, true)}, ERROR_TIME);
+        username_valid = false;
+      }
+    }
+
+
+
+    if (username_valid){ //only ajax if needed
+      username_valid = false; // set it to false until proven true!
+      $.ajax("/ajax/user_validate", {
+        datatype: "json",
+        type: "post",
+        data: {username: $username.val()}, 
+        success: 
+          function(data){
+            if(!data.user_valid){
+              // set the timer
+              username_timer = setTimeout(
+                function(){
+                  $username.parent().find(".error").html("This username is already taken! Click here to <a href=\"/signin\">login</a> or <a>here</a> to reset password (WIP)"); 
+                }, 
+                ERROR_TIME);
+            }
+            else{
+              username_valid = true;
+            }
+          }, 
+
+        failure:
+          function(){
+            alert("failed to ajax! Check your internet connection");
+          }
+      }); 
+    }
   });
+    
 
-
-  $("#nickname").on("change keyup", function(){
+  var nickname_valid=false;
+  var nickname_timer;
+  $("#nickname").on("input propertychange", function(){
     var $form = $('form.sign-up');
     var $nickname = $form.find('#nickname');
-    var isValidNickname =  checkIfPresent($nickname) && validateName($nickname);
-    return Boolean(isValidNickname);
+    // reset the vars
+    clearError($nickname);
+    nickname_valid = false;
+
+    function checkNick(do_write)
+    {
+      return checkIfPresent($nickname, do_write) && validateName($nickname, do_write);
+    }
+
+    if (!isUndefined(nickname_timer))
+    {
+      clearTimeout(nickname_timer);
+    }
+
+    if (!checkNick(false) && $nickname.val() !== '')
+    {
+      nickname_timer = setTimeout(function(){checkNick(true);}, ERROR_TIME);
+    }
+    else{
+      nickname_valid = true;
+    }
   });
 
+  var password_valid = false;
+  var password_timer;
 
-  $("#password").on("change keyup", function(){
+  $("#password").on("input propertychange", function(){
+    var $form = $('form.sign-up');
+    var $password = $form.find('#password');
+    // reset the vars
+    clearError($password);
+    password_valid = false;
+    // guilty unless proven innocent!!!!
+
+    function checkPass(do_write){
+      return validatePassword($password, do_write);
+    }
+
+    if (!isUndefined(password_timer))
+    {
+      clearTimeout(password_timer);
+    }
+
+    if (!checkPass(false) && $password.val() !== '')
+    {
+      password_timer = setTimeout(function(){checkPass(true);}, ERROR_TIME);
+    }
+    else{
+      password_valid = true;
+    }
+
+  });
+
+  var password_a_valid = false;
+  var passward_a_timer;
+  $("#password-check").on("input propertychange", function(){
     var $form = $('form.sign-up');
 
     var $password = $form.find('#password');
     var $password_repeat = $form.find('#password-check');
-    var isValidPassword;
-    if($password_repeat.val() != ''){
-      isValidPassword = validatePassword($password) && validatePasswordRepeat($password, $password_repeat);
-    } else{
-      isValidPassword = validatePassword($password);
+    clearError($password_repeat);
+
+    function checkPassA(do_write){
+      isValidPass = validatePassword($password, do_write)  && validatePasswordRepeat($password, $password_repeat,do_write);
+      // eval all the terms!
+      return isValidPass;
+    };
+
+    if (!isUndefined(passward_a_timer))
+    {
+      clearTimeout(passward_a_timer);
     }
 
-    return Boolean(isValidPassword);
-  });
-
-  $("#password-check").on("change keyup", function(){
-    var $form = $('form.sign-up');
-
-    var $password = $form.find('#password');
-    var $password_repeat = $form.find('#password-check');
-    var isValidPassword;
-    if($password_repeat.val() != ''){
-      isValidPassword = validatePassword($password) && validatePasswordRepeat($password, $password_repeat);
-    } else{
-      isValidPassword = validatePassword($password);
+    if (!checkPassA(false) && ($password_repeat.val() !== '' ||  $password.val() !== ''))
+    {
+      passward_a_timer = setTimeout(function(){checkPassA(true);}, ERROR_TIME);
+      password_a_valid = false;
     }
-    return Boolean(isValidPassword);
+    else{
+      password_a_valid = true;
+    }
+
   });
 
+  var email_timer;
+  var email_valid = false;
 
-  $('#email').on("change keyup", function(){
+  $('#email').on("input propertychange", function(){
     var $form = $('form.sign-up');
 
     var $email = $form.find('#email');
     var isValidEmail = checkIfPresent($email) && validateEmail($email);
+    
+    clearError($email);
 
-     $.ajax("/ajax/email_validate", {datatype: "json", type: "post", data: {email: $email.val()},
-       success: function(data){
-         if(!data.email_valid){
-           $email.parent().find(".error").html("This email is already registered. Click here to <a href=\"/signin\">login</a> or <a>here</a> to reset password (WIP)");
-           isValidEmail = false;
-         }},
-         failure: function(){
-           alert("failed to ajax. This can be caused by network issues");
-         }
-        });
-    return Boolean(isValidEmail);
-  });
+    if (!isUndefined(email_timer)){
+      clearTimeout(email_timer);
+    }
+
+    // check if the username is correct
+    email_valid = checkEmpty($email, false);
+
+    //var isValidEmail = checkIfPresent($email) && validateEmail($email);
+
+    if (email_valid){
+      if(!validateEmail($email, false)){
+        email_timer = setTimeout(function(){validateEmail($email, true)}, ERROR_TIME);
+        email_valid = false;
+      }
+    }
+
+    if (email_valid){
+      if(!checkIfPresent($email, false)){
+        email_timer = setTimeout(function(){checkIfPresent($username, true)}, ERROR_TIME);
+        email_valid = false;
+      }
+    }
+
+    if (email_valid){ //only ajax if needed
+      email_valid = false; // set it to false until proven true!
+      $.ajax("/ajax/email_validate", {
+        datatype: "json",
+        type: "post",
+        data: {email: $email.val()}, 
+        success: 
+          function(data){
+            if(!data.email_valid){
+              // set the timer
+              alert(data.email_valid);
+              email_timer = setTimeout(
+                function(){
+                  $email.parent().find(".error").html("This email is already registered. Click here to <a href=\"/signin\">login</a> or <a>here</a> to reset password (WIP)"); 
+                }, 
+                ERROR_TIME);
+            }
+            else{
+              email_valid = true;
+            }
+          }, 
+
+        failure:
+          function(){
+            alert("failed to ajax! Check your internet connection");
+            email_valid = false;
+          }
+      }); 
+    }
+  }); 
 
   $('.sign_up_submit').click(function(evt){
     return validateSignupForm();

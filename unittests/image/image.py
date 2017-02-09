@@ -1,4 +1,4 @@
-import back_end.image as img
+import back_end.Imaging as img
 import unittest
 
 class TestImageMethods(unittest.TestCase):

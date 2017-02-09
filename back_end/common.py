@@ -9,6 +9,27 @@ IMAGE_DIR = os.path.join('static', 'images')
 HASH_SALT = b'1U+q8L!TXEyws+5+OKEzf=q~ffCo>8-u/QJyL}cSqcg~~Ar`C{u{ZPP{Ky6M`l|b'
 USER_COOKIE = "current_user"
 
+'''
+__all__ = [
+    'UPLOADS_DIR'
+    'IMAGE_DIR',
+    'HASH_SALT',
+    'USER_COOKIE',
+    'hash_string',
+    'get_upload_path',
+    'get_image_path',
+    'get_current_time',
+    'get_secure_username',
+    'fetch_file',
+    'get_user_picture',
+    'reply_malformed',
+]'''
+
+
+# if you add a function, dont forget to put it in the __all__
+# its basically a list of all the things that get imported when you do
+# from backend.common import *
+
 def hash_string(s):
     return hashlib.sha512(HASH_SALT + s.encode()).hexdigest()
 

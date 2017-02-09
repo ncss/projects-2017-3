@@ -144,7 +144,17 @@ with sqlite3.connect('db.db') as conn:
 
         @staticmethod
         def update_some(**kwargs):
-            """Updates one value. Use update_one(nickname='newnick',...)"""
+            """
+            Updates one value. Use update_some(nickname='newnick',...)
+            Usable fields:
+             'password', 
+             'nickname', 
+             'email',
+             'gender',
+             'dob', 
+             'picture',
+             'creation_date'
+            """
             if all((i in User.MUTABLE_COLS for i in kwargs.keys())):
                 # check if the columns are allowed to be altered
                 for key in kwargs:

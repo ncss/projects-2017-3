@@ -21,4 +21,5 @@ function openDiv(evt, idOfElement) {
     // show element by setting it to block
     document.getElementById(idOfElement).style.display = "block";
     evt.currentTarget.className += " active";
+    document.getElementById("image-location").value = idOfElement;
 }

@@ -2,60 +2,79 @@ from auth import requires_login, USER_COOKIE, authenticate_cookie
 from template_engine.parser import render
 from back_end.common import *
 from db import db_api as db
+from back_end import Imaging
 
 NOUSER_PROFILEPIC_FILENAME = 'nouser.png'
 
 def signup_handler(request):
     request.write(render('signup.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request), 'unsupported_file_error_msg': ''}))
-    ident = request.get_field('id')
-    username = request.get_field('username')
-    email = request.get_field('email')
-    password = request.get_field('password')
-    doc = request.get_field('doc')
-    gender = request.get_field('gender')
-    dob = request.get_field('dob')
-    if username is not None:
-        request.set_secure_cookie("current_user", username)
 
 
 def signup_handler_post(request):
-    ident = request.get_field('id')
+    UnreadableImage = False
+
+    image_type = request.get_field('image-location')
+
+    if not image_type in ('profile_img_webcam', 'profile_img_upload', None):
+        print("gotten image-type", image_type)
+        reply_malformed(request)
+        return
+    else:
+        # get the image
+        if image_type == 'profile_img_webcam':
+            # webcam
+            print("reading from webcam")
+            print(request.get_field('webcam-input'))
+            image = Imaging.open_image(request.get_field('webcam-input'), change_icon=True, b64=True)
+        elif image_type == 'profile_img_upload':
+            # file upload
+            print("Reading from file upload")
+            image = Imaging.open_image(request.get_file('profile_picture')[2], change_icon=True, b64=False)
+        else:
+            print("No file received! img_type=", image_type)
+            image = None
+        # the picture is a ImageWrapper obj, None for no image, or Imaging.Invalid if it is invalid
+
+
     username = request.get_field('username')
     nickname = request.get_field('nickname')
     password = hash_string(request.get_field('password'))
     email = request.get_field('email')
     gender = request.get_field('gender')
     dob = request.get_field('dob')
-    profile_pic = request.get_file('profile_picture')
-    print(username)
+
+
     if db.User.find(username=username) is not None:
         request.write("username already exists!")
         return
-    new_user = db.User.sign_up(username, password, nickname, email)
+        
+    if image == Imaging.INVALID_IMAGE:
+        # the image was invalid! send the form back to the user and dont sign'em up
+        print("Image was invalid :(")
+        ...
+    else:
+        new_user = db.User.sign_up(username, password, nickname, email)
 
-    # Validation for uploaded image
-    if profile_pic != (None, None, None):
-        filename, content_type, data = profile_pic
-        if content_type.startswith('image/'):
-            file_path_profile_pic = os.path.join('uploads', 'user_image', str(new_user.id) +'.jpg')
+        if image is None:
+            request.set_secure_cookie("current_user", username)
+            # no image was supplied, do nofin
+            request.redirect('/')
 
-            with open(os.path.join('static', file_path_profile_pic), 'wb') as f:
-                f.write(data)
-                db.User.update(new_user.id, new_user.password, new_user.nickname, new_user.email, new_user.gender, new_user.dob, new_user.bio, file_path_profile_pic)
-                print(new_user.picture)
-                request.redirect('/')
+        elif Imaging.is_image(image):
+            ext = image.type
+            
+            file_path = os.path.abspath(os.path.join('static', 'uploads', 'user_image', str(new_user.id) + '.' + ext))
+            print("Saving img to", file_path)
+            image.img.save(file_path)
+            db.User.update_some(picture=file_path)
+            request.set_secure_cookie("current_user", username)
+            request.redirect('/')
 
         else:
-            print('Uploaded file type not supported')
-            request.write(render('signup.html', {'signed_in':authenticate_cookie(request), 'username': get_secure_username(request), 'unsupported_file_error_msg': 'Uploaded file type not supported.'}))
-    else:
-        file_path_profile_pic = os.path.join('uploads', 'user_image', NOUSER_PROFILEPIC_FILENAME)
-        db.User.update(new_user.id, new_user.password, new_user.nickname, new_user.email, new_user.gender, new_user.dob, new_user.bio, file_path_profile_pic)
-        request.write('We couldn\'t find an uploaded file. So we\'ll assign you a default pic.')
-        request.redirect('/')
+            raise ValueError("image cannot be " + str(image))
 
-    if username is not None:
-        request.set_secure_cookie("current_user", username)
+
+
 
 
 
