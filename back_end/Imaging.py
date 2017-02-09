@@ -23,6 +23,7 @@ def is_image(img):
 
 def open_image(data, change_icon=False, b64=False):
     """Returns an image object, given image binary data (gotten from request.get_file) """
+
     if b64:
         try:
             with open('out.txt', 'w') as f:
@@ -30,7 +31,6 @@ def open_image(data, change_icon=False, b64=False):
             data = base64.b64decode(data[22:] if data.startswith("data:image/png;base64,") else data)
         except binascii.Error:
             print("unable to decode b64!")
-            raise
             return INVALID_IMAGE
 
     io = BytesIO(data)

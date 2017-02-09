@@ -8,6 +8,7 @@ def view_handler_post(request, username):
 def view_handler(request, username):
     user = db.User.find(username=username)
     print('on profile page, profile pic = ' + str(user.picture) + ' check if user logged in or user of profile page')
+    print(get_user_picture(user))
     if user is None:
         request.write("username is not in db")
     else:

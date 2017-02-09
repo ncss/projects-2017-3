@@ -24,12 +24,20 @@ def signup_handler_post(request):
         if image_type == 'profile_img_webcam':
             # webcam
             print("reading from webcam")
-            print(request.get_field('webcam-input'))
-            image = Imaging.open_image(request.get_field('webcam-input'), change_icon=True, b64=True)
+            if request.get_field('webcam-input') is None:
+                image = None
+            else:
+                image = Imaging.open_image(request.get_field('webcam-input'), change_icon=True, b64=True)
+
         elif image_type == 'profile_img_upload':
             # file upload
             print("Reading from file upload")
-            image = Imaging.open_image(request.get_file('profile_picture')[2], change_icon=True, b64=False)
+            if request.get_file('profile_picture') == (None, None, None):
+                # no upload
+                image = None
+            else:
+                image = Imaging.open_image(request.get_file('profile_picture')[2], change_icon=True, b64=False)
+
         else:
             print("No file received! img_type=", image_type)
             image = None
@@ -62,11 +70,11 @@ def signup_handler_post(request):
 
         elif Imaging.is_image(image):
             ext = image.type
-            
-            file_path = os.path.abspath(os.path.join('static', 'uploads', 'user_image', str(new_user.id) + '.' + ext))
-            print("Saving img to", file_path)
-            image.img.save(file_path)
-            db.User.update_some(picture=file_path)
+            file_path = os.path.join('static', 'uploads', 'user_image', str(new_user.id) + '.' + ext)
+            abs_file_path = os.path.abspath(file_path)
+            print("Saving img to", abs_file_path, "with link", file_path)
+            image.img.save(abs_file_path)
+            db.User.update_some(picture='/' + file_path) # need a / to make it absolute path so it doesnt do /profile/static...
             request.set_secure_cookie("current_user", username)
             request.redirect('/')
 
