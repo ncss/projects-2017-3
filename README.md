@@ -82,6 +82,15 @@ or you can also right-click on the project name and then Open in Atom:
 <br/>
 
 ---
+
+## Updates:
+If you get something related to PIL not existing, see here:
+http://stackoverflow.com/questions/20060096/installing-pil-with-pip
+
+---
+
+## Notes:
+
 If you have any ideas or comments on this tutorial, please feel very free to add.
 
 And if you're having trouble with anything, please tell us! :DD
