@@ -18,6 +18,9 @@
           </fieldset>
           <img src="{{ join('/static/', post.file) }}" alt="Photo of item">
           <h3>{{ post.description }}</h3>
+        </fieldset>
+
+          <h2>Comments</h2>
           <p>
             <label for="addComment">Do you have an answer?</label>
             <textarea type="text" name="addComment" id="addComment"></textarea>
@@ -26,9 +29,8 @@
           <p>
             <input class="comment_submit" type="submit" value="Submit">
           </p>
-        </fieldset>
       </form>
-      <h2>Comments</h2>
+
       {% for comment in comments %}
       <fieldset class="comment">
         <img src="{{ join('/static/uploads/user_image', post.user.picture) }}"/>
