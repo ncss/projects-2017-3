@@ -5,7 +5,7 @@ NCSS 2017, Group 3 - _**the best group**_
 
 See more about us and our site in this [video](https://www.youtube.com/watch?v=nrfOD1kIIOM) :)
 
-You can view a (slightly older) version of our site live here at [findingit.tk](http://findingit.tk)
+You can view a (slightly older) version of our site live here at [ncss2017g3.herokuapp.com](http://ncss2017g3.herokuapp.com)
 
 ---
 
